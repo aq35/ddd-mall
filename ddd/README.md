@@ -10,7 +10,11 @@ Userクラスの要件
 ユーザーの認証情報(パスワード)を、変更することができる。
 モデリングUser
 ユーザーと基本識別子という組み合わせ
-User:Entity
+
+ユキビタス言語
+UserProfile:個人:ユーザーの個人情報(名前や連絡先など)を保持し管理する。
+
+[User]:Entity
 ---------------------
 username:String
 password:String
@@ -19,5 +23,23 @@ changePassword()...password encrypted
 changePersonalName()
 changePersonalContactInformation()
 
-ユキビタス言語
-Person:個人:ユーザーの個人情報(名前や連絡先など)を保持し管理する
+[User] → [UserProfile]
+
+UserProfileがEntityか値オブジェクトか判断するには[変更]という言葉だ。
+住所が変更されていた場合、UserProfileを置き換える必要はない
+
+[UserProfile]:Entity
+---------------------
+Name() 値オブジェクト
+ContactInformation()　値オブジェクト
+
+Customerクラスの要件
+新しい注文を顧客に追加する
+顧客を推奨する(具体的なのはここでは述べない)
+
+
+[Customer]:Entity
+---------------------
+AddOrder()
+MakePreferred()
+---------------------

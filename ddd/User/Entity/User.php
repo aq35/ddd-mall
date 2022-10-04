@@ -4,8 +4,8 @@ namespace DDD\User\Entity;
 
 use DDD\Validator\FreeMailValidator;
 use DDD\Exception\DomainException;
+use DDD\User\Entity\UserProfile;
 use DDD\User\ValueObject\UserId;
-use DDD\User\ValueObject\UserProfile;
 use DDD\User\ValueObject\UserPassword;
 
 final class User

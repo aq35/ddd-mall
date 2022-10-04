@@ -1,6 +1,7 @@
 <?php
 
-namespace DDD\User\ValueObject;
+namespace DDD\User\Entity;
+
 
 final class UserProfile
 {
