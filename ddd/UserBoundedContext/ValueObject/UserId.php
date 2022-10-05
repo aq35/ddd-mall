@@ -1,6 +1,6 @@
 <?php
 
-namespace DDD\User\ValueObject;
+namespace DDD\UserBoundedContext\ValueObject;
 
 final class UserId
 {
