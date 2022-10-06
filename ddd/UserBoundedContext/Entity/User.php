@@ -30,13 +30,6 @@ final class User
     private UserPassword $password;
 
     /**
-     * User constructor.
-     */
-    private function __construct()
-    {
-    }
-
-    /**
      * ファクトリメソッド
      * @param UserId $id
      * @param UserEmail $email

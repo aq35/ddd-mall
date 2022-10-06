@@ -4,7 +4,7 @@ namespace DDD\UserBoundedContext\ValueObject;
 
 use DDD\Exception\DomainException;
 
-final class Email
+final class UserEmail
 {
     private string $email;
      
