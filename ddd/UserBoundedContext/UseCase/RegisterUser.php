@@ -2,23 +2,18 @@
 
 namespace DDD\UserBoundedContext\UseCase;
 
-use DDD\UserBoundedContext\Entity\User;
-use DDD\UserBoundedContext\ValueObject\UserEmail;
-use DDD\UserBoundedContext\ValueObject\UserPassword;
 use DDD\UserBoundedContext\Service\UserService;
-use DDD\UserBoundedContext\Repogitory\IUserRepogitory;
-use Exception;
+
 
 final class RegisterUser
 {
-    public function registerUser(string $email, string $password)
+    public function registerUser(string $email, string $password):void
     {
-        // メールアドレスが一意であること
-        if(UserService::isEmailUnique($email)){
-            $userEntity = User::register(new UserEmail($email), new UserPassword($password), null);
-            IUserRepogitory::registerUser();
-        }else{
-            throw (new Exception);
-        }
+        // S3に画像保存をするURLを取得する
+
+        // 利用者登録
+        UserService::registerUser($email,$password);
+
+        // メール通知をする
     }
 }
