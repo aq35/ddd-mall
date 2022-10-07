@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    "amiralizadeh9480.laravel-extra-intellisense",
+    "onecentlin.laravel-blade",
+    "shufo.vscode-blade-formatter",
+    "esbenp.prettier-vscode",
+    "irongeek.vscode-env",
+    "bmewburn.vscode-intelephense-client",
+    "ms-ceintl.vscode-language-pack-ja",
+    "pkief.material-icon-theme",
+    "wmaurer.change-case",
+    "johnsoncodehk.volar",
+    "msjsdiag.debugger-for-chrome",
+    "christian-kohler.path-intellisense",
+    "christian-kohler.npm-intellisense",
+    "junstyle.php-cs-fixer",
+    "davidanson.vscode-markdownlint",
+    "shd101wyy.markdown-preview-enhanced",
+    "ctf0.laravel-goto-lang",
+    "mrchetan.laravel-goto-config",
+    "mhutchie.git-graph"
+  ]
+}
