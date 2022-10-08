@@ -5,7 +5,7 @@ namespace DDD\Entity;
 use DDD\ValueObject\UserId;
 use DDD\ValueObject\UserEmail;
 
-final class User
+final class User extends Entity
 {
     /**
      * @var UserId
