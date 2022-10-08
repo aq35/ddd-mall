@@ -13,7 +13,6 @@ class Index
     public static function test()
     {
         $input = new Input();
-        $input->stop_process = 0; // 0.止めない;2.InnerMiddlewareで止める。
         $input->middleware_process = [];
         $pipeline = (new PipelineBuilder)
             ->use(new OuterMiddleware())

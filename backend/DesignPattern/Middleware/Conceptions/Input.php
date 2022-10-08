@@ -2,6 +2,7 @@
 
 namespace DesignPattern\Middleware\Conceptions;
 
-final class Input
+// 入力
+class Input
 {
 }

@@ -2,6 +2,7 @@
 
 namespace DesignPattern\Middleware\Conceptions;
 
-final class Output
+// 出力
+class Output
 {
 }

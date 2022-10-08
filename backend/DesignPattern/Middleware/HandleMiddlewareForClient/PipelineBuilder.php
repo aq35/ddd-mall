@@ -35,21 +35,24 @@ final class PipelineBuilder
         return $this;
     }
 
-    // 登録されたミドルウェアとハンドラを合成したハンドラを作るメソッド
+    // イメージ
     /*
-    <仮Handler>middleware1<仮Handler>
-    public function handle(Input $input): Output
-        return $this->middleware->process($input,
-                <仮Handler>middleware2<仮Handler>
-                public function handle(Input $input): Output
-                {
-                    return $this->middleware->process($input,
-                        <コア>Handler</コア>
-                );
+    // MiddlewareHandler外側
+    function handle(){
+        手続き処理
+        MiddlewareHandler外側@handle()
+        {
+            手続き処理
+            MiddlewareHandler中側@handle(){
+                // MiddlewareHandlerC
+                function process(){
+                    手続きコード
+                    return <コア>Handler</コア>->handle();
                 }
-                )
             }
+        }
     }
+
     */
     public function build(Handler $handler): Handler
     {
