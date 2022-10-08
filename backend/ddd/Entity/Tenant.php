@@ -1,6 +1,6 @@
 <?php
 
-namespace DDD\UserBoundedContext\Entity;
+namespace DDD\Entity;
 
 final class Tenant
 {

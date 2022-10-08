@@ -1,8 +1,8 @@
 <?php
 
-namespace DDD\UserBoundedContext\ValueObject;
+namespace DDD\ValueObject;
 
-use DDD\UserBoundedContext\ValueObject\TenantId;
+use DDD\ValueObject\TenantId;
 
 /*
 サービスのメソッドからUserDescriptorを返す。
@@ -14,6 +14,7 @@ use DDD\UserBoundedContext\ValueObject\TenantId;
 User全体を返すのではなく、Userを参照するために欠かせない属性だけをまとめました。
 
 */
+
 final class UserDescriptor
 {
     private string $email;
@@ -24,11 +25,9 @@ final class UserDescriptor
         string $email,
         TenantId $tenantId,
         string $username
-    )
-    {
+    ) {
         $this->email = $email;
         $this->tenantId = $tenantId;
         $this->username = $username;
     }
 }
-    

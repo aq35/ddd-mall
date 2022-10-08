@@ -1,6 +1,6 @@
 <?php
 
-namespace DDD\UserBoundedContext\Repogitory;
+namespace DDD\Repogitory;
 
 interface IUserRepogitory
 {

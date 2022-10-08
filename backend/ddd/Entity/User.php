@@ -1,9 +1,9 @@
 <?php
 
-namespace DDD\UserBoundedContext\Entity;
+namespace DDD\Entity;
 
-use DDD\UserBoundedContext\ValueObject\UserId;
-use DDD\UserBoundedContext\ValueObject\UserEmail;
+use DDD\ValueObject\UserId;
+use DDD\ValueObject\UserEmail;
 
 final class User
 {
@@ -33,8 +33,7 @@ final class User
         UserId $id,
         string $email,
         string $password,
-    ): self
-    {
+    ): self {
         $user = new self();
         $user->id = $id;
         $user->email = $email;
@@ -50,13 +49,11 @@ final class User
     public static function register(
         string $email,
         string $password,
-    ): self
-    {   
+    ): self {
         $user = new self();
         $user->id = UserId::generate();
         $user->email = $email;
         $user->password = $password;
         return $user;
     }
-
 }
