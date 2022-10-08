@@ -12,9 +12,9 @@ use DesignPattern\EventDispatcher\EventDispatcher;
 class Event
 {
     /**
-     * Add a new event Listener
+     * イベントリスナーを使いします。
      *
-     * @param string  $name     The name of an event.
+     * @param string  $name     イベント名
      * @param mixed   $func     Can be a function name, closure function or class.
      * @param integer $priority The execution priority.
      *

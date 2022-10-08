@@ -16,3 +16,5 @@ use App\Http\Controllers\TestMiddlewareController;
 
 // デザインパターンミドルウェア
 Route::get('/test/middleware', [TestMiddlewareController::class, 'index'])->name('test.middleware');
+// デザインパターンイベントディスパッチャー
+Route::get('/test/event-dispatcher', [TestMiddlewareController::class, 'eventDispatcher'])->name('event.dispatcher');
