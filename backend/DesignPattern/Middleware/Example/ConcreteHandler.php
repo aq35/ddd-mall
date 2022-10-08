@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Example;
+namespace DesignPattern\Middleware\Example;
 
 use DesignPattern\Middleware\Conceptions\Input;
 use DesignPattern\Middleware\Conceptions\Output;

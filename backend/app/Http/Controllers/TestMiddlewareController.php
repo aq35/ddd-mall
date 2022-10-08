@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DesignPattern\Example\Index;
+use DesignPattern\Middleware\Example\Index;
 
 class TestMiddlewareController extends Controller
 {

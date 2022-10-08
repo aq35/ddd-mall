@@ -14,4 +14,5 @@ use App\Http\Controllers\TestMiddlewareController;
 |
 */
 
+// デザインパターンミドルウェア
 Route::get('/test/middleware', [TestMiddlewareController::class, 'index'])->name('test.middleware');
