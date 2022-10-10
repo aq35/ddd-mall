@@ -8,9 +8,15 @@ use DDD\Entity\User;
 // ### 利用者Entityのテスト
 final class UserEntityTest extends TestCase
 {
+    public $invalidEmail = 'nagarestarzxc@.com';
+    public $validEmail = 'nagarestarzxc@gmail.com';
+
+    public $validPassword = 'Test12345!';
+    public $inValidPassword = 'Test12345';
     public function testRegisterUserInvalidEmail(): void
     {
-        $userEntity = User::register('nagarestarzxc@.com', 'Test12345!');
+
+        $userEntity = User::register(self::$invalidEmail, self::$validPassword);
         $userEntity->getUserId();
         $data = $userEntity->validateRegister();
         echo json_encode($data->errors, JSON_UNESCAPED_UNICODE) . "\n";
@@ -19,7 +25,7 @@ final class UserEntityTest extends TestCase
 
     public function testRegisterUserInvalidPassword(): void
     {
-        $userEntity = User::register('nagarestarzxc@gmail.com', 'Test12345');
+        $userEntity = User::register(self::$validEmail, self::$inValidPassword);
         $userEntity->getUserId();
         $data = $userEntity->validateRegister();
         echo json_encode($data->errors, JSON_UNESCAPED_UNICODE) . "\n";
@@ -28,7 +34,7 @@ final class UserEntityTest extends TestCase
 
     public function testRegisterUserValidInput(): void
     {
-        $userEntity = User::register('nagarestarzxc@gmail.com', 'Test12345!');
+        $userEntity = User::register(self::$validEmail, self::$validPassword);
         $userEntity->getUserId();
         $data = $userEntity->validateRegister();
         echo json_encode($data->errors, JSON_UNESCAPED_UNICODE) . "\n";
@@ -37,10 +43,11 @@ final class UserEntityTest extends TestCase
 
     public function testRestoreFromSourceValidInput(): void
     {
+        $hashPassword = password_hash(self::$validPassword, PASSWORD_DEFAULT);
         $userEntity = User::restoreFromSource(
             \DDD\ValueObject\UserId::generate(),
-            'nagarestarzxc@gmail.com',
-            password_hash('Test12345!', PASSWORD_DEFAULT)
+            self::$validEmail,
+            $hashPassword
         );
         $userEntity->getUserId();
         $data = $userEntity->validateRestoreFromSource();
