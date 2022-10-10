@@ -1,6 +1,6 @@
 <?php
 
-namespace DDD\Handler;
+namespace DDD\Entity;
 
 use DesignPattern\Middleware\Conceptions\Middleware;
 use DesignPattern\Middleware\Conceptions\Input;

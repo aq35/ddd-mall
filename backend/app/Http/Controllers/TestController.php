@@ -34,8 +34,9 @@ class TestController extends Controller
     public function validateMiddleware()
     {
         $userEntity = User::register('nagarestarzxc@.com', 'Test12345');
+        $userEntity->getUserId();
         $data = $userEntity->validate(); //　バリデーションはregisterの後に行う。
-        dd($data);
+        dd($userEntity->getUserId()->getUserId(), $userEntity, $data);
     }
 
     // テスト:

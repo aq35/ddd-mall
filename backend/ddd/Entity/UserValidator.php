@@ -2,13 +2,15 @@
 
 namespace DDD\Entity;
 
-use DDD\Entity\User;
+
 use DDD\Handler\Validator;
+use DDD\Handler\ValidationHandler;
 use DesignPattern\Middleware\HandleMiddlewareForClient\PipelineBuilder;
 use DesignPattern\Middleware\Conceptions\Input;
-use DDD\Handler\EmailIsRFC2821;
-use DDD\Handler\PasswordIsSafe;
-use DDD\Handler\ValidationHandler;
+
+use DDD\Entity\User;
+use DDD\Entity\EmailIsRFC2821;
+use DDD\Entity\PasswordIsSafe;
 
 class UserValidator extends Validator
 {
