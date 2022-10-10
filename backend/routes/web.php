@@ -21,3 +21,6 @@ Route::get('/test/event-dispatcher', [TestController::class, 'eventDispatcherTes
 
 // デザインパターンオブザーバー
 Route::get('/test/observer', [TestController::class, 'observerTest'])->name('test.observer');
+
+// ユーザーエンティティバリデーション＊デザインパターンミドルウェア
+Route::get('/test/validate-middleware', [TestController::class, 'validateMiddleware'])->name('validate.middleware');

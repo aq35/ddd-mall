@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use DesignPattern\Middleware\Example\MiddlewareTest;
 use DesignPattern\EventDispatcher\Example\EventDispatcherExample;
 use DesignPattern\EventDispatcher\Event;
+use DDD\Entity\User;
+
 
 class TestController extends Controller
 {
@@ -15,7 +17,6 @@ class TestController extends Controller
         dd(MiddlewareTest::test());
     }
 
-    //
     public function eventDispatcherTest()
     {
         $this->callListenerByClosure();
@@ -27,6 +28,13 @@ class TestController extends Controller
     public function observerTest()
     {
         \DesignPattern\Observer\Example\ObserverTest::test();
+    }
+
+    public function validateMiddleware()
+    {
+        $userEntity = User::register('nagarestarzxc@.com', 'test12345');
+        $data = $userEntity->validated();
+        dd($data);
     }
 
     private function callListenerByClosure()

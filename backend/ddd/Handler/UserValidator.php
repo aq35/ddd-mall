@@ -3,37 +3,32 @@
 namespace DDD\Handler;
 
 use DDD\Entity\User;
-use DDD\Handler\UserValidationNotificationHandler;
 use DDD\Handler\Validator;
-use DDD\Handler\ValidationNotificationHandler;
+use DesignPattern\Middleware\HandleMiddlewareForClient\PipelineBuilder;
+use DesignPattern\Middleware\Conceptions\Input;
+
+use DDD\Handler\EmailIsRFC2821;
+use DDD\Handler\ValidationHandler;
 
 class UserValidator extends Validator
 {
     private User $user;
 
     public function __construct(
-        User $user,
-        ValidationNotificationHandler $aHandler,
+        User $user
     ) {
-        $this->setNotificationHandler($aHandler);
         $this->setUser($user);
     }
 
-    public function validate(): void
+    public function validate()
     {
-        $this->checkValidEmailForUser();
-    }
-
-    protected function checkValidEmailForUser()
-    {
-        if ($this->user->email) {
-            $this->userNotificationHandler()->handleErrorMessage("This specific validation failed");
-        }
-    }
-
-    protected function userNotificationHandler(): UserValidationNotificationHandler
-    {
-        return $this->notificationHandler();
+        $input = new Input();
+        $input->errors = [];
+        $input->params['email'] = $this->user->getEmail();
+        $pipeline = (new PipelineBuilder)
+            ->use(new EmailIsRFC2821()) // EmailがRFCであるか
+            ->build(new ValidationHandler()); // Handler登録
+        return $pipeline->handle($input);
     }
 
     protected function setUser(User $user)
