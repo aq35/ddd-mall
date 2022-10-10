@@ -2,6 +2,8 @@
 
 namespace DDD\ValueObject;
 
+use Symfony\Component\Uid\Ulid as UidUlid;
+
 final class UserId
 {
     private string $userId;
@@ -14,7 +16,7 @@ final class UserId
 
     public static function generate()
     {
-        return "";
+        return UidUlid::generate();
     }
 
     public function getUserId()

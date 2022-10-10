@@ -30,13 +30,15 @@ class TestController extends Controller
         \DesignPattern\Observer\Example\ObserverTest::test();
     }
 
+    // 存在しないメールアドレス,パスワードは、大文字、小文字の半角英字、数字、記号の最低8~32
     public function validateMiddleware()
     {
-        $userEntity = User::register('nagarestarzxc@.com', 'Test12345!');
-        $data = $userEntity->validate();
+        $userEntity = User::register('nagarestarzxc@.com', 'Test12345');
+        $data = $userEntity->validate(); //　バリデーションはregisterの後に行う。
         dd($data);
     }
 
+    // テスト:
     // public function validateMiddleware()
     // {
     //     $userEntity = User::register('nagarestarzxc@.com', 'test12345');

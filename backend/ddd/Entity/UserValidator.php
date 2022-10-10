@@ -1,13 +1,13 @@
 <?php
 
-namespace DDD\Handler;
+namespace DDD\Entity;
 
 use DDD\Entity\User;
 use DDD\Handler\Validator;
 use DesignPattern\Middleware\HandleMiddlewareForClient\PipelineBuilder;
 use DesignPattern\Middleware\Conceptions\Input;
-
 use DDD\Handler\EmailIsRFC2821;
+use DDD\Handler\PasswordIsSafe;
 use DDD\Handler\ValidationHandler;
 
 class UserValidator extends Validator

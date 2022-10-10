@@ -14,10 +14,10 @@
     "christian-kohler.path-intellisense",
     "christian-kohler.npm-intellisense",
     "junstyle.php-cs-fixer",
-    "davidanson.vscode-markdownlint",
     "shd101wyy.markdown-preview-enhanced",
     "ctf0.laravel-goto-lang",
     "mrchetan.laravel-goto-config",
-    "mhutchie.git-graph"
+    "mhutchie.git-graph",
+    "yzhang.markdown-all-in-one"
   ]
 }

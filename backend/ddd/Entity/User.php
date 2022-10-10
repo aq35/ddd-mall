@@ -4,13 +4,14 @@ namespace DDD\Entity;
 
 use DDD\ValueObject\UserId;
 use DDD\Entity\BaseEntity;
+use DDD\Entity\UserValidator;
 
 final class User extends BaseEntity
 {
     /**
      * @var UserId
      */
-    private UserId $id;
+    private UserId $userId;
 
     /**
      * @var string
@@ -25,18 +26,18 @@ final class User extends BaseEntity
 
     /**
      * ファクトリメソッド
-     * @param UserId $id
+     * @param UserId $userId
      * @param string $email
      * @param string $password
      * @return static
      */
     public static function restoreFromSource(
-        UserId $id,
+        UserId $userId,
         string $email,
         string $password,
     ): self {
         $user = new self();
-        $user->id = $id;
+        $user->userId = $userId;
         $user->email = $email;
         $user->password = $password; // 既にハッシュ化されている
         return $user;
@@ -52,7 +53,7 @@ final class User extends BaseEntity
         string $password,
     ): self {
         $user = new self();
-        $user->id = new UserId(UserId::generate());
+        $user->userId = new UserId(UserId::generate());
         $user->email = $email;
         $user->password = password_hash($password, PASSWORD_DEFAULT); // ハッシュされる前
         $user->registerPassword = $password;
@@ -61,7 +62,12 @@ final class User extends BaseEntity
 
     public function validate()
     {
-        return (new \DDD\Handler\UserValidator($this))->validate();
+        return (new UserValidator($this))->validate();
+    }
+
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     public function getEmail()
