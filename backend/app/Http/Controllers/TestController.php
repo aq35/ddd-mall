@@ -32,10 +32,17 @@ class TestController extends Controller
 
     public function validateMiddleware()
     {
-        $userEntity = User::register('nagarestarzxc@.com', 'test12345');
-        $data = $userEntity->validated();
+        $userEntity = User::register('nagarestarzxc@.com', 'Test12345!');
+        $data = $userEntity->validate();
         dd($data);
     }
+
+    // public function validateMiddleware()
+    // {
+    //     $userEntity = User::register('nagarestarzxc@.com', 'test12345');
+    //     $data = $userEntity->validate();
+    //     dd($data);
+    // }
 
     private function callListenerByClosure()
     {

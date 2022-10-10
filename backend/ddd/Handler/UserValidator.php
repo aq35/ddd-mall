@@ -25,8 +25,10 @@ class UserValidator extends Validator
         $input = new Input();
         $input->errors = [];
         $input->params['email'] = $this->user->getEmail();
+        $input->params['password'] = $this->user->getRegisterPassword();
         $pipeline = (new PipelineBuilder)
             ->use(new EmailIsRFC2821()) // EmailがRFCであるか
+            ->use(new PasswordIsSafe()) // パスワードが安全であるか
             ->build(new ValidationHandler()); // Handler登録
         return $pipeline->handle($input);
     }

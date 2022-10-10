@@ -21,6 +21,7 @@ final class User extends BaseEntity
      * @var string
      */
     private string $password;
+    private string $registerPassword;
 
     /**
      * ファクトリメソッド
@@ -37,7 +38,7 @@ final class User extends BaseEntity
         $user = new self();
         $user->id = $id;
         $user->email = $email;
-        $user->password = $password;
+        $user->password = $password; // 既にハッシュ化されている
         return $user;
     }
 
@@ -53,16 +54,12 @@ final class User extends BaseEntity
         $user = new self();
         $user->id = new UserId(UserId::generate());
         $user->email = $email;
-        $user->password = $password;
+        $user->password = password_hash($password, PASSWORD_DEFAULT); // ハッシュされる前
+        $user->registerPassword = $password;
         return $user;
     }
 
-    public function validate(): void
-    {
-        (new \DDD\Handler\UserValidator($this))->validate();
-    }
-
-    public function validated()
+    public function validate()
     {
         return (new \DDD\Handler\UserValidator($this))->validate();
     }
@@ -70,5 +67,15 @@ final class User extends BaseEntity
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRegisterPassword()
+    {
+        return $this->registerPassword;
     }
 }
