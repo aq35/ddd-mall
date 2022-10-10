@@ -60,6 +60,7 @@ final class User extends BaseEntity
         return $user;
     }
 
+    // バリデーションの実装
     public function validate()
     {
         return (new UserValidator($this))->validate();
