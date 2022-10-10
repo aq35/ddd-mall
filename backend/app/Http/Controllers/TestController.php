@@ -6,7 +6,8 @@ use DesignPattern\Middleware\Example\MiddlewareTest;
 use DesignPattern\EventDispatcher\Example\EventDispatcherExample;
 use DesignPattern\EventDispatcher\Event;
 use DDD\Entity\User;
-
+use Ramsey\Uuid\Uuid;
+use Symfony\Component\Uid\UuidV1;
 
 class TestController extends Controller
 {
@@ -39,6 +40,30 @@ class TestController extends Controller
         dd($userEntity->getUserId()->getUserId(), $userEntity, $data);
     }
 
+    // ブラウザがバックグラウンドで開いていると初期化されない。
+    public function cookieTest()
+    {
+        config([
+            'session.lifetime' => 120,
+            'session.expire_on_close' =>  true
+        ]);
+        $count = session('count');
+        $count++;
+        session(['count' =>  $count]);
+        return view('welcome', [
+            'count' => $count,
+        ]);
+    }
+
+    // public function cookieTest()
+    // {
+    //     $count = \Cookie::get('count', 0);
+    //     $count++;
+    //     \Cookie::queue('count', $count, 0);
+    //     return view('welcome', [
+    //         'count' => $count,
+    //     ]);
+    // }
     // テスト:
     // public function validateMiddleware()
     // {

@@ -8,6 +8,9 @@ use DDD\Entity\UserValidator;
 
 final class User extends BaseEntity
 {
+    // 正規表現を用いて8文字以上アルファベットの大文字小文字、数字、記号を含める
+    const VALID_PASSWORD_REGEX = '/\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[\W_])[!-~]{8,}+\z/';
+
     /**
      * @var UserId
      */
@@ -22,24 +25,24 @@ final class User extends BaseEntity
      * @var string
      */
     private string $password;
-    private string $registerPassword;
+    private string $passwordRegister;
 
     /**
      * ファクトリメソッド
-     * @param UserId $userId
+     * @param string $userId
      * @param string $email
-     * @param string $password
+     * @param string $hashPassword
      * @return static
      */
     public static function restoreFromSource(
-        UserId $userId,
+        string $userId,
         string $email,
-        string $password,
+        string $hashPassword,
     ): self {
         $user = new self();
-        $user->userId = $userId;
+        $user->userId = new UserId($userId);
         $user->email = $email;
-        $user->password = $password; // 既にハッシュ化されている
+        $user->password = $hashPassword; // 既にハッシュ化されているため、バリデーションはできない。
         return $user;
     }
 
@@ -56,14 +59,19 @@ final class User extends BaseEntity
         $user->userId = new UserId(UserId::generate());
         $user->email = $email;
         $user->password = password_hash($password, PASSWORD_DEFAULT); // ハッシュされる前
-        $user->registerPassword = $password;
+        $user->passwordRegister = $password;
         return $user;
     }
 
     // バリデーションの実装
-    public function validate()
+    public function validateRegister()
     {
-        return (new UserValidator($this))->validate();
+        return (new UserValidator($this))->validateRegister();
+    }
+
+    public function validateRestoreFromSource()
+    {
+        return (new UserValidator($this))->validateRestoreFromSource();
     }
 
     public function getUserId()
@@ -81,8 +89,9 @@ final class User extends BaseEntity
         return $this->password;
     }
 
-    public function getRegisterPassword()
+    // Hash化する前のパスワード
+    public function getPasswordRegister()
     {
-        return $this->registerPassword;
+        return $this->passwordRegister;
     }
 }

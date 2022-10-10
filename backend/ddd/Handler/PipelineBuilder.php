@@ -6,7 +6,7 @@ use DesignPattern\Middleware\Conceptions\Middleware;
 use DesignPattern\Middleware\Conceptions\Handler;
 use DesignPattern\Middleware\ChangeMiddlewareToHanlderForPipelineBuilder\MiddlewareHandler;
 
-// ### PipelineBuilder
+// ### PipelineBuilder ValidationHandlerの周りにミドルウェアを巻いていく。
 final class PipelineBuilder
 {
     /**
@@ -21,7 +21,7 @@ final class PipelineBuilder
         return $this;
     }
 
-    // イメージ
+    // PipelineBuilderのuse()とbuild()のイメージ
     /*
     // MiddlewareHandler外側
     function handle(){
@@ -42,6 +42,7 @@ final class PipelineBuilder
     public function build(Handler $handler): Handler
     {
         foreach ($this->middlewares as $middleware) {
+            // ### MiddlewareHandler ミドルウェアをHandlerにする。MiddlewareHandlerは、処理の途中で、handle()を行う。
             $handler = new MiddlewareHandler($middleware, $handler);
         }
         return $handler;

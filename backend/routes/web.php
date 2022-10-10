@@ -24,3 +24,6 @@ Route::get('/test/observer', [TestController::class, 'observerTest'])->name('tes
 
 // ユーザーエンティティバリデーション＊デザインパターンミドルウェア
 Route::get('/test/validate-middleware', [TestController::class, 'validateMiddleware'])->name('validate.middleware');
+
+
+Route::get('/test/cookie', [TestController::class, 'cookieTest'])->name('test.cookie');
