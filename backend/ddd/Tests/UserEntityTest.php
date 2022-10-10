@@ -13,6 +13,8 @@ final class UserEntityTest extends TestCase
 
     public $validPassword = 'Test12345!';
     public $inValidPassword = 'Test12345';
+
+    // メールアドレスが不正
     public function testRegisterUserInvalidEmail(): void
     {
 
@@ -23,6 +25,7 @@ final class UserEntityTest extends TestCase
         $this->assertTrue(count($data->errors) > 0);
     }
 
+    // パスワードが不正
     public function testRegisterUserInvalidPassword(): void
     {
         $userEntity = User::register(self::$validEmail, self::$inValidPassword);
@@ -32,6 +35,7 @@ final class UserEntityTest extends TestCase
         $this->assertTrue(count($data->errors) > 0);
     }
 
+    // 入力項目が正しい
     public function testRegisterUserValidInput(): void
     {
         $userEntity = User::register(self::$validEmail, self::$validPassword);
@@ -41,6 +45,7 @@ final class UserEntityTest extends TestCase
         $this->assertTrue(count($data->errors) == 0);
     }
 
+    // 入力項目が正しい
     public function testRestoreFromSourceValidInput(): void
     {
         $hashPassword = password_hash(self::$validPassword, PASSWORD_DEFAULT);

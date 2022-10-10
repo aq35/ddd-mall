@@ -38,7 +38,7 @@ class UserValidator extends Validator
         $input = new Input();
         $input->errors = [];
         $input->params['email'] = $this->user->getEmail();
-        // パスワードハッシュ化されているのでパスワードチェックはできない。
+        // パスワードハッシュ化されているパスワードは、バリデーションができないためチェック不可。
         $pipeline = $this->makeValidate([
             new EmailIsRFC2821(),
         ]);
