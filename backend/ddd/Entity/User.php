@@ -3,9 +3,10 @@
 namespace DDD\Entity;
 
 use DDD\ValueObject\UserId;
-use DDD\ValueObject\UserEmail;
+use DDD\Entity\BaseEntity;
+use DDD\Handler\ValidationNotificationHandler;
 
-final class User extends Entity
+final class User extends BaseEntity
 {
     /**
      * @var UserId
@@ -55,5 +56,10 @@ final class User extends Entity
         $user->email = $email;
         $user->password = $password;
         return $user;
+    }
+
+    public function validate(ValidationNotificationHandler $aHandler): void
+    {
+        (new \DDD\Handler\UserValidator($this, $aHandler))->validate();
     }
 }

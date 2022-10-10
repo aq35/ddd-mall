@@ -1,0 +1,118 @@
+イベント駆動型
+オブザーバー パターン
+
+掲示板でのコメント投稿機能
+
+掲示板でコメント投稿する。
+システムは、Web ページ上に自分の発言が表示する。
+裏側では、コメントがあった事を知らせる処理が走ったりします。
+例えば、何らかのログが書き込まれたり、メールや Slack でコメントがあった事を通知する処理のことです。
+
+SubjectInterface
+addObserver() メソッドは、Observer を登録します。
+removeObserver() メソッドは、Observer を削除します。
+notify() メソッドは、状態変化を Observer へ通知します。
+
+SubjectInterface の具象クラス(BulletinBoard:掲示板)
+
+<?php
+
+namespace App\Subjects;
+
+use App\Interfaces\SubjectInterface;
+use App\Interfaces\ObserverInterface;
+
+class BulletinBoard implements SubjectInterface
+{
+    private $name;
+    private $comments = [];
+    private $listeners = [];
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    public function comment($message)
+    {
+        echo sprintf('%s : %s<br>',$this->getName() ,$message);
+        $this->addComment($message);
+    }
+
+    public function addComment($message)
+    {
+        $this->comments[] = $message;
+        $this->notify();
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function addObserver(ObserverInterface $listener)
+    {
+        $this->listeners[get_class($listener)] = $listener;
+    }
+    public function removeObserver(ObserverInterface $listener)
+    {
+        unset($this->listeners[get_class($listener)]);
+    }
+    public function notify()
+    {
+        foreach ($this->listeners as $listener) {
+            $listener->execute($this);
+        }
+    }
+}
+
+ObserverInterface
+<?php
+
+namespace App\Interfaces;
+
+use App\Subjects\BulletinBoard;
+
+interface ObserverInterface
+{
+    public function execute(BulletinBoard $board);
+}
+Observerクラスは共通インターフェイスとして、subject具象クラスを引数に取るexecute()メソッドを持ちます。
+
+最後に、ログ書き込み・メール送信・Slack通知を行うObserverの具象クラスを作成します。
+App/Listeners/LoggingListener.php<?php
+
+namespace App\Listeners;
+
+use App\Interfaces\ObserverInterface;
+use App\Subjects\BulletinBoard;
+
+class LoggingListener implements ObserverInterface
+{
+    public function execute(BulletinBoard $board)
+    {
+        // ログ書き込み処理
+        echo'<small>ログ書き込みを行いました</small><br>';
+    }
+}
+
+App/Listeners/MailListener.php<?php
+
+namespace App\Listeners;
+
+use App\Interfaces\ObserverInterface;
+use App\Subjects\BulletinBoard;
+
+class MailListener implements ObserverInterface
+{
+    public function execute(BulletinBoard $board)
+    {
+        // メール送信処理
+        echo'<small>メールの送信を行いました</small><br>';
+    }
+}

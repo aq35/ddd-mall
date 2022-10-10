@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestMiddlewareController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +15,9 @@ use App\Http\Controllers\TestMiddlewareController;
 */
 
 // デザインパターンミドルウェア
-Route::get('/test/middleware', [TestMiddlewareController::class, 'index'])->name('test.middleware');
+Route::get('/test/middleware', [TestController::class, 'middlewareTest'])->name('test.middleware');
 // デザインパターンイベントディスパッチャー
-Route::get('/test/event-dispatcher', [TestMiddlewareController::class, 'eventDispatcher'])->name('event.dispatcher');
+Route::get('/test/event-dispatcher', [TestController::class, 'eventDispatcherTest'])->name('test.event-dispatcher');
+
+// デザインパターンオブザーバー
+Route::get('/test/observer', [TestController::class, 'observerTest'])->name('test.observer');

@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use DesignPattern\Middleware\Example\Index;
+use DesignPattern\Middleware\Example\MiddlewareTest;
 use DesignPattern\EventDispatcher\Example\EventDispatcherExample;
 use DesignPattern\EventDispatcher\Event;
 
-class TestMiddlewareController extends Controller
+class TestController extends Controller
 {
 
-    public function index()
+    // 入力と出力をミドルウェアで分割
+    public function middlewareTest()
     {
-        dd(Index::test());
+        dd(MiddlewareTest::test());
     }
 
-    public function eventDispatcher()
+    //
+    public function eventDispatcherTest()
     {
         $this->callListenerByClosure();
         $this->callListenerByClass();
@@ -22,17 +24,21 @@ class TestMiddlewareController extends Controller
         Event::doDispatch('test_2_class');
     }
 
-    public function callListenerByClosure()
+    public function observerTest()
+    {
+        \DesignPattern\Observer\Example\ObserverTest::test();
+    }
+
+    private function callListenerByClosure()
     {
         Event::addListener('test_1_function', function () {
             echo 'This is a closure function call.' . "\n";
         });
     }
 
-    public function callListenerByClass()
+    private function callListenerByClass()
     {
         $example = new EventDispatcherExample();
-
         Event::addListener('test_2_class', [$example, 'example1']);
     }
 }

@@ -9,14 +9,15 @@ use DesignPattern\EventDispatcher\EventDispatcher;
 /**
  * The helpers methods for Event Dispatcher.
  */
+
 class Event
 {
     /**
-     * イベントリスナーを使いします。
+     * イベントリスナーを使います。
      *
-     * @param string  $name     イベント名
-     * @param mixed   $func     Can be a function name, closure function or class.
-     * @param integer $priority The execution priority.
+     * @param string  $name  イベント名
+     * @param mixed   $func  Can be a function name, closure function or class.
+     * @param integer $priority 　The execution priority.
      *
      * @return void
      */
@@ -44,4 +45,25 @@ class Event
             $args
         );
     }
+
+    public static function event()
+    {
+        return EventDispatcher::instance();
+    }
 }
+
+// 定義
+// Event::addListener('test_1_function', function () {
+//     echo 'This is a closure function call.' . "\n";
+// });
+
+// 利用
+// Event::doDispatch('test_1_function');
+// ------------------------------------------------------------
+
+// 定義
+// $example = new EventDispatcherExample();
+// Event::addListener('test_2_class', [$example, 'example1']);
+
+// 利用
+// Event::doDispatch('test_2_function');

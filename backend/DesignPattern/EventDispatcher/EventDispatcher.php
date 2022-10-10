@@ -12,7 +12,7 @@ use function is_string;
 use function ksort;
 
 /**
- * This is just a simple event dispatcher for Shieldon firewall.
+ * シンプルな event dispatcherです。
  */
 class EventDispatcher
 {
@@ -75,7 +75,6 @@ class EventDispatcher
 
         // Or, it is an array contains Class and method name.
         if (is_array($func)) {
-
             self::$events[$name][$priority] = [
                 $func[0],
                 $func[1],

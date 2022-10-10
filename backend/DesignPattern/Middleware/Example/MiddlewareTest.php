@@ -8,7 +8,7 @@ use DesignPattern\Middleware\Example\OuterMiddleware;
 use DesignPattern\Middleware\Example\InnerMiddleware;
 use DesignPattern\Middleware\Example\ConcreteHandler;
 
-class Index
+class MiddlewareTest
 {
     public static function test()
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace DDD\Entity;
+namespace DDD\Handler;
 
 use DDD\Entity\User;
-use DDD\Validator\UserValidationNotificationHandler;
-use DDD\Validator\Validator;
-use DDD\Validator\ValidationNotificationHandler;
+use DDD\Handler\UserValidationNotificationHandler;
+use DDD\Handler\Validator;
+use DDD\Handler\ValidationNotificationHandler;
 
 class UserValidator extends Validator
 {
@@ -15,19 +15,19 @@ class UserValidator extends Validator
         User $user,
         ValidationNotificationHandler $aHandler,
     ) {
-        parent::setNotificationHandler($aHandler);
+        $this->setNotificationHandler($aHandler);
         $this->setUser($user);
     }
 
     public function validate(): void
     {
-        $this->checkForUserValidEmail();
+        $this->checkValidEmailForUser();
     }
 
-    protected function checkForUserValidEmail()
+    protected function checkValidEmailForUser()
     {
-        if ($this->user) {
-            $this->userNotificationHandler()->handleUser();
+        if ($this->user->email) {
+            $this->userNotificationHandler()->handleErrorMessage("This specific validation failed");
         }
     }
 
