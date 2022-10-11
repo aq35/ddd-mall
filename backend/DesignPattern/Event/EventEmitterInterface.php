@@ -9,10 +9,7 @@ interface EventEmitterInterface
      * ---------------------------------------------------------------------------------------------------------------------
      * DESCRIPTION | 説明
      * ---------------------------------------------------------------------------------------------------------------------
-     * 何かしらのイベントを発火して、それを受け取って何かしらの処理をできる
-     *
-     * EventEmitterのモード
-     * EVENTS_DEFAULT,EVENTS_FORWARD,EVENTS_DISCARD,EVENTS_DISCARD_INCOMING,EVENTS_DISCARD_OUTCOMING
+     * EventEmitterは、モード,イベント,リスナーの制御ができる
      *
      * EVENTS_DEFAULT
      * -
@@ -102,8 +99,6 @@ interface EventEmitterInterface
     public function delayOnce($event, $ticks, callable $listener);
 
     /**
-     *
-     *
      * 最大で $limit に設定された回数だけ発生するイベントのリスナーを設定しますが、イベントの $ticks 数が発生した後にのみ発生します。
      * このメソッドは EventListener を返します
      * Set listener for event that will fire at most as many times as $limit is set to, but only after $ticks number of events is emitted.
