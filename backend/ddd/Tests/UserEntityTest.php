@@ -5,7 +5,7 @@ namespace DDD\Tests;
 use PHPUnit\Framework\TestCase;
 use DDD\Entity\User;
 
-// ### 利用者Entityのテスト
+// ### 利用者Entityのテストケース
 final class UserEntityTest extends TestCase
 {
     public $invalidEmail = 'nagarestarzxc@.com';
