@@ -6,7 +6,27 @@ use DesignPattern\Middleware\Conceptions\Middleware;
 use DesignPattern\Middleware\Conceptions\Handler;
 use DesignPattern\Middleware\ChangeMiddlewareToHanlderForPipelineBuilder\MiddlewareHandler;
 
-// ### PipelineBuilder ValidationHandlerの周りにミドルウェアを巻いていく。
+/**
+ * ---------------------------------------------------------------------------------------------------------------------
+ * DESCRIPTION | 説明
+ * ---------------------------------------------------------------------------------------------------------------------
+ * ### PipelineBuilder　
+ * コアとなるHandlerに、MiddlewareをラッパーしたValidationHandlerを囲っていく。
+ * ミドルウェアパターンがベースになっています。
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ * USAGE | 使い方
+ * ---------------------------------------------------------------------------------------------------------------------
+ *
+ *        $input = new Input();
+ *        $pipeline = (new PipelineBuilder) // インスタンス化します。
+ *        ->use(new OuterMiddleware()) // ミドルウェアをセットします。
+ *        ->use(new InnerMiddleware()) // ミドルウェアをセットします。
+ *        ->build(new ConcreteHandler()); // コアとなる処理をセットします。
+ *        $output = $pipeline->handle($input);
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
 final class PipelineBuilder
 {
     /**
@@ -21,24 +41,6 @@ final class PipelineBuilder
         return $this;
     }
 
-    // PipelineBuilderのuse()とbuild()のイメージ
-    /*
-    // MiddlewareHandler外側
-    function handle(){
-        手続き処理
-        MiddlewareHandler外側@handle()
-        {
-            手続き処理
-            MiddlewareHandler中側@handle(){
-                // MiddlewareHandlerC
-                function process(){
-                    手続きコード
-                    return <コア>Handler</コア>->handle();
-                }
-            }
-        }
-    }
-    */
     public function build(Handler $handler): Handler
     {
         foreach ($this->middlewares as $middleware) {

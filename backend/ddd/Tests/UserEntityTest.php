@@ -5,7 +5,21 @@ namespace DDD\Tests;
 use PHPUnit\Framework\TestCase;
 use DDD\Entity\User;
 
-// ### 利用者Entityのテストケース
+/**
+ * ---------------------------------------------------------------------------------------------------------------------
+ * DESCRIPTION | 説明 テストケース
+ * ---------------------------------------------------------------------------------------------------------------------
+ * 利用者Entityのテストケース
+ * User Entity
+ * UserValidator バリデーション
+ * ---------------------------------------------------------------------------------------------------------------------
+ * USAGE | 使い方
+ * ---------------------------------------------------------------------------------------------------------------------
+ *
+ * $> ./vendor/bin/phpunit ddd
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
 final class UserEntityTest extends TestCase
 {
     public $invalidEmail = 'nagarestarzxc@.com';
@@ -14,7 +28,9 @@ final class UserEntityTest extends TestCase
     public $validPassword = 'Test12345!';
     public $inValidPassword = 'Test12345';
 
-    // メールアドレスが不正
+    /*---------------------------------------------------------------------------------------------------------------------
+     * 利用者Entity作成するも、メールアドレス不正によるバリデーションエラー
+     * ---------------------------------------------------------------------------------------------------------------------*/
     public function testRegisterUserInvalidEmail(): void
     {
 
@@ -25,7 +41,9 @@ final class UserEntityTest extends TestCase
         $this->assertTrue(count($data->errors) > 0);
     }
 
-    // パスワードが不正
+    /*---------------------------------------------------------------------------------------------------------------------
+     * 利用者Entity作成するも、パスワード不正によるバリデーションエラー
+     * ---------------------------------------------------------------------------------------------------------------------*/
     public function testRegisterUserInvalidPassword(): void
     {
         $userEntity = User::register(email: $this->validEmail, plainPassword: $this->inValidPassword);
@@ -35,7 +53,9 @@ final class UserEntityTest extends TestCase
         $this->assertTrue(count($data->errors) > 0);
     }
 
-    // 入力項目が正しい
+    /*---------------------------------------------------------------------------------------------------------------------
+     * 利用者Entity作成に成功する
+     * ---------------------------------------------------------------------------------------------------------------------*/
     public function testRegisterUserValidInput(): void
     {
         $userEntity = User::register(email: $this->validEmail, plainPassword: $this->validPassword);
@@ -45,7 +65,9 @@ final class UserEntityTest extends TestCase
         $this->assertTrue(count($data->errors) == 0);
     }
 
-    // 入力項目が正しい
+    /*---------------------------------------------------------------------------------------------------------------------
+     * 利用者Entity再生成に成功する
+     * ---------------------------------------------------------------------------------------------------------------------*/
     public function testRestoreFromSourceValidInput(): void
     {
         $hashPassword = password_hash($this->validPassword, PASSWORD_DEFAULT);
@@ -60,4 +82,3 @@ final class UserEntityTest extends TestCase
         $this->assertTrue(count($data->errors) == 0);
     }
 }
-// ./vendor/bin/phpunit ddd
