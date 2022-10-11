@@ -3,6 +3,7 @@
 namespace DDD\Entity;
 
 use DDD\ValueObject\UserId;
+use DDD\ValueObject\Password;
 use DDD\Entity\BaseEntity;
 use DDD\Entity\UserValidator;
 
@@ -22,27 +23,26 @@ final class User extends BaseEntity
     private string $email;
 
     /**
-     * @var string
+     * @var Password
      */
-    private string $password;
-    private string $passwordRegister;
+    private Password $password;
 
     /**
      * ファクトリメソッド
      * @param string $userId
      * @param string $email
-     * @param string $hashPassword
+     * @param string $hashedPassword
      * @return static
      */
     public static function restoreFromSource(
         string $userId,
         string $email,
-        string $hashPassword,
+        string $hashedPassword,
     ): self {
         $user = new self();
         $user->userId = new UserId($userId);
         $user->email = $email;
-        $user->password = $hashPassword; // 既にハッシュ化されているため、バリデーションはできない。
+        $user->password = Password::restoreFromSource($hashedPassword); // 既にハッシュ化されているため、バリデーションはできない。
         return $user;
     }
 
@@ -53,13 +53,12 @@ final class User extends BaseEntity
      */
     public static function register(
         string $email,
-        string $password,
+        string $plainPassword,
     ): self {
         $user = new self();
         $user->userId = new UserId(UserId::generate());
         $user->email = $email;
-        $user->password = password_hash($password, PASSWORD_DEFAULT); // ハッシュされる前
-        $user->passwordRegister = $password;
+        $user->password = Password::register($plainPassword); // ハッシュされる前
         return $user;
     }
 
@@ -84,14 +83,9 @@ final class User extends BaseEntity
         return $this->email;
     }
 
+    // Hash化する前のパスワード
     public function getPassword()
     {
         return $this->password;
-    }
-
-    // Hash化する前のパスワード
-    public function getPasswordRegister()
-    {
-        return $this->passwordRegister;
     }
 }

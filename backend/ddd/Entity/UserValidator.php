@@ -25,7 +25,7 @@ class UserValidator extends Validator
         $input = new Input();
         $input->errors = [];
         $input->params['email'] = $this->user->getEmail();
-        $input->params['password'] = $this->user->getPasswordRegister();
+        $input->params['password'] = $this->user->getPassword()->getPlainPassword();
         $pipeline = $this->makeValidate([
             new EmailIsRFC2821(), new PasswordIsSafe()
         ]);
