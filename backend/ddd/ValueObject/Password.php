@@ -14,9 +14,8 @@ namespace DDD\ValueObject;
  * ---------------------------------------------------------------------------------------------------------------------
  * USAGE | 使い方
  * ---------------------------------------------------------------------------------------------------------------------
- * restoreFromSource(string $hashedPassword) ...Xdsfsdfdsjsancwerfdnsf4
- *
- * register(string $plainPassword) $plainPassword ...test1234!
+ * restoreFromSource(string $hashedPassword) ... 例) Xdsfsdfdsjsancwerfdnsf4
+ * register(string $plainPassword) $plainPassword ... 例) test1234!
  * ---------------------------------------------------------------------------------------------------------------------
  */
 final class Password
