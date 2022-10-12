@@ -13,7 +13,9 @@ class TickFiniteQueue
     protected $loop;
 
     /**
+     * [キュー構造] SplQueue
      * @var SplQueue
+     * https://www.php.net/manual/en/class.splqueue.php
      */
     protected $queue;
 
@@ -23,12 +25,13 @@ class TickFiniteQueue
     private $callback;
 
     /**
+     *
      * @param LoopModelInterface $loop
      */
     public function __construct(LoopModelInterface $loop)
     {
         $this->loop = $loop;
-        $this->queue = new SplQueue();
+        $this->queue = new SplQueue(); // [キュー構造] SplQueue
     }
 
     /**
@@ -41,8 +44,11 @@ class TickFiniteQueue
     }
 
     /**
+     * [キュー構造] SplQueue 操作
+     * イベント ループの将来のティックで呼び出されるコールバックを追加します。
      * Add a callback to be invoked on a future tick of the event loop.
      *
+     * コールバックは、タイマーまたはストリーム イベントの前に、キューに入れられた順序で実行されることが保証されます。
      * Callbacks are guaranteed to be executed in the order they are enqueued, before any timer or stream events.
      *
      * @param callable $listener

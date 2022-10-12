@@ -116,8 +116,10 @@ interface LoopModelInterface
     public function onBeforeTick(callable $listener);
 
     /**
+     * イベント ループの将来のティックでコールバックが呼び出されるようにスケジュールします。
      * Schedule a callback to be invoked on a future tick of the event loop.
      *
+     * コールバックは、エンキューされた順序で実行されることが保証されています。
      * Callbacks are guaranteed to be executed in the order they are enqueued.
      *
      * @param callable $listener

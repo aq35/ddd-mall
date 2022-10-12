@@ -248,6 +248,7 @@ class SelectLoop implements LoopModelInterface
     }
 
     /**
+     * [キュー構造] SplQueue　add enqueue
      * @override
      * @inheritDoc
      */

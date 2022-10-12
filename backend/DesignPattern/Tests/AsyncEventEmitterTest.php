@@ -39,6 +39,7 @@ final class AsyncEventEmitterTest extends TestCase
             echo "\n";
             $loop->stop();
         });
+
         $loop->start();
         $this->assertTrue(true);
     }
