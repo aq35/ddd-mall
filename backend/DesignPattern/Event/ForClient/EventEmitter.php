@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\ForClient\ForClient;
+namespace DesignPattern\Event\ForClient;
 
 use DesignPattern\Event\Domain\EventEmitterInterface;
 
