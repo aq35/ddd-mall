@@ -2,7 +2,7 @@
 
 namespace DesignPattern\Event\Loop;
 
-use DesignPattern\Event\Loop\TimerInterface;
+use DesignPattern\Event\Loop\Timer\TimerInterface;
 
 interface LoopInterface
 {

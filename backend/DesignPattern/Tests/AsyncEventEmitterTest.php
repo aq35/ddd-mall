@@ -5,8 +5,8 @@ namespace DDD\Tests;
 use PHPUnit\Framework\TestCase;
 
 use DesignPattern\Event\ForClient\EventEmitter;
-use DesignPattern\Event\Domain\EventEmitterMode;
-use DesignPattern\Event\Loop\Loop;
+use DesignPattern\Event\Loop\ForClient\Loop;
+use DesignPattern\Event\Loop\ForClient\SelectLoop;
 
 final class AsyncEventEmitterTest extends TestCase
 {
@@ -19,24 +19,27 @@ final class AsyncEventEmitterTest extends TestCase
         $asyncEmitter = new EventEmitter($loop); // this EventEmitter uses loop to dispatch events asynchronously
 
         $baseEmitter->on('event', function () {
+            echo "> 同期処理を完了します \n";
             echo "> \$baseEmitter received event!\n";
         });
         $asyncEmitter->on('event', function () {
+            echo "> 非同期処理を完了します \n";
             echo "> \$asyncEmitter received event!\n";
         });
 
-        echo "\nThis event is sync so it will\n";
+        echo "\n このイベントは同期的に処理をします。 \n";
         $baseEmitter->emit('event');
-        echo "resolve listeners in the middle of printing this string\n";
+        echo "同期処理が終わっている想定です。\n";
 
-        echo "\nThis event is async so it will\n";
+        echo "\nこのイベントは非同期的に処理をします。\n";
         $asyncEmitter->emit('event');
-        echo "resolve listeners in the next cycle of loop, after string has been printed\n";
+        echo "非同期処理は、以降に表示されます。\n";
 
         $loop->onAfterTick(function () use ($loop) {
             echo "\n";
             $loop->stop();
         });
         $loop->start();
+        $this->assertTrue(true);
     }
 }

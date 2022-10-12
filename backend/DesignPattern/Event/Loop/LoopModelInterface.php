@@ -3,7 +3,7 @@
 namespace DesignPattern\Event\Loop;
 
 use Dazzle\Loop\Flow\FlowController;
-use DesignPattern\Event\Loop\TimerInterface;
+use DesignPattern\Event\Loop\Timer\TimerInterface;
 
 interface LoopModelInterface
 {

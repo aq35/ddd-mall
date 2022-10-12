@@ -1,14 +1,15 @@
 <?php
 
-namespace DesignPattern\Event\Loop;
+namespace DesignPattern\Event\Loop\ForClient;
 
-use Dazzle\Loop\Tick\TickContinousQueue;
-use Dazzle\Loop\Tick\TickFiniteQueue;
-use Dazzle\Loop\Timer\Timer;
-use Dazzle\Loop\Timer\TimerBox;
+use DesignPattern\Event\Loop\Tick\TickContinousQueue;
+use DesignPattern\Event\Loop\Tick\TickFiniteQueue;
+
+use DesignPattern\Event\Loop\Timer\Timer;
+use DesignPattern\Event\Loop\Timer\TimerBox;
+use DesignPattern\Event\Loop\Timer\TimerInterface;
 
 use DesignPattern\Event\Loop\FlowController;
-use DesignPattern\Event\Loop\TimerInterface;
 use DesignPattern\Event\Loop\LoopModelInterface;
 
 class SelectLoop implements LoopModelInterface

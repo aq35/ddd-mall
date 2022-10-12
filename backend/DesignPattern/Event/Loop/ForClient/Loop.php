@@ -1,9 +1,11 @@
 <?php
 
-namespace DesignPattern\Event\Loop;
+namespace DesignPattern\Event\Loop\ForClient;
 
 use DesignPattern\Event\Loop\FlowController;
-use DesignPattern\Event\Loop\TimerInterface;
+use DesignPattern\Event\Loop\Timer\TimerInterface;
+use DesignPattern\Event\Loop\LoopExtendedInterface;
+use DesignPattern\Event\Loop\LoopModelInterface;
 
 class Loop implements LoopExtendedInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Event\Loop;
+namespace DesignPattern\Event\Loop\Timer;
 
 use DesignPattern\Event\Loop\LoopModelInterface;
 
