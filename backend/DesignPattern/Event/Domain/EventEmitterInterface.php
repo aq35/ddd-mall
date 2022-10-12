@@ -28,10 +28,10 @@ interface EventEmitterInterface
      * Set mode for EventEmitter behaviour.
      *
      * Set mode for EventEmitter behaviour. $emitterMode can be one of:
-     * EventEmitter::EVENTS_FORWARD すべてのイベントの転送を許可します | Allows all events to be forwarded (Default)
-     * EventEmitter::EVENTS_DISCARD Disallows すべてのイベントの転送を禁止します | all events from being forwarded
-     * EventEmitter::EVENTS_DISCARD_INCOMING エミッターにアタッチされたリスナーのみを破棄します | Discards only listeners attached to $this emitter
-     * EventEmitter::EVENTS_DISCARD_OUTCOMING フォワーダーでさらに発行するものだけを破棄します | Discards only further emits on forwarder
+     * EventEmitterMode::EVENTS_FORWARD すべてのイベントの転送を許可します | Allows all events to be forwarded (Default)
+     * EventEmitterMode::EVENTS_DISCARD Disallows すべてのイベントの転送を禁止します | all events from being forwarded
+     * EventEmitterMode::EVENTS_DISCARD_INCOMING エミッターにアタッチされたリスナーのみを破棄します | Discards only listeners attached to $this emitter
+     * EventEmitterMode::EVENTS_DISCARD_OUTCOMING フォワーダーでさらに発行するものだけを破棄します | Discards only further emits on forwarder
      *
      * @param int $emitterMode
      */
