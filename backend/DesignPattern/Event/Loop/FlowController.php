@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Loop\Flow;
+namespace DesignPattern\Event\Loop;
 
 class FlowController
 {

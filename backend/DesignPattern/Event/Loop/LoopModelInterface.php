@@ -1,9 +1,9 @@
 <?php
 
-namespace DesignPattern\Loop\ForClient;
+namespace DesignPattern\Event\Loop;
 
-use DesignPattern\Loop\Flow\FlowController;
-use DesignPattern\Loop\Timer\TimerInterface;
+use Dazzle\Loop\Flow\FlowController;
+use DesignPattern\Event\Loop\TimerInterface;
 
 interface LoopModelInterface
 {

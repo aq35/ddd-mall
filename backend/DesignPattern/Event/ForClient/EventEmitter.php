@@ -1,13 +1,13 @@
 <?php
 
-namespace DesignPattern\Event\ForClient;
+namespace DesignPattern\ForClient\ForClient;
 
 use DesignPattern\Event\Domain\EventEmitterInterface;
 
-use DesignPattern\Event\Domain\EventEmitterMode;
+use DesignPattern\Event\ForClient\AsyncEventEmitter;
 use DesignPattern\Event\Domain\EventListener;
 use DesignPattern\Event\ForClient\BaseEventEmitter;
-use DesignPattern\Loop\Domain\LoopInterface;
+use DesignPattern\Event\Loop\LoopInterface;
 
 class EventEmitter implements EventEmitterInterface
 {
@@ -22,7 +22,7 @@ class EventEmitter implements EventEmitterInterface
     public function __construct(LoopInterface $loop = null)
     {
         if ($loop !== null) {
-            // $this->emitter = new AsyncEventEmitter($loop);
+            $this->emitter = new AsyncEventEmitter($loop);
         } else {
             $this->emitter = new BaseEventEmitter();
         }

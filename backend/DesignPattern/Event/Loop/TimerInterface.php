@@ -1,8 +1,8 @@
 <?php
 
-namespace DesignPattern\Loop\Timer;
+namespace DesignPattern\Event\Loop;
 
-use DesignPattern\Loop\Model\LoopModelInterface;
+use DesignPattern\Event\Loop\LoopModelInterface;
 
 interface TimerInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Loop\Domain;
+namespace DesignPattern\Event\Loop;
 
 use DesignPattern\Loop\Timer\TimerInterface;
 
