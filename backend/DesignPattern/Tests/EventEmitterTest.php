@@ -5,11 +5,13 @@ namespace DDD\Tests;
 use PHPUnit\Framework\TestCase;
 
 use DesignPattern\Event\ForClient\EventEmitter;
+use DesignPattern\Event\Domain\EventEmitterMode;
 
 /**
  * ---------------------------------------------------------------------------------------------------------------------
  * DESCRIPTION | 説明
  * ---------------------------------------------------------------------------------------------------------------------
+ * EventEmitter単体の動作テスト
  * ---------------------------------------------------------------------------------------------------------------------
  * USAGE | 使い方
  * ---------------------------------------------------------------------------------------------------------------------
@@ -149,7 +151,7 @@ final class EventEmitterTest extends TestCase
         $counter = 0;
         $counterMax = 5;
 
-        echo "\n------ ３,4,5実行されるEmitします　------\n";
+        echo "\n------ 3,4,5実行されるEmitします------\n";
         while ($counter < $counterMax) {
             $emitter->emit('event.number', [++$counter]);
         }
@@ -182,6 +184,55 @@ final class EventEmitterTest extends TestCase
         echo "\n------ イベントから、コールバック3を削除しました。イベントは 1st だけ実行されます。 ------\n";
         $emitter->removeListener('event', $callback3); // alternative method to cancel listener
         $emitter->emit('event');
+
+        // 同期なので、delayTimesのコールバックが終わるまで待っている。
+        $this->assertTrue(true);
+    }
+
+    public function testEventEmitter_switching_modes(): void
+    {
+        $source = new EventEmitter();
+        $bridge = new EventEmitter();
+        $target = new EventEmitter();
+
+        // the handlers are being attached to $target emitter.
+        $source->on('event', function () {
+            echo "> \$source EventEmtiter got event!\n";
+        });
+        $bridge->on('event', function () {
+            echo "> \$bridge EventEmtiter got event!\n";
+        });
+        $target->on('event', function () {
+            echo "> \$target EventEmtiter got event!\n";
+        });
+
+        // create forwarding chaing
+        $source->forwardEvents($bridge);
+        $bridge->forwardEvents($target);
+
+        // emit events using different modes
+        echo "\n";
+        echo "#----------- #1 MODE=EVENTS_FORWARD (DEFAULT) -----------\n";
+        echo "# in this mode all events will be received and dispatched further.\n\n";
+        $source->emit('event');
+
+        echo "\n";
+        echo "#----------- #2 MODE=EVENTS_DISCARD_INCOMING -----------\n";
+        echo "# in this mode the incoming events will be dropped but, the propagation will continue.\n\n";
+        $bridge->setMode(EventEmitterMode::EVENTS_DISCARD_INCOMING); // $bridgeはアウト
+        $source->emit('event');
+
+        echo "\n";
+        echo "#----------- #3 MODE=EVENTS_DISCARD_OUTCOMING -----------\n";
+        echo "# in this mode the incoming events will be fired, but the propagation will be stopped.\n\n";
+        $bridge->setMode(EventEmitterMode::EVENTS_DISCARD_OUTCOMING); // $targetはアウト
+        $source->emit('event');
+
+        echo "\n";
+        echo "#----------- #4 MODE=EVENTS_DISCARD -----------\n";
+        echo "# in this mode both incoming and outcoming events are being dropped.\n\n";
+        $bridge->setMode(EventEmitterMode::EVENTS_DISCARD); // $bridgeと$targetはアウト
+        $source->emit('event');
 
         // 同期なので、delayTimesのコールバックが終わるまで待っている。
         $this->assertTrue(true);
