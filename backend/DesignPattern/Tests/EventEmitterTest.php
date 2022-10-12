@@ -237,4 +237,52 @@ final class EventEmitterTest extends TestCase
         // 同期なので、delayTimesのコールバックが終わるまで待っている。
         $this->assertTrue(true);
     }
+
+    public function testEventEmitter_forwarding_events(): void
+    {
+        $source = new EventEmitter();
+        $target = new EventEmitter();
+
+        // the handlers are being attached to $target emitter.
+        $target->on('account.name', function ($name) {
+            echo "New account name is $name.\n";
+        });
+        $target->on('account.pass', function ($pass) {
+            echo "New account pass is $pass.\n";
+        });
+
+        // this will make all events forward to $target so you don't have to know their exact list.
+        // this preferred option instead of copying.
+        $source->forwardEvents($target);
+
+        // while the emits are being emited on $source emitter.
+        $source->emit('account.name', ['admin']);
+        $source->emit('account.pass', ['admin1234']);
+
+        // 同期なので、delayTimesのコールバックが終わるまで待っている。
+        $this->assertTrue(true);
+    }
+
+    public function testEventEmitter_copying_events(): void
+    {
+        $source = new EventEmitter();
+        $target = new EventEmitter();
+        // the handlers are being attached to $target emitter.
+        $target->on('account.name', function ($name) {
+            echo "New account name is $name.\n";
+        });
+        $target->on('account.pass', function ($pass) {
+            echo "New account pass is $pass.\n";
+        });
+
+        $source->copyEvent($target, 'account.name');
+        //$source->copyEvent($target, 'account.pass'); // uncomment this to copy also 'account.pass' event!
+
+        // while the emits are being emited on $source emitter.
+        $source->emit('account.name', ['admin']); // コピーしたイベントを実行できる
+        $source->emit('account.pass', ['admin1234']); // 存在しないので、実行されない
+
+        // 同期なので、delayTimesのコールバックが終わるまで待っている。
+        $this->assertTrue(true);
+    }
 }
