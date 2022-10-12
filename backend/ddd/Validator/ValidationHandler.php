@@ -1,10 +1,10 @@
 <?php
 
-namespace DDD\Handler;
+namespace DDD\Validator;
 
-use DesignPattern\Middleware\Conceptions\Input;
-use DesignPattern\Middleware\Conceptions\Output;
-use DesignPattern\Middleware\Conceptions\Handler;
+use DesignPattern\Middleware\Domain\Input;
+use DesignPattern\Middleware\Domain\Output;
+use DesignPattern\Middleware\Domain\Handler;
 
 // ### ValidationHandler ミドルウェアパターンのコア処理部分
 final class ValidationHandler implements Handler

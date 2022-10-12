@@ -2,12 +2,11 @@
 
 namespace DDD\Entity;
 
-use DDD\Handler\Validator;
-use DesignPattern\Middleware\Conceptions\Input;
+use DDD\Validator\Validator;
 
 use DDD\Entity\User;
-use DDD\Entity\EmailIsRFC2821;
-use DDD\Entity\PasswordIsSafe;
+use DDD\Validator\Rules\EmailIsRFC2821;
+use DDD\Validator\Rules\PasswordIsSafe;
 
 /*---------------------------------------------------------------------------------------------------------------------
 * DESCRIPTION | 説明
@@ -37,8 +36,7 @@ class UserValidator extends Validator
 
     public function validateRegister()
     {
-        $input = new Input();
-        $input->errors = [];
+        $input = self::newInput();
         $input->params['email'] = $this->user->getEmail();
         $input->params['password'] = $this->user->getPassword()->getPlainPassword();
         $pipeline = $this->useMiddleware([
@@ -50,8 +48,7 @@ class UserValidator extends Validator
 
     public function validateRestoreFromSource()
     {
-        $input = new Input();
-        $input->errors = [];
+        $input = self::newInput();
         $input->params['email'] = $this->user->getEmail();
         // パスワードハッシュ化されているパスワードは、バリデーションができないためチェック不可。
         $pipeline = $this->useMiddleware([

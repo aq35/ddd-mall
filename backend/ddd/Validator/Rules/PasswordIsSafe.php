@@ -1,13 +1,13 @@
 <?php
 
-namespace DDD\Entity;
+namespace DDD\Validator\Rules;
 
-use DesignPattern\Middleware\Conceptions\Middleware;
-use DesignPattern\Middleware\Conceptions\Input;
-use DesignPattern\Middleware\Conceptions\Output;
-use DesignPattern\Middleware\Conceptions\Handler;
+use DesignPattern\Middleware\Domain\Middleware;
+use DesignPattern\Middleware\Domain\Input;
+use DesignPattern\Middleware\Domain\Output;
+use DesignPattern\Middleware\Domain\Handler;
 
-// ### PasswordIsSafe UserValidatorのバリデーションルール
+// ### PasswordIsSafe
 final class PasswordIsSafe implements Middleware
 {
     // 正規表現を用いて8文字以上アルファベットの大文字小文字、数字、記号を含める

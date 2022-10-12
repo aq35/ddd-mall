@@ -1,9 +1,9 @@
 <?php
 
-namespace DesignPattern\Middleware\Conceptions;
+namespace DesignPattern\Middleware\Domain;
 
-use DesignPattern\Middleware\Conceptions\Input;
-use DesignPattern\Middleware\Conceptions\Output;
+use DesignPattern\Middleware\Domain\Input;
+use DesignPattern\Middleware\Domain\Output;
 
 #### ミドルウェア(概念)
 

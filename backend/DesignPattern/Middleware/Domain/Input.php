@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Middleware\Conceptions;
+namespace DesignPattern\Middleware\Domain;
 
 // 入力
 class Input

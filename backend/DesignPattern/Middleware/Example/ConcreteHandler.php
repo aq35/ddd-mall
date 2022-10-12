@@ -2,9 +2,9 @@
 
 namespace DesignPattern\Middleware\Example;
 
-use DesignPattern\Middleware\Conceptions\Input;
-use DesignPattern\Middleware\Conceptions\Output;
-use DesignPattern\Middleware\Conceptions\Handler;
+use DesignPattern\Middleware\Domain\Input;
+use DesignPattern\Middleware\Domain\Output;
+use DesignPattern\Middleware\Domain\Handler;
 
 final class ConcreteHandler implements Handler
 {

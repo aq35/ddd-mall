@@ -2,8 +2,8 @@
 
 namespace DesignPattern\Middleware\Example;
 
-use DesignPattern\Middleware\HandleMiddlewareForClient\PipelineBuilder;
-use DesignPattern\Middleware\Conceptions\Input;
+use DesignPattern\Middleware\ForClient\PipelineBuilder;
+use DesignPattern\Middleware\Domain\Input;
 use DesignPattern\Middleware\Example\OuterMiddleware;
 use DesignPattern\Middleware\Example\InnerMiddleware;
 use DesignPattern\Middleware\Example\ConcreteHandler;

@@ -1,11 +1,11 @@
 <?php
 
-namespace DesignPattern\Middleware\ChangeMiddlewareToHanlderForPipelineBuilder;
+namespace DesignPattern\Middleware\ForPipelineBuilder;
 
-use DesignPattern\Middleware\Conceptions\Middleware;
-use DesignPattern\Middleware\Conceptions\Handler;
-use DesignPattern\Middleware\Conceptions\Input;
-use DesignPattern\Middleware\Conceptions\Output;
+use DesignPattern\Middleware\Domain\Middleware;
+use DesignPattern\Middleware\Domain\Handler;
+use DesignPattern\Middleware\Domain\Input;
+use DesignPattern\Middleware\Domain\Output;
 
 // ### MiddlewareHandler
 // パイプラインを形成するためには、Middleware と Handler は同一視できなければならない。

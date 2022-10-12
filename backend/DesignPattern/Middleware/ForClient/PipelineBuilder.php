@@ -1,10 +1,10 @@
 <?php
 
-namespace DesignPattern\Middleware\HandleMiddlewareForClient;
+namespace DesignPattern\Middleware\ForClient;
 
-use DesignPattern\Middleware\Conceptions\Middleware;
-use DesignPattern\Middleware\Conceptions\Handler;
-use DesignPattern\Middleware\ChangeMiddlewareToHanlderForPipelineBuilder\MiddlewareHandler;
+use DesignPattern\Middleware\Domain\Middleware;
+use DesignPattern\Middleware\Domain\Handler;
+use DesignPattern\Middleware\ForPipelineBuilder\MiddlewareHandler;
 
 // ### PipelineBuilder
 // クライアントコードが Middleware パターンを扱いやすくするための補助的なクラス

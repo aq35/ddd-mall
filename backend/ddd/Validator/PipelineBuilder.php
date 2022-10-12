@@ -1,10 +1,10 @@
 <?php
 
-namespace DDD\Handler;
+namespace DDD\Validator;
 
-use DesignPattern\Middleware\Conceptions\Middleware;
-use DesignPattern\Middleware\Conceptions\Handler;
-use DesignPattern\Middleware\ChangeMiddlewareToHanlderForPipelineBuilder\MiddlewareHandler;
+use DesignPattern\Middleware\Domain\Middleware;
+use DesignPattern\Middleware\Domain\Handler;
+use DesignPattern\Middleware\ForPipelineBuilder\MiddlewareHandler;
 
 /**
  * ---------------------------------------------------------------------------------------------------------------------

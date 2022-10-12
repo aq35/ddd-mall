@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Middleware\Conceptions;
+namespace DesignPattern\Middleware\Domain;
 
 // 出力
 class Output

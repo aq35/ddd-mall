@@ -1,13 +1,13 @@
 <?php
 
-namespace DDD\Entity;
+namespace DDD\Validator\Rules;
 
-use DesignPattern\Middleware\Conceptions\Middleware;
-use DesignPattern\Middleware\Conceptions\Input;
-use DesignPattern\Middleware\Conceptions\Output;
-use DesignPattern\Middleware\Conceptions\Handler;
+use DesignPattern\Middleware\Domain\Middleware;
+use DesignPattern\Middleware\Domain\Input;
+use DesignPattern\Middleware\Domain\Output;
+use DesignPattern\Middleware\Domain\Handler;
 
-// ### EmailIsRFC2821 UserValidatorのバリデーションルール
+// ### EmailIsRFC2821
 final class EmailIsRFC2821 implements Middleware
 {
     public function process(Input $input, Handler $next): Output
