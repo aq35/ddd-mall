@@ -19,14 +19,14 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
     /**
      * @var QueueInterface|QueueModelInterface|null
      */
-    protected $Queue = null;
+    protected $queue = null;
 
     /**
      * @see QueueAwareInterface::setQueue
      */
-    public function setQueue(QueueInterface|QueueModelInterface|null $Queue = null)
+    public function setQueue(QueueInterface|QueueModelInterface|null $queue = null)
     {
-        $this->Queue = $Queue;
+        $this->queue = $queue;
     }
 
     /**
@@ -34,7 +34,7 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
      */
     public function getQueue(): QueueInterface|QueueModelInterface|null
     {
-        return $this->Queue;
+        return $this->queue;
     }
 
     protected function attachOnListener($pointer, $event, callable $listener)
