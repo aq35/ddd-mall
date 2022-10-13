@@ -2,66 +2,63 @@
 
 namespace DesignPattern\Event\ForClient;
 
-use DesignPattern\Event\Loop\LoopAwareInterface;
-use DesignPattern\Event\Loop\LoopInterface;
+use DesignPattern\Event\Contract\EventEmitterInterface;
 
-use DesignPattern\Event\Domain\EventEmitterInterface;
+use DesignPattern\Queue\QueueAwareInterface;
+use DesignPattern\Queue\QueueInterface;
+use DesignPattern\Queue\QueueModelInterface;
 
-class AsyncEventEmitter extends BaseEventEmitter implements EventEmitterInterface, LoopAwareInterface
+use DesignPattern\Event\Queue\ForClient\Queue;
+use DesignPattern\Event\Queue\ForClient\SelectQueue;
+
+
+// 並列式SeriesEventEmitter
+class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, QueueAwareInterface
 {
 
     /**
-     * @var LoopInterface|null
+     * @var QueueInterface|QueueModelInterface|null
      */
-    protected $loop = null;
+    protected $Queue = null;
 
     /**
-     * @see LoopAwareInterface::setLoop
+     * @see QueueAwareInterface::setQueue
      */
-    public function setLoop(LoopInterface $loop = null)
+    public function setQueue(QueueInterface|QueueModelInterface|null $Queue = null)
     {
-        $this->loop = $loop;
+        $this->Queue = $Queue;
     }
 
     /**
-     * @see LoopAwareInterface::getLoop
+     * @see QueueAwareInterface::getQueue
      */
-    public function getLoop()
+    public function getQueue(): QueueInterface|QueueModelInterface|null
     {
-        return $this->loop;
+        return $this->Queue;
     }
 
-    /**
-     * @see BaseEventEmitterTrait::attachOnListener
-     */
     protected function attachOnListener($pointer, $event, callable $listener)
     {
         return function () use ($listener) {
             $args = func_get_args();
-            $this->getLoop()->onTick(function () use ($listener, $args) {
+            $this->getQueue()->onTick(function () use ($listener, $args) {
                 $listener(...$args);
             });
         };
     }
 
-    /**
-     * @see BaseEventEmitterTrait::attachOnceListener
-     */
     protected function attachOnceListener($pointer, $event, callable $listener)
     {
         return function () use ($listener, $event, $pointer) {
             unset($this->eventListeners[$event][$pointer]);
 
             $args = func_get_args();
-            $this->getLoop()->onTick(function () use ($listener, $args) {
+            $this->getQueue()->onTick(function () use ($listener, $args) {
                 $listener(...$args);
             });
         };
     }
 
-    /**
-     * @see BaseEventEmitterTrait::attachTimesListener
-     */
     protected function attachTimesListener($pointer, $event, $limit, callable $listener)
     {
         $emitter = $this;
@@ -72,17 +69,14 @@ class AsyncEventEmitter extends BaseEventEmitter implements EventEmitterInterfac
             }
 
             $args = func_get_args();
-            $this->getLoop()->onTick(function () use ($listener, $args) {
+            $this->getQueue()->onTick(function () use ($listener, $args) {
                 $listener(...$args);
             });
         };
     }
 
-    /**
-     * @param LoopInterface $loop
-     */
-    public function __construct(LoopInterface $loop)
+    public function __construct()
     {
-        $this->setLoop($loop);
+        $this->setQueue(new Queue(new SelectQueue()));
     }
 }

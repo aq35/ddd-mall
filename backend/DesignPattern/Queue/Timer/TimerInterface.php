@@ -1,17 +1,17 @@
 <?php
 
-namespace DesignPattern\Event\Loop\Timer;
+namespace DesignPattern\Queue\Timer;
 
-use DesignPattern\Event\Loop\LoopModelInterface;
+use DesignPattern\Queue\QueueModelInterface;
 
 interface TimerInterface
 {
     /**
-     * Return loop.
+     * Return Queue.
      *
-     * @return LoopModelInterface
+     * @return QueueModelInterface
      */
-    public function getLoop();
+    public function getQueue();
 
     /**
      * Return interval of timer.
@@ -56,7 +56,7 @@ interface TimerInterface
     public function isActive();
 
     /**
-     * Cancel timer and unregister it from loop.
+     * Cancel timer and unregister it from Queue.
      */
     public function cancel();
 }

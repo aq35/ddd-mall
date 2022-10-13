@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Event\Domain;
+namespace DesignPattern\Event\Contract;
 
 interface EventEmitterInterface
 {

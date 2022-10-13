@@ -1,8 +1,8 @@
 <?php
 
-namespace DesignPattern\Event\Loop\Timer;
+namespace DesignPattern\Queue\Timer;
 
-use DesignPattern\Event\Loop\LoopModelInterface;
+use DesignPattern\Queue\QueueModelInterface;
 
 class Timer implements TimerInterface
 {
@@ -12,9 +12,9 @@ class Timer implements TimerInterface
     const MIN_INTERVAL = 1e-6;
 
     /**
-     * @var LoopModelInterface
+     * @var QueueModelInterface
      */
-    protected $loop;
+    protected $Queue;
 
     /**
      * @var float
@@ -37,19 +37,19 @@ class Timer implements TimerInterface
     protected $data;
 
     /**
-     * @param LoopModelInterface $loop
+     * @param QueueModelInterface $Queue
      * @param $interval
      * @param callable $callback
      * @param bool $periodic
      * @param mixed|null $data
      */
-    public function __construct(LoopModelInterface $loop, $interval, callable $callback, $periodic = false, $data = null)
+    public function __construct(QueueModelInterface $Queue, $interval, callable $callback, $periodic = false, $data = null)
     {
         if ($interval < self::MIN_INTERVAL) {
             $interval = self::MIN_INTERVAL;
         }
 
-        $this->loop = $loop;
+        $this->Queue = $Queue;
         $this->interval = (float) $interval;
         $this->callback = $callback;
         $this->periodic = (bool) $periodic;
@@ -61,7 +61,7 @@ class Timer implements TimerInterface
      */
     public function __destruct()
     {
-        unset($this->loop);
+        unset($this->Queue);
         unset($this->interval);
         unset($this->callback);
         unset($this->periodic);
@@ -72,9 +72,9 @@ class Timer implements TimerInterface
      * @override
      * @inheritDoc
      */
-    public function getLoop()
+    public function getQueue()
     {
-        return $this->loop;
+        return $this->Queue;
     }
 
     /**
@@ -128,7 +128,7 @@ class Timer implements TimerInterface
      */
     public function isActive()
     {
-        return $this->loop->isTimerActive($this);
+        return $this->Queue->isTimerActive($this);
     }
 
     /**
@@ -137,8 +137,8 @@ class Timer implements TimerInterface
      */
     public function cancel()
     {
-        if (isset($this->loop)) {
-            $this->loop->cancelTimer($this);
+        if (isset($this->Queue)) {
+            $this->Queue->cancelTimer($this);
         }
     }
 }

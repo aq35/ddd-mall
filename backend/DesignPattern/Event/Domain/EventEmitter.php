@@ -1,14 +1,16 @@
 <?php
 
-namespace DesignPattern\Event\ForClient;
+namespace DesignPattern\Event\Domain;
 
-use DesignPattern\Event\Domain\EventEmitterInterface;
+use DesignPattern\Event\Contract\EventEmitterInterface;
 
-use DesignPattern\Event\ForClient\AsyncEventEmitter;
 use DesignPattern\Event\Domain\EventListener;
-use DesignPattern\Event\ForClient\BaseEventEmitter;
-use DesignPattern\Event\Loop\LoopInterface;
 
+// use DesignPattern\Event\ForClient\AsyncEventEmitter;
+// use DesignPattern\Event\ForClient\BaseEventEmitter;
+// use DesignPattern\Event\Loop\LoopInterface;
+
+// EventEmitterは、EventEmitterのモード, イベントのリスナーの制御, イベントの制御を行います。
 class EventEmitter implements EventEmitterInterface
 {
     /**
@@ -17,16 +19,25 @@ class EventEmitter implements EventEmitterInterface
     protected $emitter;
 
     /**
-     * @param LoopInterface $loop
+     * @param EventEmitter $emitter
      */
-    public function __construct(LoopInterface $loop = null)
+    public function __construct(EventEmitter $emitter)
     {
-        if ($loop !== null) {
-            $this->emitter = new AsyncEventEmitter($loop);
-        } else {
-            $this->emitter = new BaseEventEmitter();
-        }
+        $this->emitter = $emitter;
     }
+
+
+    // /**
+    //  * @param LoopInterface $loop
+    //  */
+    // public function __construct(LoopInterface $loop = null)
+    // {
+    //     if ($loop !== null) {
+    //         $this->emitter = new AsyncEventEmitter($loop);
+    //     } else {
+    //         $this->emitter = new BaseEventEmitter();
+    //     }
+    // }
 
     /**
      *　emitterを破棄

@@ -1,18 +1,18 @@
 <?php
 
-namespace DesignPattern\Event\Loop\ForClient;
+namespace DesignPattern\Event\Queue\ForClient;
 
-use DesignPattern\Event\Loop\Tick\TickContinousQueue;
-use DesignPattern\Event\Loop\Tick\TickFiniteQueue;
+use DesignPattern\Queue\Tick\TickContinousQueue;
+use DesignPattern\Queue\Tick\TickFiniteQueue;
 
-use DesignPattern\Event\Loop\Timer\Timer;
-use DesignPattern\Event\Loop\Timer\TimerBox;
-use DesignPattern\Event\Loop\Timer\TimerInterface;
+use DesignPattern\Queue\Timer\Timer;
+use DesignPattern\Queue\Timer\TimerBox;
+use DesignPattern\Queue\Timer\TimerInterface;
 
-use DesignPattern\Event\Loop\FlowController;
-use DesignPattern\Event\Loop\LoopModelInterface;
+use DesignPattern\Queue\FlowController;
+use DesignPattern\Queue\QueueModelInterface;
 
-class SelectLoop implements LoopModelInterface
+class SelectQueue implements QueueModelInterface
 {
     /**
      * @var int
@@ -359,11 +359,11 @@ class SelectLoop implements LoopModelInterface
     public function erase($all = false)
     {
         $this->stop();
-        $loop = new static();
+        $Queue = new static();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $this->$key = $loop->$key;
+            $this->$key = $Queue->$key;
         }
 
         $this->flowController->isRunning = false;
@@ -375,14 +375,14 @@ class SelectLoop implements LoopModelInterface
      * @override
      * @inheritDoc
      */
-    public function export(LoopModelInterface $loop, $all = false)
+    public function export(QueueModelInterface $Queue, $all = false)
     {
         $this->stop();
-        $loop->stop();
+        $Queue->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $loop->$key = $this->$key;
+            $Queue->$key = $this->$key;
         }
 
         return $this;
@@ -392,14 +392,14 @@ class SelectLoop implements LoopModelInterface
      * @override
      * @inheritDoc
      */
-    public function import(LoopModelInterface $loop, $all = false)
+    public function import(QueueModelInterface $Queue, $all = false)
     {
         $this->stop();
-        $loop->stop();
+        $Queue->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $this->$key = $loop->$key;
+            $this->$key = $Queue->$key;
         }
 
         return $this;
@@ -409,15 +409,15 @@ class SelectLoop implements LoopModelInterface
      * @override
      * @inheritDoc
      */
-    public function swap(LoopModelInterface $loop, $all = false)
+    public function swap(QueueModelInterface $Queue, $all = false)
     {
         $this->stop();
-        $loop->stop();
+        $Queue->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $tmp = $loop->$key;
-            $loop->$key = $this->$key;
+            $tmp = $Queue->$key;
+            $Queue->$key = $this->$key;
             $this->$key = $tmp;
         }
 

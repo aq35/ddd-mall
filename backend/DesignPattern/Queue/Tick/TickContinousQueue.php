@@ -1,16 +1,16 @@
 <?php
 
-namespace DesignPattern\Event\Loop\Tick;
+namespace DesignPattern\Queue\Tick;
 
-use DesignPattern\Event\Loop\LoopModelInterface;
+use DesignPattern\Queue\QueueModelInterface;
 use SplQueue;
 
 class TickContinousQueue
 {
     /**
-     * @var LoopModelInterface
+     * @var QueueModelInterface
      */
-    protected $loop;
+    protected $Queue;
 
     /**
      * @var SplQueue
@@ -23,11 +23,11 @@ class TickContinousQueue
     private $callback;
 
     /**
-     * @param LoopModelInterface $loop
+     * @param QueueModelInterface $Queue
      */
-    public function __construct(LoopModelInterface $loop)
+    public function __construct(QueueModelInterface $Queue)
     {
-        $this->loop = $loop;
+        $this->Queue = $Queue;
         $this->queue = new SplQueue();
     }
 
@@ -36,12 +36,12 @@ class TickContinousQueue
      */
     public function __destruct()
     {
-        unset($this->loop);
+        unset($this->Queue);
         unset($this->queue);
     }
 
     /**
-     * Add a callback to be invoked on the next tick of the event loop.
+     * Add a callback to be invoked on the next tick of the event Queue.
      *
      * Callbacks are guaranteed to be executed in the order they are enqueued, before any timer or stream events.
      *
@@ -59,10 +59,10 @@ class TickContinousQueue
      */
     public function tick()
     {
-        while (!$this->queue->isEmpty() && $this->loop->isRunning()) {
+        while (!$this->queue->isEmpty() && $this->Queue->isRunning()) {
             $this->callback = $this->queue->dequeue();
             $callback = $this->callback; // without this proxy PHPStorm marks line as fatal error.
-            $callback($this->loop);
+            $callback($this->Queue);
         }
     }
 

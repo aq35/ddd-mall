@@ -1,14 +1,14 @@
 <?php
 
-namespace DesignPattern\Event\Loop;
+namespace DesignPattern\Queue;
 
-use DesignPattern\Event\Loop\Timer\TimerInterface;
+use DesignPattern\Queue\Timer\TimerInterface;
 
-interface LoopInterface
+interface QueueInterface
 {
     /**
      * ループが現在実行されているかどうかを確認します
-     * Check if loop is currently running.
+     * Check if Queue is currently running.
      *
      * @return bool
      */
@@ -99,7 +99,7 @@ interface LoopInterface
 
     /**
      * イベント ループの開始ティックでコールバックが呼び出されるようにスケジュールします。
-     * Schedule a callback to be invoked on the start tick of event loop.
+     * Schedule a callback to be invoked on the start tick of event Queue.
      * コールバックは、何よりも先に、キューに入れられた順序で実行されることが保証されています。
      * Callbacks are guarenteed to be executed in the order they are enqueued, before anything else.
      *
@@ -109,7 +109,7 @@ interface LoopInterface
 
     /**
      * イベント ループの停止ティックでコールバックが呼び出されるようにスケジュールします。
-     * Schedule a callback to be invoked on the stop tick of event loop.
+     * Schedule a callback to be invoked on the stop tick of event Queue.
      * コールバックは、エンキューされた順序で実行されることが保証されています。
      * Callbacks are guarenteed to be executed in the order they are enqueued.
      *
@@ -119,7 +119,7 @@ interface LoopInterface
 
     /**
      * イベント ループの将来のティックでコールバックが呼び出されるようにスケジュールします。
-     * Schedule a callback to be invoked on a future tick of the event loop.
+     * Schedule a callback to be invoked on a future tick of the event Queue.
      * コールバックは、エンキューされた順序で実行されることが保証されています。
      * Callbacks are guaranteed to be executed in the order they are enqueued.
      * このメソッドは onAfterTick() メソッドのエイリアスです。
@@ -132,7 +132,7 @@ interface LoopInterface
 
     /**
      * イベント ループの次のティックでコールバックが呼び出されるようにスケジュールします。
-     * Schedule a callback to be invoked on the next tick of the event loop.
+     * Schedule a callback to be invoked on the next tick of the event Queue.
      * コールバックは、タイマーまたはストリーム イベントの前に、キューに入れられた順序で実行されることが保証されます。
      * Callbacks are guaranteed to be executed in the order they are enqueued, before any timer or stream events.
      *
@@ -142,7 +142,7 @@ interface LoopInterface
 
     /**
      * イベント ループの将来のティックでコールバックが呼び出されるようにスケジュールします。
-     * Schedule a callback to be invoked on a future tick of the event loop.
+     * Schedule a callback to be invoked on a future tick of the event Queue.
      * コールバックは、エンキューされた順序で実行されることが保証されています。
      * Callbacks are guaranteed to be executed in the order they are enqueued.
      *

@@ -2,7 +2,7 @@
 
 namespace DesignPattern\Event\Domain;
 
-use DesignPattern\Event\Domain\EventEmitterInterface;
+use DesignPattern\Event\Contract\EventEmitterInterface;
 
 class EventListener
 {

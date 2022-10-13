@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Event\Loop\Timer;
+namespace DesignPattern\Queue\Timer;
 
 use SplObjectStorage;
 use SplPriorityQueue;

@@ -1,16 +1,16 @@
 <?php
 
-namespace DesignPattern\Event\Loop\Tick;
+namespace DesignPattern\Queue\Tick;
 
-use DesignPattern\Event\Loop\LoopModelInterface;
+use DesignPattern\Queue\QueueModelInterface;
 use SplQueue;
 
 class TickFiniteQueue
 {
     /**
-     * @var LoopModelInterface
+     * @var QueueModelInterface
      */
-    protected $loop;
+    protected $Queue;
 
     /**
      * [キュー構造] SplQueue
@@ -26,11 +26,11 @@ class TickFiniteQueue
 
     /**
      *
-     * @param LoopModelInterface $loop
+     * @param QueueModelInterface $Queue
      */
-    public function __construct(LoopModelInterface $loop)
+    public function __construct(QueueModelInterface $Queue)
     {
-        $this->loop = $loop;
+        $this->Queue = $Queue;
         $this->queue = new SplQueue(); // [キュー構造] SplQueue
     }
 
@@ -39,14 +39,14 @@ class TickFiniteQueue
      */
     public function __destruct()
     {
-        unset($this->loop);
+        unset($this->Queue);
         unset($this->queue);
     }
 
     /**
      * [キュー構造] SplQueue 操作
      * イベント ループの将来のティックで呼び出されるコールバックを追加します。
-     * Add a callback to be invoked on a future tick of the event loop.
+     * Add a callback to be invoked on a future tick of the event Queue.
      *
      * コールバックは、タイマーまたはストリーム イベントの前に、キューに入れられた順序で実行されることが保証されます。
      * Callbacks are guaranteed to be executed in the order they are enqueued, before any timer or stream events.
@@ -67,10 +67,10 @@ class TickFiniteQueue
     {
         $count = $this->queue->count();
 
-        while ($count-- && $this->loop->isRunning()) {
+        while ($count-- && $this->Queue->isRunning()) {
             $this->callback = $this->queue->dequeue();
             $callback = $this->callback; // without this proxy PHPStorm marks line as fatal error.
-            $callback($this->loop);
+            $callback($this->Queue);
         }
     }
 

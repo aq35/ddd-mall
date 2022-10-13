@@ -1,10 +1,10 @@
 <?php
 
-namespace DesignPattern\_Event\ForClient;
+namespace DesignPattern\Event\ForClient;
 
-use DesignPattern\_Event\Contract\EventEmitterInterface;
-use DesignPattern\_Event\Domain\EventEmitterMode;
-use DesignPattern\_Event\Domain\EventListener;
+use DesignPattern\Event\Contract\EventEmitterInterface;
+use DesignPattern\Event\Domain\EventEmitterMode;
+use DesignPattern\Event\Domain\EventListener;
 
 // 直列式EventEmitter
 class SeriesEventEmitter implements EventEmitterInterface

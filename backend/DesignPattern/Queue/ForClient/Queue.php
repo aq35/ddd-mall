@@ -1,24 +1,24 @@
 <?php
 
-namespace DesignPattern\Event\Loop\ForClient;
+namespace DesignPattern\Queue\ForClient;
 
-use DesignPattern\Event\Loop\Timer\TimerInterface;
-use DesignPattern\Event\Loop\LoopExtendedInterface;
-use DesignPattern\Event\Loop\LoopModelInterface;
+use DesignPattern\Queue\Timer\TimerInterface;
+use DesignPattern\Queue\QueueExtendedInterface;
+use DesignPattern\Queue\QueueModelInterface;
 
-class Loop implements LoopExtendedInterface
+class Queue implements QueueExtendedInterface
 {
     /**
-     * @var LoopModelInterface
+     * @var QueueModelInterface
      */
-    protected $loop;
+    protected $Queue;
 
     /**
-     * @param LoopModelInterface
+     * @param QueueModelInterface
      */
-    public function __construct(LoopModelInterface $loop)
+    public function __construct(QueueModelInterface $Queue)
     {
-        $this->loop = $loop;
+        $this->Queue = $Queue;
     }
 
     /**
@@ -26,7 +26,7 @@ class Loop implements LoopExtendedInterface
      */
     public function __destruct()
     {
-        //        unset($this->loop);
+        //        unset($this->Queue);
     }
 
     /**
@@ -35,7 +35,7 @@ class Loop implements LoopExtendedInterface
      */
     public function getModel()
     {
-        return $this->loop;
+        return $this->Queue;
     }
 
     /**
@@ -44,7 +44,7 @@ class Loop implements LoopExtendedInterface
      */
     public function erase($all = false)
     {
-        $this->loop->erase($all);
+        $this->Queue->erase($all);
 
         return $this;
     }
@@ -53,9 +53,9 @@ class Loop implements LoopExtendedInterface
      * @override
      * @inheritDoc
      */
-    public function export(LoopExtendedInterface $loop, $all = false)
+    public function export(QueueExtendedInterface $Queue, $all = false)
     {
-        $this->loop->export($loop->getModel(), $all);
+        $this->Queue->export($Queue->getModel(), $all);
 
         return $this;
     }
@@ -64,9 +64,9 @@ class Loop implements LoopExtendedInterface
      * @override
      * @inheritDoc
      */
-    public function import(LoopExtendedInterface $loop, $all = false)
+    public function import(QueueExtendedInterface $Queue, $all = false)
     {
-        $this->loop->import($loop->getModel(), $all);
+        $this->Queue->import($Queue->getModel(), $all);
 
         return $this;
     }
@@ -75,9 +75,9 @@ class Loop implements LoopExtendedInterface
      * @override
      * @inheritDoc
      */
-    public function swap(LoopExtendedInterface $loop, $all = false)
+    public function swap(QueueExtendedInterface $Queue, $all = false)
     {
-        $this->loop->swap($loop->getModel(), $all);
+        $this->Queue->swap($Queue->getModel(), $all);
 
         return $this;
     }
@@ -88,7 +88,7 @@ class Loop implements LoopExtendedInterface
      */
     public function isRunning()
     {
-        return $this->loop->isRunning();
+        return $this->Queue->isRunning();
     }
 
     /**
@@ -97,7 +97,7 @@ class Loop implements LoopExtendedInterface
      */
     public function addReadStream($stream, callable $listener)
     {
-        $this->loop->addReadStream($stream, $listener);
+        $this->Queue->addReadStream($stream, $listener);
     }
 
     /**
@@ -106,7 +106,7 @@ class Loop implements LoopExtendedInterface
      */
     public function addWriteStream($stream, callable $listener)
     {
-        $this->loop->addWriteStream($stream, $listener);
+        $this->Queue->addWriteStream($stream, $listener);
     }
 
     /**
@@ -115,7 +115,7 @@ class Loop implements LoopExtendedInterface
      */
     public function removeReadStream($stream)
     {
-        $this->loop->removeReadStream($stream);
+        $this->Queue->removeReadStream($stream);
     }
 
     /**
@@ -124,7 +124,7 @@ class Loop implements LoopExtendedInterface
      */
     public function removeWriteStream($stream)
     {
-        $this->loop->removeWriteStream($stream);
+        $this->Queue->removeWriteStream($stream);
     }
 
     /**
@@ -133,7 +133,7 @@ class Loop implements LoopExtendedInterface
      */
     public function removeStream($stream)
     {
-        $this->loop->removeStream($stream);
+        $this->Queue->removeStream($stream);
     }
 
     /**
@@ -142,7 +142,7 @@ class Loop implements LoopExtendedInterface
      */
     public function addTimer($interval, callable $callback)
     {
-        return $this->loop->addTimer($interval, $callback);
+        return $this->Queue->addTimer($interval, $callback);
     }
 
     /**
@@ -151,7 +151,7 @@ class Loop implements LoopExtendedInterface
      */
     public function addPeriodicTimer($interval, callable $callback)
     {
-        return $this->loop->addPeriodicTimer($interval, $callback);
+        return $this->Queue->addPeriodicTimer($interval, $callback);
     }
 
     /**
@@ -160,7 +160,7 @@ class Loop implements LoopExtendedInterface
      */
     public function cancelTimer(TimerInterface $timer)
     {
-        $this->loop->cancelTimer($timer);
+        $this->Queue->cancelTimer($timer);
     }
 
     /**
@@ -169,7 +169,7 @@ class Loop implements LoopExtendedInterface
      */
     public function isTimerActive(TimerInterface $timer)
     {
-        return $this->loop->isTimerActive($timer);
+        return $this->Queue->isTimerActive($timer);
     }
 
     /**
@@ -178,7 +178,7 @@ class Loop implements LoopExtendedInterface
      */
     public function onStart(callable $listener)
     {
-        $this->loop->onStart($listener);
+        $this->Queue->onStart($listener);
     }
 
     /**
@@ -187,7 +187,7 @@ class Loop implements LoopExtendedInterface
      */
     public function onStop(callable $listener)
     {
-        $this->loop->onStop($listener);
+        $this->Queue->onStop($listener);
     }
 
     /**
@@ -196,7 +196,7 @@ class Loop implements LoopExtendedInterface
      */
     public function onTick(callable $listener)
     {
-        $this->loop->onAfterTick($listener);
+        $this->Queue->onAfterTick($listener);
     }
 
     /**
@@ -205,7 +205,7 @@ class Loop implements LoopExtendedInterface
      */
     public function onBeforeTick(callable $listener)
     {
-        $this->loop->onBeforeTick($listener);
+        $this->Queue->onBeforeTick($listener);
     }
 
     /**
@@ -215,7 +215,7 @@ class Loop implements LoopExtendedInterface
      */
     public function onAfterTick(callable $listener)
     {
-        $this->loop->onAfterTick($listener);
+        $this->Queue->onAfterTick($listener);
     }
 
     /**
@@ -224,7 +224,7 @@ class Loop implements LoopExtendedInterface
      */
     public function tick()
     {
-        $this->loop->tick();
+        $this->Queue->tick();
     }
 
     /**
@@ -233,7 +233,7 @@ class Loop implements LoopExtendedInterface
      */
     public function start()
     {
-        $this->loop->start();
+        $this->Queue->start();
     }
 
     /**
@@ -242,7 +242,7 @@ class Loop implements LoopExtendedInterface
      */
     public function stop()
     {
-        $this->loop->stop();
+        $this->Queue->stop();
     }
 
     /**
@@ -251,7 +251,7 @@ class Loop implements LoopExtendedInterface
      */
     public function setFlowController($flowController)
     {
-        $this->loop->setFlowController($flowController);
+        $this->Queue->setFlowController($flowController);
     }
 
     /**
@@ -260,6 +260,6 @@ class Loop implements LoopExtendedInterface
      */
     public function getFlowController()
     {
-        return $this->loop->getFlowController();
+        return $this->Queue->getFlowController();
     }
 }

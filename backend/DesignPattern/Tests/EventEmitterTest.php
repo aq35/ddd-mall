@@ -238,7 +238,7 @@ final class EventEmitterTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testEventEmitter_forwarding_events(): void
+    public function testEventEmitter_forwardingEvents(): void
     {
         $source = new EventEmitter();
         $target = new EventEmitter();
@@ -263,7 +263,7 @@ final class EventEmitterTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testEventEmitter_copying_events(): void
+    public function testEventEmitter_copyingEvents(): void
     {
         $source = new EventEmitter();
         $target = new EventEmitter();

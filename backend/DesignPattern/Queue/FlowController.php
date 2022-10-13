@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Event\Loop;
+namespace DesignPattern\Queue;
 
 class FlowController
 {
@@ -26,7 +26,7 @@ class FlowController
     }
 
     /**
-     * Check if FlowController allows loop to run.
+     * Check if FlowController allows Queue to run.
      *
      * @return bool
      */
@@ -36,7 +36,7 @@ class FlowController
     }
 
     /**
-     * Set FlowController to allow loop to run.
+     * Set FlowController to allow Queue to run.
      */
     public function start()
     {
@@ -44,7 +44,7 @@ class FlowController
     }
 
     /**
-     * Set FlowController to not allow loop to run.
+     * Set FlowController to not allow Queue to run.
      */
     public function stop()
     {
