@@ -10,7 +10,7 @@ use DesignPattern\Event\Loop\LoopAwareInterface;
 use DesignPattern\Event\Loop\LoopInterface;
 use DesignPattern\Event\Loop\LoopModelInterface;
 
-// 非同期SeriesEventEmitter
+// 並列式SeriesEventEmitter
 class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, LoopAwareInterface
 {
 
