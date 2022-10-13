@@ -8,8 +8,8 @@ use DesignPattern\Queue\QueueAwareInterface;
 use DesignPattern\Queue\QueueInterface;
 use DesignPattern\Queue\QueueModelInterface;
 
-use DesignPattern\Event\Queue\ForClient\Queue;
-use DesignPattern\Event\Queue\ForClient\SelectQueue;
+use DesignPattern\Queue\ForClient\Queue;
+use DesignPattern\Queue\ForClient\SelectQueue;
 
 
 // 並列式SeriesEventEmitter

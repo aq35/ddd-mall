@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Event\Queue\ForClient;
+namespace DesignPattern\Queue\ForClient;
 
 use DesignPattern\Queue\Tick\TickContinousQueue;
 use DesignPattern\Queue\Tick\TickFiniteQueue;
