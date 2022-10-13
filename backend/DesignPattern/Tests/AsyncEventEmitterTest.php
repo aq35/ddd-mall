@@ -4,19 +4,17 @@ namespace DDD\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use DesignPattern\Event\ForClient\EventEmitter;
+use DesignPattern\_Event\ForClient\SeriesEventEmitter;
+use DesignPattern\_Event\ForClient\AsyncEventEmitter;
 use DesignPattern\Event\Loop\ForClient\Loop;
 use DesignPattern\Event\Loop\ForClient\SelectLoop;
 
 final class AsyncEventEmitterTest extends TestCase
 {
-
     public function testEventEmitter_async_emitters(): void
     {
-        $loop = new Loop(new SelectLoop());
-
-        $baseEmitter  = new EventEmitter(); // this is basic, synchronous EventEmitter
-        $asyncEmitter = new EventEmitter($loop); // this EventEmitter uses loop to dispatch events asynchronously
+        $baseEmitter  = new SeriesEventEmitter();
+        $asyncEmitter = new AsyncEventEmitter();
 
         $baseEmitter->on('event', function () {
             echo "> 同期処理を完了します \n";
@@ -35,12 +33,12 @@ final class AsyncEventEmitterTest extends TestCase
         $asyncEmitter->emit('event');
         echo "非同期処理は、以降に表示されます。\n";
 
-        $loop->onAfterTick(function () use ($loop) {
+        $asyncEmitter->getLoop()->onAfterTick(function () use ($asyncEmitter) {
             echo "\n";
-            $loop->stop();
+            $asyncEmitter->getLoop()->stop();
         });
 
-        $loop->start();
+        $asyncEmitter->getLoop()->start();
         $this->assertTrue(true);
     }
 }
