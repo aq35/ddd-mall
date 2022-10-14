@@ -9,9 +9,9 @@ interface QueueExtendedAwareInterface
     /**
      * Set the Queue of which object is aware of.
      *
-     * @param QueueExtendedInterface|null $Queue
+     * @param QueueExtendedInterface|null $queue
      */
-    public function setQueue(QueueExtendedInterface $Queue = null);
+    public function setQueue(QueueExtendedInterface $queue = null);
 
     /**
      * Return the Queue of which object is aware of.

@@ -359,11 +359,11 @@ class SelectQueue implements QueueModelInterface
     public function erase($all = false)
     {
         $this->stop();
-        $Queue = new static();
+        $queue = new static();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $this->$key = $Queue->$key;
+            $this->$key = $queue->$key;
         }
 
         $this->flowController->isRunning = false;
@@ -375,14 +375,14 @@ class SelectQueue implements QueueModelInterface
      * @override
      * @inheritDoc
      */
-    public function export(QueueModelInterface $Queue, $all = false)
+    public function export(QueueModelInterface $queue, $all = false)
     {
         $this->stop();
-        $Queue->stop();
+        $queue->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $Queue->$key = $this->$key;
+            $queue->$key = $this->$key;
         }
 
         return $this;
@@ -392,14 +392,14 @@ class SelectQueue implements QueueModelInterface
      * @override
      * @inheritDoc
      */
-    public function import(QueueModelInterface $Queue, $all = false)
+    public function import(QueueModelInterface $queue, $all = false)
     {
         $this->stop();
-        $Queue->stop();
+        $queue->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $this->$key = $Queue->$key;
+            $this->$key = $queue->$key;
         }
 
         return $this;
@@ -409,15 +409,15 @@ class SelectQueue implements QueueModelInterface
      * @override
      * @inheritDoc
      */
-    public function swap(QueueModelInterface $Queue, $all = false)
+    public function swap(QueueModelInterface $queue, $all = false)
     {
         $this->stop();
-        $Queue->stop();
+        $queue->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $tmp = $Queue->$key;
-            $Queue->$key = $this->$key;
+            $tmp = $queue->$key;
+            $queue->$key = $this->$key;
             $this->$key = $tmp;
         }
 
