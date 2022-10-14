@@ -2,6 +2,8 @@
 
 namespace DesignPattern\Queue;
 
+use DesignPattern\Queue\BaseQueue\QueueInterface;
+
 interface QueueAwareInterface
 {
     /**

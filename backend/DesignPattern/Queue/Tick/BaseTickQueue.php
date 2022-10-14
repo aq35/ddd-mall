@@ -3,12 +3,13 @@
 namespace DesignPattern\Queue\Tick;
 
 use DesignPattern\Queue\QueueModelInterface;
+use DesignPattern\Queue\BaseQueue\QueueInterface;
 use SplQueue;
 
 class BaseTickQueue
 {
     /**
-     * @var QueueModelInterface
+     * @var QueueModelInterface|QueueInterface
      */
     protected $queueModel;
 
@@ -26,9 +27,9 @@ class BaseTickQueue
 
     /**
      *
-     * @param QueueModelInterface $queueModel
+     * @param QueueModelInterface|QueueInterface $queueModel
      */
-    public function __construct(QueueModelInterface $queueModel)
+    public function __construct(QueueModelInterface|QueueInterface $queueModel)
     {
         $this->queueModel = $queueModel;
         $this->queue = new SplQueue(); // [キュー構造] SplQueue

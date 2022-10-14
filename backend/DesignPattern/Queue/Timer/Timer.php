@@ -2,6 +2,7 @@
 
 namespace DesignPattern\Queue\Timer;
 
+use DesignPattern\Queue\BaseQueue\QueueInterface;
 use DesignPattern\Queue\QueueModelInterface;
 
 class Timer implements TimerInterface
@@ -12,7 +13,7 @@ class Timer implements TimerInterface
     const MIN_INTERVAL = 1e-6;
 
     /**
-     * @var QueueModelInterface
+     * @var QueueModelInterface|QueueInterface
      */
     protected $Queue;
 
@@ -37,13 +38,13 @@ class Timer implements TimerInterface
     protected $data;
 
     /**
-     * @param QueueModelInterface $Queue
+     * @param QueueModelInterface|QueueInterface $Queue
      * @param $interval
      * @param callable $callback
      * @param bool $periodic
      * @param mixed|null $data
      */
-    public function __construct(QueueModelInterface $Queue, $interval, callable $callback, $periodic = false, $data = null)
+    public function __construct(QueueModelInterface|QueueInterface $Queue, $interval, callable $callback, $periodic = false, $data = null)
     {
         if ($interval < self::MIN_INTERVAL) {
             $interval = self::MIN_INTERVAL;
