@@ -39,6 +39,22 @@ final class User extends BaseEntity
     private Password $password;
 
     /**
+     * @param string $email
+     * @param string $password
+     * @return static
+     */
+    public static function register(
+        string $email,
+        string $plainPassword,
+    ): self {
+        $user = new self();
+        $user->userId = UserId::generate();
+        $user->email = $email;
+        $user->password = Password::register($plainPassword); // ハッシュされる前
+        return $user;
+    }
+
+    /**
      * ファクトリメソッド
      * @param UserId $userId
      * @param string $email
@@ -54,22 +70,6 @@ final class User extends BaseEntity
         $user->userId = $userId;
         $user->email = $email;
         $user->password = Password::restoreFromSource($hashedPassword); // 既にハッシュ化されているため、バリデーションはできない。
-        return $user;
-    }
-
-    /**
-     * @param string $email
-     * @param string $password
-     * @return static
-     */
-    public static function register(
-        string $email,
-        string $plainPassword,
-    ): self {
-        $user = new self();
-        $user->userId = UserId::generate();
-        $user->email = $email;
-        $user->password = Password::register($plainPassword); // ハッシュされる前
         return $user;
     }
 

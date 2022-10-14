@@ -12,16 +12,20 @@ use DDD\Validator\Rules\PasswordIsSafe;
 * DESCRIPTION | 説明
 * ---------------------------------------------------------------------------------------------------------------------
 *  ### UserValidator
-*  UserValidatorクラスは、PipelineBuilderクラスのクライアントです。
-*  PipelineBuilderのmiddlewareをセットする実装は、親クラスであるValidatorが行っています。
-*
+*  UserValidatorクラスは、バリデーションのユースケースです。
+*  UserValidator自体は、バリデーションのコアであるミドルウェアパターンを隠しています。
 * ---------------------------------------------------------------------------------------------------------------------
 * USAGE | 使い方 バリデーションチェック
 * ---------------------------------------------------------------------------------------------------------------------
-*　$pipeline = $this->useMiddleware([
-*　new EmailIsRFC2821(),
-*　]);
-*　$output = $pipeline->handle($input);
+    return $this->validate(
+        params: [
+            'email' => $this->user->getEmail(),
+            'password' => $this->user->getPassword()->getPlainPassword(),
+        ],
+        ruleHandlers: [
+            new EmailIsRFC2821(), new PasswordIsSafe()
+        ]
+    );
 * ---------------------------------------------------------------------------------------------------------------------*/
 
 class UserValidator extends Validator
