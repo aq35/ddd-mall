@@ -18,24 +18,29 @@ namespace DDD\ValueObject;
  * register(string $plainPassword) $plainPassword ... 例) test1234!
  * ---------------------------------------------------------------------------------------------------------------------
  */
-final class Password
+
+use DDD\ValueObject\BaseValueObject\BaseValueObject;
+
+final class Password extends BaseValueObject
 {
     private string $hashedPassword;
     private string|null $plainPassword;
 
+    // ハッシュ化パスワード
     public static function restoreFromSource(string $hashedPassword)
     {
         $password = new self();
-        $password->plainPassword = null;
         $password->hashedPassword = $hashedPassword;
+        $password->plainPassword = null;
         return $password;
     }
 
+    // 平文パスワード
     public static function register(string $plainPassword)
     {
         $password = new self();
+        $password->hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
         $password->plainPassword = $plainPassword;
-        $password->password = password_hash($plainPassword, PASSWORD_DEFAULT);
         return $password;
     }
 

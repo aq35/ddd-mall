@@ -2,6 +2,7 @@
 
 namespace DDD\Entity;
 
+use DDD\Entity\BaseEntity\BaseEntity;
 use DDD\Entity\User;
 use DDD\Entity\Person;
 

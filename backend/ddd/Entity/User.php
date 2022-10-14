@@ -2,9 +2,10 @@
 
 namespace DDD\Entity;
 
+use DDD\Entity\BaseEntity\BaseEntity;
+
 use DDD\ValueObject\UserId;
 use DDD\ValueObject\Password;
-use DDD\Entity\BaseEntity;
 use DDD\Entity\UserValidator;
 
 /*---------------------------------------------------------------------------------------------------------------------
@@ -22,9 +23,6 @@ use DDD\Entity\UserValidator;
 
 final class User extends BaseEntity
 {
-    // 正規表現を用いて8文字以上アルファベットの大文字小文字、数字、記号を含める
-    const VALID_PASSWORD_REGEX = '/\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[\W_])[!-~]{8,}+\z/';
-
     /**
      * @var UserId
      */
@@ -42,18 +40,18 @@ final class User extends BaseEntity
 
     /**
      * ファクトリメソッド
-     * @param string $userId
+     * @param UserId $userId
      * @param string $email
      * @param string $hashedPassword
      * @return static
      */
     public static function restoreFromSource(
-        string $userId,
+        UserId $userId,
         string $email,
         string $hashedPassword,
     ): self {
         $user = new self();
-        $user->userId = new UserId($userId);
+        $user->userId = $userId;
         $user->email = $email;
         $user->password = Password::restoreFromSource($hashedPassword); // 既にハッシュ化されているため、バリデーションはできない。
         return $user;
@@ -69,7 +67,7 @@ final class User extends BaseEntity
         string $plainPassword,
     ): self {
         $user = new self();
-        $user->userId = new UserId(UserId::generate());
+        $user->userId = UserId::generate();
         $user->email = $email;
         $user->password = Password::register($plainPassword); // ハッシュされる前
         return $user;

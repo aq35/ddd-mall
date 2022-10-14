@@ -2,6 +2,8 @@
 
 namespace DDD\Entity;
 
+use DDD\Entity\BaseEntity\BaseEntity;
+
 final class Person extends BaseEntity
 {
     /**

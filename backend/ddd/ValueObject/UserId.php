@@ -2,9 +2,9 @@
 
 namespace DDD\ValueObject;
 
-use Symfony\Component\Uid\Ulid;
+use DDD\ValueObject\BaseValueObject\BaseValueObject;
 
-final class UserId
+final class UserId extends BaseValueObject
 {
     private string $userId;
 
@@ -16,7 +16,7 @@ final class UserId
 
     public static function generate()
     {
-        return Ulid::generate();
+        return new UserId(parent::generateId());
     }
 
     public function getUserId()

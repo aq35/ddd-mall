@@ -36,26 +36,28 @@ class UserValidator extends Validator
 
     public function validateRegister()
     {
-        $input = self::newInput();
-        $input->params['email'] = $this->user->getEmail();
-        $input->params['password'] = $this->user->getPassword()->getPlainPassword();
-        $pipeline = $this->useMiddleware([
-            new EmailIsRFC2821(), new PasswordIsSafe()
-        ]);
-        $output = $pipeline->handle($input);
-        return $output;
+        return $this->validate(
+            params: [
+                'email' => $this->user->getEmail(),
+                'password' => $this->user->getPassword()->getPlainPassword(),
+            ],
+            ruleHandlers: [
+                new EmailIsRFC2821(), new PasswordIsSafe()
+            ]
+        );
     }
 
     public function validateRestoreFromSource()
     {
-        $input = self::newInput();
-        $input->params['email'] = $this->user->getEmail();
-        // パスワードハッシュ化されているパスワードは、バリデーションができないためチェック不可。
-        $pipeline = $this->useMiddleware([
-            new EmailIsRFC2821(),
-        ]);
-        $output = $pipeline->handle($input);
-        return $output;
+        return $this->validate(
+            params: [
+                'email' => $this->user->getEmail()
+            ],
+            // パスワードハッシュ化されているパスワードは、バリデーションができないためチェック不可。
+            ruleHandlers: [
+                new EmailIsRFC2821()
+            ]
+        );
     }
 
     protected function setUser(User $user)

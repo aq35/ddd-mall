@@ -1,8 +1,7 @@
 <?php
 
-namespace DDD\Entity;
+namespace DDD\Entity\BaseEntity;
 
-// Entityの設計
 abstract class BaseEntity
 {
     public $errors = [];
