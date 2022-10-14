@@ -2,21 +2,23 @@
 
 namespace DesignPattern\Queue\ForClient;
 
+use DesignPattern\Queue\BaseQueue\QueueInterface;
+
 use DesignPattern\Queue\Timer\TimerInterface;
 use DesignPattern\Queue\QueueExtendedInterface;
 use DesignPattern\Queue\QueueModelInterface;
 
-class Queue implements QueueExtendedInterface
+class Queue implements QueueExtendedInterface, QueueInterface
 {
     /**
-     * @var QueueModelInterface
+     * @var QueueInterface|QueueModelInterface
      */
     protected $Queue;
 
     /**
-     * @param QueueModelInterface
+     * @param QueueInterface| QueueModelInterface
      */
-    public function __construct(QueueModelInterface $Queue)
+    public function __construct(QueueInterface|QueueModelInterface $Queue)
     {
         $this->Queue = $Queue;
     }

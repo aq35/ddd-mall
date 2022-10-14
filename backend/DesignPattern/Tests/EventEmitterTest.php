@@ -4,14 +4,14 @@ namespace DDD\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use DesignPattern\Event\ForClient\EventEmitter;
+use DesignPattern\Event\ForClient\SeriesEventEmitter;
 use DesignPattern\Event\Domain\EventEmitterMode;
 
 /**
  * ---------------------------------------------------------------------------------------------------------------------
  * DESCRIPTION | 説明
  * ---------------------------------------------------------------------------------------------------------------------
- * EventEmitter単体の動作テスト
+ * SeriesEventEmitter単体の動作テスト
  * ---------------------------------------------------------------------------------------------------------------------
  * USAGE | 使い方
  * ---------------------------------------------------------------------------------------------------------------------
@@ -24,11 +24,11 @@ use DesignPattern\Event\Domain\EventEmitterMode;
 final class EventEmitterTest extends TestCase
 {
     /*---------------------------------------------------------------------------------------------------------------------
-     * EventEmitter on()
+     * SeriesEventEmitter on()
      * ---------------------------------------------------------------------------------------------------------------------*/
     public function testEventEmitter_On(): void
     {
-        $emitter = new EventEmitter();
+        $emitter = new SeriesEventEmitter();
 
         $emitter->on('script.start', function ($asset) {
             echo "\n";
@@ -40,11 +40,11 @@ final class EventEmitterTest extends TestCase
     }
 
     /*---------------------------------------------------------------------------------------------------------------------
-     * EventEmitter on() を何回も
+     * SeriesEventEmitter on() を何回も
      * ---------------------------------------------------------------------------------------------------------------------*/
     public function testEventEmitter_On_Multiple_Listeners(): void
     {
-        $emitter = new EventEmitter();
+        $emitter = new SeriesEventEmitter();
         $count = 0;
 
         $emitter->on('script.start', function (&$count) {
@@ -69,11 +69,11 @@ final class EventEmitterTest extends TestCase
     }
 
     /*---------------------------------------------------------------------------------------------------------------------
-     * EventEmitter delayTimes() 順番飛ばし (応用)
+     * SeriesEventEmitter delayTimes() 順番飛ばし (応用)
      * ---------------------------------------------------------------------------------------------------------------------*/
     public function testEventEmitter_delayTimes(): void
     {
-        $emitter = new EventEmitter();
+        $emitter = new SeriesEventEmitter();
 
         // 0,1,2は飛ばして、3,4 を実行する
         $emitter->delayTimes('event.number', 3, 2, function ($number) {
@@ -93,11 +93,11 @@ final class EventEmitterTest extends TestCase
     }
 
     /*---------------------------------------------------------------------------------------------------------------------
-     * EventEmitter delayTimes() 3回のみ実行 (応用)
+     * SeriesEventEmitter delayTimes() 3回のみ実行 (応用)
      * ---------------------------------------------------------------------------------------------------------------------*/
     public function testEventEmitter_times(): void
     {
-        $emitter = new EventEmitter();
+        $emitter = new SeriesEventEmitter();
 
         // 最初のemitから3回、以降は破棄
         $emitter->times('event.number', 3, function ($number) {
@@ -118,7 +118,7 @@ final class EventEmitterTest extends TestCase
 
     public function testEventEmitter_disposable(): void
     {
-        $emitter = new EventEmitter();
+        $emitter = new SeriesEventEmitter();
 
         // this handler will be disposed after first fire
         $emitter->once('event.number', function ($number) {
@@ -139,7 +139,7 @@ final class EventEmitterTest extends TestCase
 
     public function testEventEmitter_delayed(): void
     {
-        $emitter = new EventEmitter();
+        $emitter = new SeriesEventEmitter();
 
         // 3回目からスタート
         // this handler will start to work on 3rd time it receives this particular event
@@ -162,7 +162,7 @@ final class EventEmitterTest extends TestCase
 
     public function testEventEmitter_cancelling(): void
     {
-        $emitter = new EventEmitter();
+        $emitter = new SeriesEventEmitter();
 
         $listener1 = $emitter->on('event', $callback1 = function () {
             echo "1st listener reacted to the event.\n";
@@ -191,9 +191,9 @@ final class EventEmitterTest extends TestCase
 
     public function testEventEmitter_switching_modes(): void
     {
-        $source = new EventEmitter();
-        $bridge = new EventEmitter();
-        $target = new EventEmitter();
+        $source = new SeriesEventEmitter();
+        $bridge = new SeriesEventEmitter();
+        $target = new SeriesEventEmitter();
 
         // the handlers are being attached to $target emitter.
         $source->on('event', function () {
@@ -240,8 +240,8 @@ final class EventEmitterTest extends TestCase
 
     public function testEventEmitter_forwardingEvents(): void
     {
-        $source = new EventEmitter();
-        $target = new EventEmitter();
+        $source = new SeriesEventEmitter();
+        $target = new SeriesEventEmitter();
 
         // the handlers are being attached to $target emitter.
         $target->on('account.name', function ($name) {
@@ -265,8 +265,8 @@ final class EventEmitterTest extends TestCase
 
     public function testEventEmitter_copyingEvents(): void
     {
-        $source = new EventEmitter();
-        $target = new EventEmitter();
+        $source = new SeriesEventEmitter();
+        $target = new SeriesEventEmitter();
         // the handlers are being attached to $target emitter.
         $target->on('account.name', function ($name) {
             echo "New account name is $name.\n";

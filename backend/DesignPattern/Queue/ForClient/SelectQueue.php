@@ -2,6 +2,7 @@
 
 namespace DesignPattern\Queue\ForClient;
 
+use DesignPattern\Queue\BaseQueue\QueueInterface;
 use DesignPattern\Queue\Tick\TickContinousQueue;
 use DesignPattern\Queue\Tick\TickFiniteQueue;
 
@@ -12,7 +13,7 @@ use DesignPattern\Queue\Timer\TimerInterface;
 use DesignPattern\Queue\FlowController;
 use DesignPattern\Queue\QueueModelInterface;
 
-class SelectQueue implements QueueModelInterface
+class SelectQueue implements QueueModelInterface, QueueInterface
 {
     /**
      * @var int

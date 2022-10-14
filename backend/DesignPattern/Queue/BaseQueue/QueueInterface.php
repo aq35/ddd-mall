@@ -1,11 +1,10 @@
 <?php
 
-namespace DesignPattern\Queue;
+namespace DesignPattern\Queue\BaseQueue;
 
-use Dazzle\Queue\Flow\FlowController;
 use DesignPattern\Queue\Timer\TimerInterface;
 
-interface BaseQueueInterface
+interface QueueInterface
 {
     /**
      * ループが現在実行されているかどうかを確認します

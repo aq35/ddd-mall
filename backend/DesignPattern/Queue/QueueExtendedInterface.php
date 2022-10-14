@@ -3,6 +3,7 @@
 namespace DesignPattern\Queue;
 
 use DesignPattern\Queue\FlowController;
+use DesignPattern\Queue\BaseQueue\QueueInterface;
 
 interface QueueExtendedInterface extends QueueInterface
 {
