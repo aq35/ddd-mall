@@ -6,7 +6,7 @@ use DesignPattern\Queue\QueueModelInterface;
 use DesignPattern\Queue\BaseQueue\QueueInterface;
 use SplQueue;
 
-class BaseTickQueue
+class BaseTickSplQueue
 {
     /**
      * @var QueueModelInterface|QueueInterface

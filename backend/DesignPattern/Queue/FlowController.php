@@ -2,6 +2,7 @@
 
 namespace DesignPattern\Queue;
 
+// 閉じたり(false)、開いたり(true)する。最初は開いていると[Queue]は利用できる
 class FlowController
 {
     /**

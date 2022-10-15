@@ -3,8 +3,8 @@
 namespace DesignPattern\Queue\ForClient;
 
 use DesignPattern\Queue\BaseQueue\QueueInterface;
-use DesignPattern\Queue\Tick\TickContinousQueue;
-use DesignPattern\Queue\Tick\TickFiniteQueue;
+use DesignPattern\Queue\Tick\TickContinousSplQueue;
+use DesignPattern\Queue\Tick\TickFiniteSplQueue;
 
 use DesignPattern\Queue\Timer\Timer;
 use DesignPattern\Queue\Timer\TimerBox;
@@ -21,29 +21,29 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     const MICROSECONDS_PER_SECOND = 1e6;
 
     /**
-     * @var TickContinousQueue
+     * @var TickContinousSplQueue
      */
     protected $startTickQueue;
 
     /**
-     * @var TickContinousQueue
+     * @var TickContinousSplQueue
      */
     protected $stopTickQueue;
 
     /**
-     * @var TickContinousQueue
+     * @var TickContinousSplQueue
      */
     protected $nextTickQueue;
 
     /**
-     * @var TickFiniteQueue
+     * @var TickFiniteSplQueue
      */
     protected $futureTickQueue;
 
     /**
      * @var FlowController
      */
-    protected $flowController;
+    protected $flowController; // 閉じたり(false)、開いたり(true)する。最初は開いていると[Queue]は利用できる
 
     /**
      * @var TimerBox
@@ -70,15 +70,13 @@ class SelectQueue implements QueueModelInterface, QueueInterface
      */
     protected $writeListeners = [];
 
-    /**
-     *
-     */
+
     public function __construct()
     {
-        $this->startTickQueue = new TickContinousQueue($this);
-        $this->stopTickQueue = new TickContinousQueue($this);
-        $this->nextTickQueue = new TickContinousQueue($this);
-        $this->futureTickQueue = new TickFiniteQueue($this);
+        $this->startTickQueue = new TickContinousSplQueue($this);
+        $this->stopTickQueue = new TickContinousSplQueue($this);
+        $this->nextTickQueue = new TickContinousSplQueue($this);
+        $this->futureTickQueue = new TickFiniteSplQueue($this);
         $this->flowController = new FlowController();
         $this->timers = new TimerBox();
     }
@@ -100,19 +98,13 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         unset($this->writeListeners);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function isRunning()
     {
         return isset($this->flowController->isRunning) ? $this->flowController->isRunning : false;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addReadStream($stream, callable $listener)
     {
         $key = (int) $stream;
@@ -123,10 +115,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         }
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addWriteStream($stream, callable $listener)
     {
         $key = (int) $stream;
@@ -137,10 +126,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         }
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function removeReadStream($stream)
     {
         $key = (int) $stream;
@@ -151,10 +137,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         );
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function removeWriteStream($stream)
     {
         $key = (int) $stream;
@@ -165,20 +148,14 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         );
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function removeStream($stream)
     {
         $this->removeReadStream($stream);
         $this->removeWriteStream($stream);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addTimer($interval, callable $callback)
     {
         $timer = new Timer($this, $interval, $callback, false);
@@ -188,10 +165,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         return $timer;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addPeriodicTimer($interval, callable $callback)
     {
         $timer = new Timer($this, $interval, $callback, true);
@@ -201,10 +175,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         return $timer;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function cancelTimer(TimerInterface $timer)
     {
         if (isset($this->timers)) {
@@ -212,37 +183,25 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         }
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function isTimerActive(TimerInterface $timer)
     {
         return $this->timers->contains($timer);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function onStart(callable $listener)
     {
         $this->startTickQueue->add($listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function onStop(callable $listener)
     {
         $this->stopTickQueue->add($listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function onBeforeTick(callable $listener)
     {
         $this->nextTickQueue->add($listener);
@@ -258,10 +217,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         $this->futureTickQueue->add($listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function tick()
     {
         $this->flowController->isRunning = true;
@@ -274,12 +230,11 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         $this->flowController->isRunning = false;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
+    // clientが使う。
     public function start()
     {
+        // 他に作業しているので注意
         if ($this->flowController->isRunning) {
             return;
         }
@@ -321,10 +276,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         }
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function stop()
     {
         if (!$this->flowController->isRunning) {
@@ -335,28 +287,19 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         $this->flowController->isRunning = false;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function setFlowController($flowController)
     {
         $this->flowController = $flowController;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function getFlowController()
     {
         return $this->flowController;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function erase($all = false)
     {
         $this->stop();
@@ -372,10 +315,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         return $this;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function export(QueueModelInterface $queue, $all = false)
     {
         $this->stop();
@@ -389,10 +329,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         return $this;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function import(QueueModelInterface $queue, $all = false)
     {
         $this->stop();
@@ -406,10 +343,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         return $this;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function swap(QueueModelInterface $queue, $all = false)
     {
         $this->stop();

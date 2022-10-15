@@ -21,6 +21,11 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
      */
     protected $queue = null;
 
+    public function __construct()
+    {
+        $this->setQueue(new Queue(new SelectQueue()));
+    }
+
     /**
      * @see QueueAwareInterface::setQueue
      */
@@ -73,10 +78,5 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
                 $listener(...$args);
             });
         };
-    }
-
-    public function __construct()
-    {
-        $this->setQueue(new Queue(new SelectQueue()));
     }
 }
