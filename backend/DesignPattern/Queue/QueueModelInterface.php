@@ -17,6 +17,7 @@ interface QueueModelInterface
     public function start();
 
     /**
+     * stopすることでループは閉じる
      * Instruct a running event Queue to stop.
      */
     public function stop();

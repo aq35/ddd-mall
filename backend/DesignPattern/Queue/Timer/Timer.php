@@ -39,12 +39,12 @@ class Timer implements TimerInterface
 
     /**
      * @param QueueModelInterface|QueueInterface $Queue
-     * @param $interval
+     * @param float $interval
      * @param callable $callback
      * @param bool $periodic
      * @param mixed|null $data
      */
-    public function __construct(QueueModelInterface|QueueInterface $Queue, $interval, callable $callback, $periodic = false, $data = null)
+    public function __construct(QueueModelInterface|QueueInterface $Queue, float $interval, callable $callback, $periodic = false, $data = null)
     {
         if ($interval < self::MIN_INTERVAL) {
             $interval = self::MIN_INTERVAL;
@@ -69,73 +69,49 @@ class Timer implements TimerInterface
         unset($this->data);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function getQueue()
     {
         return $this->Queue;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
-    public function getInterval()
+
+    public function getInterval(): float
     {
         return $this->interval;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function getCallback()
     {
         return $this->callback;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function getData()
     {
         return $this->data;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function setData($data)
     {
         $this->data = $data;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function isPeriodic()
     {
         return $this->periodic;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function isActive()
     {
         return $this->Queue->isTimerActive($this);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function cancel()
     {
         if (isset($this->Queue)) {

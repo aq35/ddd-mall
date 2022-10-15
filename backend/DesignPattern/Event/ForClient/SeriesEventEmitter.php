@@ -342,4 +342,14 @@ class SeriesEventEmitter implements EventEmitterInterface
         $this->eventListeners = [];
         $this->forwardListeners = [];
     }
+
+    // デバッグ用
+    public function eventListenerForDebug()
+    {
+        foreach ($this->eventListeners as $eventListener) {
+            foreach ($eventListener as $eL) {
+                var_dump($eL->getEvent());
+            }
+        }
+    }
 }

@@ -399,7 +399,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
 
     /**
      * Emulate a stream_select() implementation that does not break when passed empty stream arrays.
-     *
+     * https://php.net/manual/en/function.stream-select.php
      * @param array &$read
      * @param array &$write
      * @param integer|null $timeout
