@@ -51,13 +51,13 @@ final class AsyncEventEmitterTest extends TestCase
         $asyncEmitter->eventListenerForDebug();
 
         $i += 1;
-        $asyncEmitter->getQueue()->onBeforeTick(function () use ($asyncEmitter, $i) {
-            echo "\e[31m $i 番目 onBeforeTick \e[m" . "\n";
+        $asyncEmitter->getQueue()->onStart(function () use ($asyncEmitter, $i) {
+            echo "\e[31m $i 番目 onStart \e[m" . "\n";
         });
 
         $i += 1;
-        $asyncEmitter->getQueue()->onStart(function () use ($asyncEmitter, $i) {
-            echo "\e[31m $i 番目 onStart \e[m" . "\n";
+        $asyncEmitter->getQueue()->onBeforeTick(function () use ($asyncEmitter, $i) {
+            echo "\e[31m $i 番目 onBeforeTick \e[m" . "\n";
         });
 
         $i += 1;
