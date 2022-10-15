@@ -4,8 +4,8 @@ namespace DesignPattern\Queue\ForClient;
 
 use DesignPattern\Queue\BaseQueue\QueueInterface;
 
-use DesignPattern\Queue\TickSplQueue\TickContinousSplQueue;
-use DesignPattern\Queue\TickSplQueue\TickFiniteSplQueue;
+use DesignPattern\Queue\SplQueue\ContinousSplQueue;
+use DesignPattern\Queue\SplQueue\FiniteSplQueue;
 
 use DesignPattern\Queue\Timer\Timer;
 use DesignPattern\Queue\Timer\TimerBox;
@@ -24,22 +24,22 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     /**
      * @var TickContinousSplQueue
      */
-    protected $startTickQueue;
+    protected $startSqlQueue;
 
     /**
      * @var TickContinousSplQueue
      */
-    protected $stopTickQueue;
+    protected $stopSplQueue;
 
     /**
      * @var TickContinousSplQueue
      */
-    protected $nextTickQueue;
+    protected $nextSqlQueue;
 
     /**
      * @var TickFiniteSplQueue
      */
-    protected $futureTickQueue;
+    protected $futureSqlQueue;
 
     /**
      * @var FlowController
@@ -74,10 +74,10 @@ class SelectQueue implements QueueModelInterface, QueueInterface
 
     public function __construct()
     {
-        $this->startTickQueue = new TickContinousSplQueue($this);
-        $this->stopTickQueue = new TickContinousSplQueue($this);
-        $this->nextTickQueue = new TickContinousSplQueue($this);
-        $this->futureTickQueue = new TickFiniteSplQueue($this);
+        $this->startSqlQueue = new ContinousSplQueue($this);
+        $this->stopSplQueue = new ContinousSplQueue($this);
+        $this->nextSqlQueue = new ContinousSplQueue($this);
+        $this->futureSqlQueue = new FiniteSplQueue($this);
         $this->flowController = new FlowController();
         $this->timers = new TimerBox();
     }
@@ -87,10 +87,10 @@ class SelectQueue implements QueueModelInterface, QueueInterface
      */
     public function __destruct()
     {
-        unset($this->startTickQueue);
-        unset($this->stopTickQueue);
-        unset($this->nextTickQueue);
-        unset($this->futureTickQueue);
+        unset($this->startSqlQueue);
+        unset($this->stopSplQueue);
+        unset($this->nextSqlQueue);
+        unset($this->futureSqlQueue);
         unset($this->flowController);
         unset($this->timers);
         unset($this->readStreams);
@@ -193,19 +193,19 @@ class SelectQueue implements QueueModelInterface, QueueInterface
 
     public function onStart(callable $listener)
     {
-        $this->startTickQueue->add($listener);
+        $this->startSqlQueue->add($listener);
     }
 
 
     public function onStop(callable $listener)
     {
-        $this->stopTickQueue->add($listener);
+        $this->stopSplQueue->add($listener);
     }
 
 
     public function onBeforeTick(callable $listener)
     {
-        $this->nextTickQueue->add($listener);
+        $this->nextSqlQueue->add($listener);
     }
 
     /**
@@ -215,7 +215,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
      */
     public function onAfterTick(callable $listener)
     {
-        $this->futureTickQueue->add($listener);
+        $this->futureSqlQueue->add($listener);
     }
 
 
@@ -223,8 +223,8 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     {
         $this->flowController->isRunning = true;
 
-        $this->nextTickQueue->tick();
-        $this->futureTickQueue->tick();
+        $this->nextSqlQueue->tick();
+        $this->futureSqlQueue->tick();
         $this->timers->tick();
         $this->waitForStreamActivity(0);
 
@@ -246,17 +246,17 @@ class SelectQueue implements QueueModelInterface, QueueInterface
         });
 
         $this->flowController->isRunning = true;
-        $this->startTickQueue->tick();
+        $this->startSqlQueue->tick();
 
         while ($this->flowController->isRunning) {
-            $this->nextTickQueue->tick();
+            $this->nextSqlQueue->tick();
 
-            $this->futureTickQueue->tick();
+            $this->futureSqlQueue->tick();
 
             $this->timers->tick();
 
             // Next-tick or future-tick queues have pending callbacks ...
-            if (!$this->flowController->isRunning || !$this->nextTickQueue->isEmpty() || !$this->futureTickQueue->isEmpty()) {
+            if (!$this->flowController->isRunning || !$this->nextSqlQueue->isEmpty() || !$this->futureSqlQueue->isEmpty()) {
                 $timeout = 0;
             }
             // There is a pending timer, only block until it is due ...
@@ -284,7 +284,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
             return;
         }
 
-        $this->stopTickQueue->tick();
+        $this->stopSplQueue->tick();
         $this->flowController->isRunning = false;
     }
 
@@ -423,8 +423,8 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     private function getTransferableProperties()
     {
         return [
-            'nextTickQueue'     => null,
-            'futureTickQueue'   => null,
+            'nextSqlQueue'     => null,
+            'futureSqlQueue'   => null,
             'flowController'    => null
         ];
     }

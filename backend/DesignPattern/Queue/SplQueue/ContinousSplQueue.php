@@ -1,8 +1,8 @@
 <?php
 
-namespace DesignPattern\Queue\TickSplQueue;
+namespace DesignPattern\Queue\SplQueue;
 
-class TickContinousSplQueue extends BaseTickSplQueue
+class ContinousSplQueue extends BaseSplQueue
 {
     /**
      * コールバック キューをフラッシュします。

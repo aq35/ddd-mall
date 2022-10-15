@@ -1,12 +1,12 @@
 <?php
 
-namespace DesignPattern\Queue\TickSplQueue;
+namespace DesignPattern\Queue\SplQueue;
 
 use DesignPattern\Queue\QueueModelInterface;
 use DesignPattern\Queue\BaseQueue\QueueInterface;
 use SplQueue;
 
-class BaseTickSplQueue
+class BaseSplQueue
 {
     /**
      * @var QueueModelInterface|QueueInterface
