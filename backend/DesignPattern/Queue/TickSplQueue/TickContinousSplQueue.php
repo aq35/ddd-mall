@@ -1,8 +1,8 @@
 <?php
 
-namespace DesignPattern\Queue\Tick;
+namespace DesignPattern\Queue\TickSplQueue;
 
-class TickFiniteSplQueue extends BaseTickSplQueue
+class TickContinousSplQueue extends BaseTickSplQueue
 {
     /**
      * コールバック キューをフラッシュします。
@@ -19,11 +19,9 @@ class TickFiniteSplQueue extends BaseTickSplQueue
      */
     public function tick()
     {
-        $count = $this->queue->count();
-
-        while ($count-- && $this->queueModel->isRunning()) {
-            $this->callback = $this->queue->dequeue();
-            $callback = $this->callback; // without this proxy PHPStorm marks line as fatal error.
+        while (!$this->queue->isEmpty() && $this->queueModel->isRunning()) {
+            $this->callback = $this->queue->dequeue(); // キューからノードをデキューする。先に入れられたデータから順に取り出す。
+            $callback = $this->callback;
             $callback($this->queueModel);
         }
     }

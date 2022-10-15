@@ -3,8 +3,9 @@
 namespace DesignPattern\Queue\ForClient;
 
 use DesignPattern\Queue\BaseQueue\QueueInterface;
-use DesignPattern\Queue\Tick\TickContinousSplQueue;
-use DesignPattern\Queue\Tick\TickFiniteSplQueue;
+
+use DesignPattern\Queue\TickSplQueue\TickContinousSplQueue;
+use DesignPattern\Queue\TickSplQueue\TickFiniteSplQueue;
 
 use DesignPattern\Queue\Timer\Timer;
 use DesignPattern\Queue\Timer\TimerBox;

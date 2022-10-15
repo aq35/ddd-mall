@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Queue\Tick;
+namespace DesignPattern\Queue\TickSplQueue;
 
 use DesignPattern\Queue\QueueModelInterface;
 use DesignPattern\Queue\BaseQueue\QueueInterface;
