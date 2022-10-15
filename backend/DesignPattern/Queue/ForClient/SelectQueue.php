@@ -493,4 +493,9 @@ class SelectQueue implements QueueModelInterface, QueueInterface
             'flowController'    => null
         ];
     }
+
+    public function onTick(callable $listener)
+    {
+        $this->queue->onAfterTick($listener);
+    }
 }

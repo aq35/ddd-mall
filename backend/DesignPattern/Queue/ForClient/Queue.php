@@ -1,26 +1,26 @@
 <?php
 
-namespace DesignPattern\Queue\ForClient;
+namespace DesignPattern\queue\ForClient;
 
-use DesignPattern\Queue\BaseQueue\QueueInterface;
+use DesignPattern\queue\Basequeue\QueueInterface;
 
-use DesignPattern\Queue\Timer\TimerInterface;
-use DesignPattern\Queue\QueueExtendedInterface;
-use DesignPattern\Queue\QueueModelInterface;
+use DesignPattern\queue\Timer\TimerInterface;
+use DesignPattern\queue\queueExtendedInterface;
+use DesignPattern\queue\queueModelInterface;
 
-class Queue implements QueueExtendedInterface, QueueInterface
+class queue implements queueExtendedInterface, QueueInterface
 {
     /**
-     * @var QueueInterface|QueueModelInterface
+     * @var QueueInterface|queueModelInterface
      */
-    protected $Queue;
+    protected $queue;
 
     /**
-     * @param QueueInterface| QueueModelInterface
+     * @param QueueInterface| queueModelInterface
      */
-    public function __construct(QueueInterface|QueueModelInterface $Queue)
+    public function __construct(QueueInterface|queueModelInterface $queue)
     {
-        $this->Queue = $Queue;
+        $this->queue = $queue;
     }
 
     /**
@@ -28,240 +28,168 @@ class Queue implements QueueExtendedInterface, QueueInterface
      */
     public function __destruct()
     {
-        //        unset($this->Queue);
+        //        unset($this->queue);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function getModel()
     {
-        return $this->Queue;
+        return $this->queue;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function erase($all = false)
     {
-        $this->Queue->erase($all);
+        $this->queue->erase($all);
 
         return $this;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
-    public function export(QueueExtendedInterface $Queue, $all = false)
+
+    public function export(queueExtendedInterface $queue, $all = false)
     {
-        $this->Queue->export($Queue->getModel(), $all);
+        $this->queue->export($queue->getModel(), $all);
 
         return $this;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
-    public function import(QueueExtendedInterface $Queue, $all = false)
+
+    public function import(queueExtendedInterface $queue, $all = false)
     {
-        $this->Queue->import($Queue->getModel(), $all);
+        $this->queue->import($queue->getModel(), $all);
 
         return $this;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
-    public function swap(QueueExtendedInterface $Queue, $all = false)
+
+    public function swap(queueExtendedInterface $queue, $all = false)
     {
-        $this->Queue->swap($Queue->getModel(), $all);
+        $this->queue->swap($queue->getModel(), $all);
 
         return $this;
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function isRunning()
     {
-        return $this->Queue->isRunning();
+        return $this->queue->isRunning();
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addReadStream($stream, callable $listener)
     {
-        $this->Queue->addReadStream($stream, $listener);
+        $this->queue->addReadStream($stream, $listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addWriteStream($stream, callable $listener)
     {
-        $this->Queue->addWriteStream($stream, $listener);
+        $this->queue->addWriteStream($stream, $listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function removeReadStream($stream)
     {
-        $this->Queue->removeReadStream($stream);
+        $this->queue->removeReadStream($stream);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function removeWriteStream($stream)
     {
-        $this->Queue->removeWriteStream($stream);
+        $this->queue->removeWriteStream($stream);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function removeStream($stream)
     {
-        $this->Queue->removeStream($stream);
+        $this->queue->removeStream($stream);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addTimer($interval, callable $callback)
     {
-        return $this->Queue->addTimer($interval, $callback);
+        return $this->queue->addTimer($interval, $callback);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function addPeriodicTimer($interval, callable $callback)
     {
-        return $this->Queue->addPeriodicTimer($interval, $callback);
+        return $this->queue->addPeriodicTimer($interval, $callback);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function cancelTimer(TimerInterface $timer)
     {
-        $this->Queue->cancelTimer($timer);
+        $this->queue->cancelTimer($timer);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function isTimerActive(TimerInterface $timer)
     {
-        return $this->Queue->isTimerActive($timer);
+        return $this->queue->isTimerActive($timer);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function onStart(callable $listener)
     {
-        $this->Queue->onStart($listener);
+        $this->queue->onStart($listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function onStop(callable $listener)
     {
-        $this->Queue->onStop($listener);
+        $this->queue->onStop($listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function onTick(callable $listener)
     {
-        $this->Queue->onAfterTick($listener);
+        $this->queue->onAfterTick($listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function onBeforeTick(callable $listener)
     {
-        $this->Queue->onBeforeTick($listener);
+        $this->queue->onBeforeTick($listener);
     }
 
     /**
-     * [キュー構造] SplQueue　add enqueue
+     * [キュー構造] Splqueue　add enqueue
      * @override
      * @inheritDoc
      */
     public function onAfterTick(callable $listener)
     {
-        $this->Queue->onAfterTick($listener);
+        $this->queue->onAfterTick($listener);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function tick()
     {
-        $this->Queue->tick();
+        $this->queue->tick();
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function start()
     {
-        $this->Queue->start();
+        $this->queue->start();
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function stop()
     {
-        $this->Queue->stop();
+        $this->queue->stop();
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function setFlowController($flowController)
     {
-        $this->Queue->setFlowController($flowController);
+        $this->queue->setFlowController($flowController);
     }
 
-    /**
-     * @override
-     * @inheritDoc
-     */
+
     public function getFlowController()
     {
-        return $this->Queue->getFlowController();
+        return $this->queue->getFlowController();
     }
 }

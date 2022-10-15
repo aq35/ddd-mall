@@ -5,8 +5,8 @@ namespace DesignPattern\Event\ForClient;
 use DesignPattern\Event\Contract\EventEmitterInterface;
 
 use DesignPattern\Queue\QueueAwareInterface;
-use DesignPattern\Queue\QueueInterface;
 use DesignPattern\Queue\QueueModelInterface;
+use DesignPattern\Queue\BaseQueue\QueueInterface;
 
 use DesignPattern\Queue\ForClient\Queue;
 use DesignPattern\Queue\ForClient\SelectQueue;
