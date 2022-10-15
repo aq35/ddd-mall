@@ -19,8 +19,8 @@ class ContinousSplQueue extends BaseSplQueue
      */
     public function tick()
     {
-        while (!$this->queue->isEmpty() && $this->queueModel->isRunning()) {
-            $this->callback = $this->queue->dequeue(); // キューからノードをデキューする。先に入れられたデータから順に取り出す。
+        while (!$this->sqlQueue->isEmpty() && $this->queueModel->isRunning()) {
+            $this->callback = $this->sqlQueue->dequeue(); // キューからノードをデキューする。先に入れられたデータから順に取り出す。
             $callback = $this->callback;
             $callback($this->queueModel);
         }

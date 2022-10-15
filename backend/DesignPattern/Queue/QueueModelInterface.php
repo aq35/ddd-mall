@@ -46,27 +46,27 @@ interface QueueModelInterface
     /**
      * Export Queue not fired handlers and/or streams to another Queue model.
      *
-     * @param QueueModelInterface $Queue
+     * @param QueueModelInterface $queue
      * @param bool $all
      * @return QueueModelInterface
      */
-    public function export(QueueModelInterface $Queue, $all = false);
+    public function export(QueueModelInterface $queue, $all = false);
 
     /**
      * Import handlers and/or streams from another Queue model.
      *
-     * @param QueueModelInterface $Queue
+     * @param QueueModelInterface $queue
      * @param bool $all
      * @return QueueModelInterface
      */
-    public function import(QueueModelInterface $Queue, $all = false);
+    public function import(QueueModelInterface $queue, $all = false);
 
     /**
      * Swap handlers and/or stream between Queue models.
      *
-     * @param QueueModelInterface $Queue
+     * @param QueueModelInterface $queue
      * @param bool $all
      * @return QueueModelInterface
      */
-    public function swap(QueueModelInterface $Queue, $all = false);
+    public function swap(QueueModelInterface $queue, $all = false);
 }

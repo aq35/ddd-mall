@@ -22,17 +22,17 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     const MICROSECONDS_PER_SECOND = 1e6;
 
     /**
-     * @var TickContinousSplQueue
+     * @var ContinousSplQueue
      */
     protected $startSqlQueue;
 
     /**
-     * @var TickContinousSplQueue
+     * @var ContinousSplQueue
      */
     protected $stopSplQueue;
 
     /**
-     * @var TickContinousSplQueue
+     * @var ContinousSplQueue
      */
     protected $nextSqlQueue;
 
@@ -255,19 +255,23 @@ class SelectQueue implements QueueModelInterface, QueueInterface
 
             $this->timers->tick();
 
+            // 次ティックまたは将来ティックのキューには、保留中のコールバックがあります
             // Next-tick or future-tick queues have pending callbacks ...
             if (!$this->flowController->isRunning || !$this->nextSqlQueue->isEmpty() || !$this->futureSqlQueue->isEmpty()) {
                 $timeout = 0;
             }
+            // 保留中のタイマーがあり、期限が来るまでブロックするだけです...
             // There is a pending timer, only block until it is due ...
             else if ($scheduledAt = $this->timers->getFirst()) {
                 $timeout = $scheduledAt - $this->timers->getTime();
                 $timeout = ($timeout < 0) ? 0 : $timeout * self::MICROSECONDS_PER_SECOND;
             }
+            // 可能なイベントはストリーム アクティビティだけなので、いつまでも待ちます...
             // The only possible event is stream activity, so wait forever ...
             else if ($this->readStreams || $this->writeStreams) {
                 $timeout = null;
             }
+            // やることがなくなった...
             // There's nothing left to do ...
             else {
                 break;
@@ -304,11 +308,11 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     public function erase($all = false)
     {
         $this->stop();
-        $queue = new static();
+        $selectQueue = new static();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $this->$key = $queue->$key;
+            $this->$key = $selectQueue->$key;
         }
 
         $this->flowController->isRunning = false;
@@ -317,43 +321,43 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     }
 
 
-    public function export(QueueModelInterface $queue, $all = false)
+    public function export(QueueModelInterface $queueModel, $all = false)
     {
         $this->stop();
-        $queue->stop();
+        $queueModel->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $queue->$key = $this->$key;
+            $queueModel->$key = $this->$key;
         }
 
         return $this;
     }
 
 
-    public function import(QueueModelInterface $queue, $all = false)
+    public function import(QueueModelInterface $queueModel, $all = false)
     {
         $this->stop();
-        $queue->stop();
+        $queueModel->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $this->$key = $queue->$key;
+            $this->$key = $queueModel->$key;
         }
 
         return $this;
     }
 
 
-    public function swap(QueueModelInterface $queue, $all = false)
+    public function swap(QueueModelInterface $queueModel, $all = false)
     {
         $this->stop();
-        $queue->stop();
+        $queueModel->stop();
 
         $list = $all === true ? $this : $this->getTransferableProperties();
         foreach ($list as $key => $val) {
-            $tmp = $queue->$key;
-            $queue->$key = $this->$key;
+            $tmp = $queueModel->$key;
+            $queueModel->$key = $this->$key;
             $this->$key = $tmp;
         }
 
@@ -431,6 +435,6 @@ class SelectQueue implements QueueModelInterface, QueueInterface
 
     public function onTick(callable $listener)
     {
-        $this->queue->onAfterTick($listener);
+        $this->sqlQueue->onAfterTick($listener);
     }
 }

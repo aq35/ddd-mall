@@ -19,10 +19,9 @@ class FiniteSplQueue extends BaseSplQueue
      */
     public function tick()
     {
-        $count = $this->queue->count();
-
+        $count = $this->sqlQueue->count();
         while ($count-- && $this->queueModel->isRunning()) {
-            $this->callback = $this->queue->dequeue();
+            $this->callback = $this->sqlQueue->dequeue();
             $callback = $this->callback; // without this proxy PHPStorm marks line as fatal error.
             $callback($this->queueModel);
         }

@@ -54,6 +54,8 @@ final class AsyncEventEmitterTest extends TestCase
 
         $asyncEmitter->getQueue()->onAfterTick(function () use ($asyncEmitter) {
             echo "\n";
+            echo "AfterTick";
+            echo "\n";
             $asyncEmitter->getQueue()->stop();
         });
 

@@ -18,7 +18,7 @@ class BaseSplQueue
      * @var SplQueue
      * https://www.php.net/manual/en/class.splqueue.php
      */
-    protected $queue;
+    protected $sqlQueue;
 
     /**
      * @var callable
@@ -32,7 +32,7 @@ class BaseSplQueue
     public function __construct(QueueModelInterface|QueueInterface $queueModel)
     {
         $this->queueModel = $queueModel;
-        $this->queue = new SplQueue(); // [キュー構造] SplQueue
+        $this->sqlQueue = new SplQueue(); // [キュー構造] SplQueue
     }
 
     /**
@@ -41,7 +41,7 @@ class BaseSplQueue
     public function __destruct()
     {
         unset($this->queueModel);
-        unset($this->queue);
+        unset($this->sqlQueue);
     }
 
     /**
@@ -56,7 +56,7 @@ class BaseSplQueue
      */
     public function add(callable $listener)
     {
-        $this->queue->enqueue($listener);
+        $this->sqlQueue->enqueue($listener);
     }
 
     /**
@@ -66,10 +66,10 @@ class BaseSplQueue
      */
     public function tick()
     {
-        $count = $this->queue->count();
+        $count = $this->sqlQueue->count();
 
         while ($count-- && $this->queueModel->isRunning()) {
-            $this->callback = $this->queue->dequeue();
+            $this->callback = $this->sqlQueue->dequeue();
             $callback = $this->callback; // without this proxy PHPStorm marks line as fatal error.
             $callback($this->queueModel);
         }
@@ -82,6 +82,6 @@ class BaseSplQueue
      */
     public function isEmpty()
     {
-        return $this->queue->isEmpty();
+        return $this->sqlQueue->isEmpty();
     }
 }
