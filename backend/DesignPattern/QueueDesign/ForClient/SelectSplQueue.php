@@ -55,21 +55,25 @@ class SelectSplQueue implements SelectQueueInterface
     protected $timers;
 
     /**
+     * [PHPリソース]
      * @var resource[]
      */
     protected $readStreams = [];
 
     /**
+     * [PHPリソース]
      * @var callable[]
      */
     protected $readListeners = [];
 
     /**
+     * [PHPリソース]
      * @var resource[]
      */
     protected $writeStreams = [];
 
     /**
+     * [PHPリソース]
      * @var callable[]
      */
     protected $writeListeners = [];
@@ -110,6 +114,7 @@ class SelectSplQueue implements SelectQueueInterface
         return isset($this->flowController->isRunning) ? $this->flowController->isRunning : false;
     }
 
+    // [PHPリソース]
     public function addReadStream($stream, callable $listener)
     {
         $key = (int) $stream;
@@ -120,6 +125,7 @@ class SelectSplQueue implements SelectQueueInterface
         }
     }
 
+    // [PHPリソース]
     public function addWriteStream($stream, callable $listener)
     {
         $key = (int) $stream;
@@ -130,6 +136,7 @@ class SelectSplQueue implements SelectQueueInterface
         }
     }
 
+    // [PHPリソース]
     public function removeReadStream($stream)
     {
         $key = (int) $stream;
@@ -139,7 +146,7 @@ class SelectSplQueue implements SelectQueueInterface
             $this->readListeners[$key]
         );
     }
-
+    // [PHPリソース]
     public function removeWriteStream($stream)
     {
         $key = (int) $stream;
@@ -149,7 +156,7 @@ class SelectSplQueue implements SelectQueueInterface
             $this->writeListeners[$key]
         );
     }
-
+    // [PHPリソース]
     public function removeStream($stream)
     {
         $this->removeReadStream($stream);
@@ -295,6 +302,7 @@ class SelectSplQueue implements SelectQueueInterface
             }
             // Timers -----
 
+            // [PHPリソース]
             $this->waitForStreamActivity(timeout: $timeout);
         }
     }
