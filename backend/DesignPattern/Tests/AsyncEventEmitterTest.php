@@ -59,6 +59,11 @@ final class AsyncEventEmitterTest extends TestCase
             echo "\e[31m [$i 番目] onAfterTick \e[m" . "\n";
         });
 
+        // $i += 1;
+        // $asyncEmitter->getQueue()->addReadStream(10, function () use ($asyncEmitter, $i) {
+        //     echo "\e[31m [$i 番目] addReadStream \e[m" . "\n";
+        // });
+
         $i += 1;
         $asyncEmitter->getQueue()->addPeriodicTimer(1e-6, function () use ($asyncEmitter, $i) {
             echo "\e[31m [$i 番目] PeriodicTimer \e[m" . "\n";

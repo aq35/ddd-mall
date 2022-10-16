@@ -110,6 +110,22 @@ class SelectSplQueue implements SelectQueueInterface
         return isset($this->flowController->isRunning) ? $this->flowController->isRunning : false;
     }
 
+    // [PHPのリソース型(resource)]
+    // リソースはPHPと外部世界とのやり取りを行うための特別な変数です。
+    // 例えばPHPからMySQLやSQLite、テキストファイルなどのデータベースへ接続したり、画像ファイルを開いたりする際、PHPではそれらを実行するための専用の関数が定義されています。
+    // そのような関数を実行して取得した接続情報を変数へ格納することが可能で、これらの変数は外部リソースを保持し、型はリソース型となります。
+    //
+    // リソース型 は PHPの外部世界 とやり取りを行うデータが格納されている型 です。
+    // つまり、リソースは、特別な関数により作成された外部情報を持つ変数のことです。そのような変数の型がリソース型となるのです。
+    // PHPの外部世界とのやり取りを行うためには、様々な処理が必要になりますが、リソースにはそのような処理を完結に扱うためのデータが格納されます。
+    //
+    // したがって、通常行う複雑な手続きが、リソースを呼び出すだけで一括して処理することが可能となり、外部リソースのやり取りが非常に楽になります。
+    // リソースの実体は整数値です。リソースは外部世界とのやり取りを実現するための数値データ（ハンドル）が格納されているハンドラです。
+    // このような特殊な型のため、他の型からリソース型への変換はできません。
+    // リソースへの参照が無くなった時点でそのリソースは自動的に削除されます。これにより、このリソースが作成した全てのリソースは開放され、同時にメモリも開放されます。
+    // 例えばデータベースのMySQLとやり取りを行うために、データベースへ接続するための特別な関数を動かし、結果を変数に格納しておきます。この変数はリソース型の変数となります。
+    // データベースを利用しているアプリケーションであれば、頻繁にデータベースを呼び出すことになりますが、その際、リソース型の変数を呼び出すだけでいつでもデータベースとやり取りが行えるようになります。この特別な変数がリソース型の変数です。
+    //
     public function addReadStream($stream, callable $listener)
     {
         $key = (int) $stream;
@@ -158,16 +174,27 @@ class SelectSplQueue implements SelectQueueInterface
 
     public function addTimer($interval, callable $callback)
     {
-        $timer = new QueueHasTimer($this, $interval, $callback, false);
+        // SelectQueueを操作できる＋タイマー
+        $timer = new QueueHasTimer(
+            selectQueue: $this,
+            interval: $interval,
+            callback: $callback,
+            periodic: false
+        );
 
-        $this->timers->add($timer);
+        $this->timers->add($timer); // SelectQueueを操作できる＋タイマーに入れる。
 
         return $timer;
     }
 
     public function addPeriodicTimer($interval, callable $callback)
     {
-        $timer = new QueueHasTimer($this, $interval, $callback, true);
+        $timer = new QueueHasTimer(
+            selectQueue: $this,
+            interval: $interval,
+            callback: $callback,
+            periodic: true
+        );
 
         $this->timers->add($timer);
 
@@ -222,7 +249,9 @@ class SelectSplQueue implements SelectQueueInterface
         $this->onBeforeSqlQueue->tick(); // [PHP SplQueue]
         $this->onAfterSqlQueue->tick(); // [PHP SplQueue]
         $this->timers->tick();
-        $this->waitForStreamActivity(0);
+        $this->waitForStreamActivity(
+            timeout: 0
+        );
 
         $this->flowController->isRunning = false;
     }
@@ -235,7 +264,7 @@ class SelectSplQueue implements SelectQueueInterface
             return;
         }
 
-        $this->addPeriodicTimer(1, function () {
+        $this->addPeriodicTimer(interval: 1, callback: function () {
             usleep(1);
         });
 
@@ -282,7 +311,7 @@ class SelectSplQueue implements SelectQueueInterface
             }
             // Timers -----
 
-            $this->waitForStreamActivity($timeout);
+            $this->waitForStreamActivity(timeout: $timeout);
         }
     }
 
@@ -378,7 +407,7 @@ class SelectSplQueue implements SelectQueueInterface
         $read  = $this->readStreams;
         $write = $this->writeStreams;
 
-        if ($this->streamSelect($read, $write, $timeout) === false) {
+        if ($this->streamSelect(read: $read, write: $write, timeout: $timeout) === false) {
             return;
         }
 
@@ -402,6 +431,7 @@ class SelectSplQueue implements SelectQueueInterface
     }
 
     /**
+     * 秒とマイクロ秒で指定されたタイムアウトで、指定されたストリームの配列で select() システムコールと同等のものを実行します
      * Emulate a stream_select() implementation that does not break when passed empty stream arrays.
      * https://php.net/manual/en/function.stream-select.php
      * @param array &$read
@@ -412,13 +442,15 @@ class SelectSplQueue implements SelectQueueInterface
      */
     private function streamSelect(array &$read, array &$write, $timeout)
     {
+        echo json_encode($read);
         if ($read || $write) {
             $except = null;
-
-            return @stream_select($read, $write, $except, $timeout === null ? null : 0, $timeout);
+            // 配列にリストされたストリーム read、文字が読み取り可能になるかどうかを確認するために監視されます.
+            // 配列にリストされたストリームはwrite、書き込みがブロックされないかどうかを確認するために監視されます。
+            // 配列にリストされたストリームは、except優先度の高い例外的な (「帯域外」) データの到着を監視されます。
+            // 変更された配列に含まれるストリーム リソースの数を返します。
+            return @stream_select(read: $read, write: $write, except: $except, seconds: $timeout === null ? null : 0, microseconds: $timeout);
         }
-
-        usleep($timeout);
 
         return 0;
     }
@@ -431,9 +463,9 @@ class SelectSplQueue implements SelectQueueInterface
     private function getTransferableProperties()
     {
         return [
-            'onBeforeSqlQueue'     => null,
-            'onAfterSqlQueue'   => null,
-            'flowController'    => null
+            'onBeforeSqlQueue'   => null,
+            'onAfterSqlQueue'  => null,
+            'flowController'  => null
         ];
     }
 
