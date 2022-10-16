@@ -2,7 +2,7 @@
 
 namespace DesignPattern\QueueDesign\QueueHasTimer;
 
-use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\SplQueue\QueueFeatureInterface;
 
 interface QueueHasTimerInterface
 {

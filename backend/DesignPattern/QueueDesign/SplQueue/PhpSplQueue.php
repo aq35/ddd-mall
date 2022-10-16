@@ -5,7 +5,7 @@ namespace DesignPattern\QueueDesign\SplQueue;
 use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 use SplQueue;
 
-// [PHP SplQueue]
+// [PHP SplQueue] PHP が提供する SplQueue が操作できるようになる
 class PhpSplQueue
 {
     /**

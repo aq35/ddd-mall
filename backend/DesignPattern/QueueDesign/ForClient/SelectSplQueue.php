@@ -11,7 +11,7 @@ use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerBox;
 use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerInterface;
 
 use DesignPattern\QueueDesign\FlowController;
-use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\SplQueue\QueueFeatureInterface;
 
 class SelectSplQueue implements SelectQueueInterface
 {
