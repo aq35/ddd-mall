@@ -7,35 +7,36 @@ use DesignPattern\QueueDesign\QueueExtendedInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 use DesignPattern\QueueDesign\Basequeue\QueueManagerInterface;
 
+// [QueueDesign] 本体クラス
 class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
 {
     /**
      * @var QueueManagerInterface|QueueFeatureInterface
      */
-    protected $myQueue;
+    protected $selectQueue;
 
     /**
      * @param QueueManagerInterface|QueueFeatureInterface
      */
-    public function __construct(QueueManagerInterface|QueueFeatureInterface $myQueue)
+    public function __construct(QueueManagerInterface|QueueFeatureInterface $selectQueue)
     {
-        $this->myQueue = $myQueue;
+        $this->selectQueue = $selectQueue;
     }
 
     public function __destruct()
     {
-        // unset($this->myQueue);
+        // unset($this->selectQueue);
     }
 
     public function getModel()
     {
-        return $this->myQueue;
+        return $this->selectQueue;
     }
 
 
     public function erase($all = false)
     {
-        $this->myQueue->erase($all);
+        $this->selectQueue->erase($all);
 
         return $this;
     }
@@ -43,7 +44,7 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
 
     public function export(QueueExtendedInterface $queueExtended, $all = false)
     {
-        $this->myQueue->export($queueExtended->getModel(), $all);
+        $this->selectQueue->export($queueExtended->getModel(), $all);
 
         return $this;
     }
@@ -51,7 +52,7 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
 
     public function import(QueueExtendedInterface $queueExtended, $all = false)
     {
-        $this->myQueue->import($queueExtended->getModel(), $all);
+        $this->selectQueue->import($queueExtended->getModel(), $all);
 
         return $this;
     }
@@ -59,7 +60,7 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
 
     public function swap(QueueExtendedInterface $queueExtended, $all = false)
     {
-        $this->myQueue->swap($queueExtended->getModel(), $all);
+        $this->selectQueue->swap($queueExtended->getModel(), $all);
 
         return $this;
     }
@@ -67,85 +68,85 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
 
     public function isRunning()
     {
-        return $this->myQueue->isRunning();
+        return $this->selectQueue->isRunning();
     }
 
 
     public function addReadStream($stream, callable $listener)
     {
-        $this->myQueue->addReadStream($stream, $listener);
+        $this->selectQueue->addReadStream($stream, $listener);
     }
 
 
     public function addWriteStream($stream, callable $listener)
     {
-        $this->myQueue->addWriteStream($stream, $listener);
+        $this->selectQueue->addWriteStream($stream, $listener);
     }
 
 
     public function removeReadStream($stream)
     {
-        $this->myQueue->removeReadStream($stream);
+        $this->selectQueue->removeReadStream($stream);
     }
 
 
     public function removeWriteStream($stream)
     {
-        $this->myQueue->removeWriteStream($stream);
+        $this->selectQueue->removeWriteStream($stream);
     }
 
 
     public function removeStream($stream)
     {
-        $this->myQueue->removeStream($stream);
+        $this->selectQueue->removeStream($stream);
     }
 
 
     public function addTimer($interval, callable $callback)
     {
-        return $this->myQueue->addTimer($interval, $callback);
+        return $this->selectQueue->addTimer($interval, $callback);
     }
 
 
     public function addPeriodicTimer($interval, callable $callback)
     {
-        return $this->myQueue->addPeriodicTimer($interval, $callback);
+        return $this->selectQueue->addPeriodicTimer($interval, $callback);
     }
 
 
     public function cancelTimer(TimerInterface $timer)
     {
-        $this->myQueue->cancelTimer($timer);
+        $this->selectQueue->cancelTimer($timer);
     }
 
 
     public function isTimerActive(TimerInterface $timer)
     {
-        return $this->myQueue->isTimerActive($timer);
+        return $this->selectQueue->isTimerActive($timer);
     }
 
 
     public function onStart(callable $listener)
     {
-        $this->myQueue->onStart($listener);
+        $this->selectQueue->onStart($listener);
     }
 
 
     public function onStop(callable $listener)
     {
-        $this->myQueue->onStop($listener);
+        $this->selectQueue->onStop($listener);
     }
 
 
     public function onTick(callable $listener)
     {
-        $this->myQueue->onAfterTick($listener);
+        $this->selectQueue->onAfterTick($listener);
     }
 
 
     public function onBeforeTick(callable $listener)
     {
-        $this->myQueue->onBeforeTick($listener);
+        $this->selectQueue->onBeforeTick($listener);
     }
 
     /**
@@ -155,36 +156,36 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
      */
     public function onAfterTick(callable $listener)
     {
-        $this->myQueue->onAfterTick($listener);
+        $this->selectQueue->onAfterTick($listener);
     }
 
 
     public function tick()
     {
-        $this->myQueue->tick();
+        $this->selectQueue->tick();
     }
 
 
     public function start()
     {
-        $this->myQueue->start();
+        $this->selectQueue->start();
     }
 
 
     public function stop()
     {
-        $this->myQueue->stop();
+        $this->selectQueue->stop();
     }
 
 
     public function setFlowController($flowController)
     {
-        $this->myQueue->setFlowController($flowController);
+        $this->selectQueue->setFlowController($flowController);
     }
 
 
     public function getFlowController()
     {
-        return $this->myQueue->getFlowController();
+        return $this->selectQueue->getFlowController();
     }
 }

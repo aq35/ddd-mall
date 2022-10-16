@@ -12,10 +12,9 @@ use DesignPattern\QueueDesign\Timer\TimerBox;
 use DesignPattern\QueueDesign\Timer\TimerInterface;
 
 use DesignPattern\QueueDesign\FlowController;
-
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
-class SelectQueueDesign implements QueueFeatureInterface, QueueManagerInterface
+class SelectSplQueue implements QueueFeatureInterface, QueueManagerInterface
 {
     /**
      * @var int

@@ -4,7 +4,8 @@ namespace DesignPattern\QueueDesign\BaseQueue;
 
 use DesignPattern\QueueDesign\Timer\TimerInterface;
 
-// QueueDesign の状態管理
+// [QueueDesign] QueueManagerInterface QueueDesign の状態管理を担当します。
+// QueueManagerInterface は、Queueサービス の操作系を持ちません。
 interface QueueManagerInterface
 {
     /**
