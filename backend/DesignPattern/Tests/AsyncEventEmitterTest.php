@@ -22,6 +22,15 @@ final class AsyncEventEmitterTest extends TestCase
         $asyncEmitter->getQueue()->onStart(function () use ($asyncEmitter, $i) {
             echo "\e[31m [$i 番目] onStart \e[m" . "\n";
         });
+        $i += 1;
+        $asyncEmitter->getQueue()->onStart(function () use ($asyncEmitter, $i) {
+            echo "\e[31m [$i 番目] onStart \e[m" . "\n";
+        });
+
+        $i += 1;
+        $asyncEmitter->getQueue()->onBeforeTick(function () use ($asyncEmitter, $i) {
+            echo "\e[31m [$i 番目] onBeforeTick \e[m" . "\n";
+        });
 
         $i += 1;
         $asyncEmitter->getQueue()->onBeforeTick(function () use ($asyncEmitter, $i) {
@@ -48,11 +57,6 @@ final class AsyncEventEmitterTest extends TestCase
         $i += 1;
         $asyncEmitter->getQueue()->onAfterTick(function () use ($asyncEmitter, $i) {
             echo "\e[31m [$i 番目] onAfterTick \e[m" . "\n";
-        });
-
-        $i += 1;
-        $asyncEmitter->getQueue()->onTick(function () use ($asyncEmitter, $i) {
-            echo "\e[31m [$i 番目] onTick \e[m" . "\n";
         });
 
         $i += 1;

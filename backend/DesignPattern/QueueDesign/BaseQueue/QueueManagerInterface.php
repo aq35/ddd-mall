@@ -136,7 +136,4 @@ interface QueueManagerInterface
      * @param callable $listener
      */
     public function onAfterTick(callable $listener);
-
-
-    public function onTick(callable $listener);
 }
