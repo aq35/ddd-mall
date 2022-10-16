@@ -264,7 +264,8 @@ class SelectSplQueue implements SelectQueueInterface
             // 例) new AsyncEventEmitter()->getQueue()->onAfterTick();
             $this->onAfterSqlQueue->tick(); // [PHP SplQueue]
 
-            $this->timers->tick(); // [PHP SplQueue]
+            // Timers -----
+            $this->timers->tick();
 
             // 次ティックまたは将来ティックのキューには、保留中のコールバックがあります
             // Next-tick or future-tick queues have pending callbacks ...
@@ -287,6 +288,7 @@ class SelectSplQueue implements SelectQueueInterface
             else {
                 break;
             }
+            // Timers -----
 
             $this->waitForStreamActivity($timeout);
         }
