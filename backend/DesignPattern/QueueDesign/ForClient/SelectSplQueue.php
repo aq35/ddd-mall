@@ -40,6 +40,7 @@ class SelectSplQueue implements SelectQueueInterface
     protected $nextSqlQueue;
 
     /**
+     * [PHP SplQueue]
      * @var FiniteSplQueue
      */
     protected $fititeSqlQueue;
@@ -196,26 +197,26 @@ class SelectSplQueue implements SelectQueueInterface
         return $this->timers->contains($timer);
     }
 
-
+    // [PHP SplQueue]
     public function onStart(callable $listener)
     {
         $this->startSqlQueue->add($listener);
     }
 
-
+    // [PHP SplQueue]
     public function onStop(callable $listener)
     {
         $this->stopSplQueue->add($listener);
     }
 
-
+    // [PHP SplQueue]
     public function onBeforeTick(callable $listener)
     {
         $this->nextSqlQueue->add($listener);
     }
 
     /**
-     * [キュー構造] SplQueue　add enqueue
+     * [PHP SplQueue]
      * @override
      * @inheritDoc
      */
@@ -229,8 +230,8 @@ class SelectSplQueue implements SelectQueueInterface
     {
         $this->flowController->isRunning = true;
 
-        $this->nextSqlQueue->tick();
-        $this->fititeSqlQueue->tick();
+        $this->nextSqlQueue->tick(); // [PHP SplQueue]
+        $this->fititeSqlQueue->tick(); // [PHP SplQueue]
         $this->timers->tick();
         $this->waitForStreamActivity(0);
 
@@ -255,11 +256,11 @@ class SelectSplQueue implements SelectQueueInterface
         $this->startSqlQueue->tick();
 
         while ($this->flowController->isRunning) {
-            $this->nextSqlQueue->tick();
+            $this->nextSqlQueue->tick(); // [PHP SplQueue]
 
-            $this->fititeSqlQueue->tick();
+            $this->fititeSqlQueue->tick(); // [PHP SplQueue]
 
-            $this->timers->tick();
+            $this->timers->tick(); // [PHP SplQueue]
 
             // 次ティックまたは将来ティックのキューには、保留中のコールバックがあります
             // Next-tick or future-tick queues have pending callbacks ...
@@ -293,7 +294,7 @@ class SelectSplQueue implements SelectQueueInterface
             return;
         }
 
-        $this->stopSplQueue->tick();
+        $this->stopSplQueue->tick(); // [PHP SplQueue]
         $this->flowController->isRunning = false;
     }
 
