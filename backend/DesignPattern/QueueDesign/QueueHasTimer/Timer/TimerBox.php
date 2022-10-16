@@ -2,8 +2,9 @@
 
 namespace DesignPattern\QueueDesign\QueueHasTimer\Timer;
 
-use SplObjectStorage;
-use SplPriorityQueue;
+
+use SplObjectStorage; // [SplObjectStorage] ユニークなオブジェクトにする
+use SplPriorityQueue; // [SplPriorityQueue] 優先順位つきキューの主要な機能を提供します。 最大ヒープを使用して実装しています。
 use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerInterface;
 
 class TimerBox
@@ -23,13 +24,10 @@ class TimerBox
      */
     protected $scheduler;
 
-    /**
-     *
-     */
     public function __construct()
     {
-        $this->timers = new SplObjectStorage();
-        $this->scheduler = new SplPriorityQueue();
+        $this->timers = new SplObjectStorage(); // [SplObjectStorage]
+        $this->scheduler = new SplPriorityQueue(); // [SplPriorityQueue]
     }
 
     /**
@@ -54,7 +52,9 @@ class TimerBox
      */
     public function contains(TimerInterface $timer)
     {
-        return $this->timers->contains($timer);
+        return $this->timers->contains(
+            object: $timer
+        ); // [SplObjectStorage] ストレージに特定のオブジェクトが含まれるかどうかを調べる
     }
 
     /**
@@ -64,9 +64,22 @@ class TimerBox
     {
         $interval = $timer->getInterval();
         $scheduledAt = $interval + $this->getTime();
+        // [SplObjectStorage] オブジェクトをストレージに追加する
+        $this->timers->attach(
+            object: $timer,
+            info: $scheduledAt
+        );
 
-        $this->timers->attach($timer, $scheduledAt);
-        $this->scheduler->insert($timer, -$scheduledAt);
+        // [SplObjectStorage] キューに要素を挿入する
+        // priority
+        // 数字が大きいほど、優先される。
+        // 時間は経てば経つほど大きい数字になる。
+        // 今回、[scheduler]は、優先順位は、時間が早い方を優先したい。
+        // priorityは、 -$scheduledAt をセットする。
+        $this->scheduler->insert(
+            value: $timer,
+            priority: -$scheduledAt
+        );
     }
 
     /**
@@ -74,24 +87,28 @@ class TimerBox
      */
     public function remove(TimerInterface $timer)
     {
-        $this->timers->detach($timer);
+        $this->timers->detach($timer); // [SplObjectStorage] オブジェクトをストレージから取り除く
     }
 
     /**
+     * 優先順位の高いTimerをスケジュールから取り出します。
      * @return null|bool|int|float|string
      */
     public function getFirst()
     {
         while ($this->scheduler->count()) {
+            // 優先度が高いものから取り出す。
             $timer = $this->scheduler->top();
 
-            if ($this->timers->contains($timer)) {
+            if ($this->timers->contains($timer)) { // [SplObjectStorage] ストレージに特定のオブジェクトが含まれるかどうかを調べる
                 return $this->timers[$timer];
             }
 
+            // $timersに存在しない$timerは削除する。
             $this->scheduler->extract();
         }
 
+        // schedulerには何もなかった。
         return null;
     }
 
@@ -103,29 +120,26 @@ class TimerBox
         return count($this->timers) === 0;
     }
 
-    /**
-     *
-     */
     public function tick()
     {
-        $time = $this->updateTime();
+        $time = $this->updateTime(); // 時間を進める。
         $timers = $this->timers;
         $scheduler = $this->scheduler;
 
         while (!$scheduler->isEmpty()) {
             $timer = $scheduler->top();
 
-            if (!isset($timers[$timer])) {
-                $scheduler->extract();
-                $timers->detach($timer);
+            if (!isset($timers[$timer])) { // $timersに、$timerがない場合、$timerを削除していく。
+                $scheduler->extract(); // $timerが削除される。
+                $timers->detach($timer); // [SplObjectStorage] オブジェクトをストレージから取り除く
                 continue;
             }
 
-            if ($timers[$timer] >= $time) {
+            if ($timers[$timer] >= $time) { // $timeより、$timerの中身が大きい場合、実行するものがない
                 break;
             }
 
-            $scheduler->extract();
+            $scheduler->extract(); // スケジュールの中身を削除する。
 
             $callback = $timer->getCallback();
             $callback($timer);
@@ -134,7 +148,7 @@ class TimerBox
                 $timers[$timer] = $scheduledAt = $timer->getInterval() + $time;
                 $scheduler->insert($timer, -$scheduledAt);
             } else {
-                $timers->detach($timer);
+                $timers->detach($timer); // [SplObjectStorage] オブジェクトをストレージから取り除く
             }
         }
     }

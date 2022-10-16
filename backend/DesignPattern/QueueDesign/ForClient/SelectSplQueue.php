@@ -105,12 +105,10 @@ class SelectSplQueue implements SelectQueueInterface
         unset($this->writeListeners);
     }
 
-
     public function isRunning()
     {
         return isset($this->flowController->isRunning) ? $this->flowController->isRunning : false;
     }
-
 
     public function addReadStream($stream, callable $listener)
     {
@@ -122,7 +120,6 @@ class SelectSplQueue implements SelectQueueInterface
         }
     }
 
-
     public function addWriteStream($stream, callable $listener)
     {
         $key = (int) $stream;
@@ -132,7 +129,6 @@ class SelectSplQueue implements SelectQueueInterface
             $this->writeListeners[$key] = $listener;
         }
     }
-
 
     public function removeReadStream($stream)
     {
@@ -144,7 +140,6 @@ class SelectSplQueue implements SelectQueueInterface
         );
     }
 
-
     public function removeWriteStream($stream)
     {
         $key = (int) $stream;
@@ -155,13 +150,11 @@ class SelectSplQueue implements SelectQueueInterface
         );
     }
 
-
     public function removeStream($stream)
     {
         $this->removeReadStream($stream);
         $this->removeWriteStream($stream);
     }
-
 
     public function addTimer($interval, callable $callback)
     {
@@ -172,7 +165,6 @@ class SelectSplQueue implements SelectQueueInterface
         return $timer;
     }
 
-
     public function addPeriodicTimer($interval, callable $callback)
     {
         $timer = new QueueHasTimer($this, $interval, $callback, true);
@@ -181,7 +173,6 @@ class SelectSplQueue implements SelectQueueInterface
 
         return $timer;
     }
-
 
     public function cancelTimer(TimerInterface $timer)
     {
@@ -271,8 +262,9 @@ class SelectSplQueue implements SelectQueueInterface
             if (!$this->flowController->isRunning || !$this->onBeforeSqlQueue->isEmpty() || !$this->onAfterSqlQueue->isEmpty()) {
                 $timeout = 0;
             }
-            // 保留中のタイマーがあり、期限が来るまでブロックするだけです...
+            // 保留中のタイマーがあり、期限が来るまでブロックする
             // There is a pending timer, only block until it is due ...
+            // 優先順位の高い保留中のタイマー取り出す。Timerが取り出せるまで
             else if ($scheduledAt = $this->timers->getFirst()) {
                 $timeout = $scheduledAt - $this->timers->getTime();
                 $timeout = ($timeout < 0) ? 0 : $timeout * self::MICROSECONDS_PER_SECOND;
@@ -285,6 +277,7 @@ class SelectSplQueue implements SelectQueueInterface
             // やることがなくなった...
             // There's nothing left to do ...
             else {
+                // whileを抜ける。
                 break;
             }
             // Timers -----
