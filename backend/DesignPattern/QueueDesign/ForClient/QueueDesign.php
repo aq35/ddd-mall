@@ -2,12 +2,12 @@
 
 namespace DesignPattern\QueueDesign\ForClient;
 
-use DesignPattern\QueueDesign\BaseQueue\QueueManagerExtendedInterface;
 use DesignPattern\QueueDesign\Timer\TimerInterface;
 use DesignPattern\QueueDesign\ForClient\SelectQueueInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
 // [QueueDesign] 本体クラス
-class QueueDesign implements QueueManagerExtendedInterface
+class QueueDesign implements SelectQueueInterface
 {
     /**
      * @var SelectQueueInterface
@@ -32,7 +32,6 @@ class QueueDesign implements QueueManagerExtendedInterface
         return $this->selectQueue;
     }
 
-
     public function erase($all = false)
     {
         $this->selectQueue->erase($all);
@@ -40,8 +39,8 @@ class QueueDesign implements QueueManagerExtendedInterface
         return $this;
     }
 
-
-    public function export(QueueManagerExtendedInterface $queueExtended, $all = false)
+    // 機能
+    public function export(QueueFeatureInterface $queueExtended, $all = false)
     {
         $this->selectQueue->export($queueExtended->getModel(), $all);
 
@@ -49,7 +48,7 @@ class QueueDesign implements QueueManagerExtendedInterface
     }
 
 
-    public function import(QueueManagerExtendedInterface $queueExtended, $all = false)
+    public function import(QueueFeatureInterface $queueExtended, $all = false)
     {
         $this->selectQueue->import($queueExtended->getModel(), $all);
 
@@ -57,14 +56,14 @@ class QueueDesign implements QueueManagerExtendedInterface
     }
 
 
-    public function swap(QueueManagerExtendedInterface $queueExtended, $all = false)
+    public function swap(QueueFeatureInterface $queueExtended, $all = false)
     {
         $this->selectQueue->swap($queueExtended->getModel(), $all);
 
         return $this;
     }
 
-
+    // ループが現在実行されているかどうかを確認します
     public function isRunning()
     {
         return $this->selectQueue->isRunning();

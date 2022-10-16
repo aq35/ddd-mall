@@ -16,6 +16,7 @@ use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
 class SelectSplQueue implements SelectQueueInterface
 {
+
     /**
      * @var int
      */
@@ -282,7 +283,6 @@ class SelectSplQueue implements SelectQueueInterface
         }
     }
 
-
     public function stop()
     {
         if (!$this->flowController->isRunning) {
@@ -437,5 +437,10 @@ class SelectSplQueue implements SelectQueueInterface
     public function onTick(callable $listener)
     {
         $this->sqlQueue->onAfterTick($listener);
+    }
+
+    public function getModel()
+    {
+        return $this;
     }
 }

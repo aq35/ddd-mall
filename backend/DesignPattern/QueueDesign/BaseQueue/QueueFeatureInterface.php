@@ -10,6 +10,8 @@ use Dazzle\QueueDesign\Flow\FlowController;
 // 実際には、QueueFeatureInterfaceは、どんなQueueサービスを使っているかは考えなくて良い。
 interface QueueFeatureInterface
 {
+    public function getModel();
+
     /**
      * Perform a single iteration of the event Queue.
      */
