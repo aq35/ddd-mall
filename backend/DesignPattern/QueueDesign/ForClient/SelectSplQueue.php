@@ -448,4 +448,9 @@ class SelectSplQueue implements SelectQueueInterface
     {
         return $this;
     }
+
+    public function onTick(callable $listener)
+    {
+        return $this->tick($listener);
+    }
 }
