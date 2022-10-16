@@ -105,8 +105,8 @@ class SelectSplQueue implements SelectQueueInterface
         unset($this->timers);
         unset($this->readStreams);
         unset($this->readListeners);
-        unset($this->writeStreams);
-        unset($this->writeListeners);
+        unset($this->writeStreams); // [PHPリソース]
+        unset($this->writeListeners); // [PHPリソース]
     }
 
     public function isRunning()
@@ -403,6 +403,7 @@ class SelectSplQueue implements SelectQueueInterface
             return;
         }
 
+        // 読み込み用
         foreach ($read as $stream) {
             $key = (int) $stream;
 
@@ -412,6 +413,7 @@ class SelectSplQueue implements SelectQueueInterface
             }
         }
 
+        // 書き込み用
         foreach ($write as $stream) {
             $key = (int) $stream;
 

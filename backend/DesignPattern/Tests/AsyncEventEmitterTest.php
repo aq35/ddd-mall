@@ -59,11 +59,6 @@ final class AsyncEventEmitterTest extends TestCase
             echo "\e[31m [$i 番目] onAfterTick \e[m" . "\n";
         });
 
-        // $i += 1;
-        // $asyncEmitter->getQueue()->addReadStream(10, function () use ($asyncEmitter, $i) {
-        //     echo "\e[31m [$i 番目] addReadStream \e[m" . "\n";
-        // });
-
         $i += 1;
         $asyncEmitter->getQueue()->addPeriodicTimer(1e-6, function () use ($asyncEmitter, $i) {
             echo "\e[31m [$i 番目] PeriodicTimer \e[m" . "\n";
@@ -73,6 +68,30 @@ final class AsyncEventEmitterTest extends TestCase
         $i += 1;
         $asyncEmitter->getQueue()->onStop(function () use ($asyncEmitter, $i) {
             echo "\e[31m [$i 番目] onStop \e[m" . "\n";
+        });
+
+        // ファイル操作
+        $stream = fopen("./DesignPattern/Tests/StreamText.txt", "r");
+        $i += 1;
+        $asyncEmitter->getQueue()->addReadStream($stream, function () use ($stream, $asyncEmitter, $i) {
+            echo $stream . "\n"; // Resource id
+            if (filesize("./DesignPattern/Tests/StreamText.txt")) {
+                $mes = fread($stream, filesize("./DesignPattern/Tests/StreamText.txt"));
+                fclose($stream);
+                echo $mes;
+                echo "\e[31m [$i 番目] addReadStream \e[m" . "\n";
+            }
+        });
+
+        // ファイル操作
+        $stream = fopen("./DesignPattern/Tests/StreamText.txt", 'w');
+        $i += 1;
+        $asyncEmitter->getQueue()->addWriteStream($stream, function () use ($stream, $asyncEmitter, $i) {
+            echo $stream . "\n"; // Resource id
+            $message = "あいうえお\n";
+            fwrite($stream, $message); // ファイルに書き込む
+            fclose($stream);
+            echo "\e[31m [$i 番目] addWriteStream \e[m" . "\n";
         });
 
         $asyncEmitter->getQueue()->start();
