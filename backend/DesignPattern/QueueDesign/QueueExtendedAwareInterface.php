@@ -2,21 +2,21 @@
 
 namespace DesignPattern\QueueDesign;
 
-use DesignPattern\QueueDesign\QueueExtendedInterface;
+use DesignPattern\QueueDesign\QueueManagerExtendedInterface;
 
 interface QueueExtendedAwareInterface
 {
     /**
      * Set the Queue of which object is aware of.
      *
-     * @param QueueExtendedInterface|null $queue
+     * @param QueueManagerExtendedInterface|null $queue
      */
-    public function setQueue(QueueExtendedInterface $queue = null);
+    public function setQueue(QueueManagerExtendedInterface $queue = null);
 
     /**
      * Return the Queue of which object is aware of.
      *
-     * @return QueueExtendedInterface|null
+     * @return QueueManagerExtendedInterface|null
      */
     public function getQueue();
 }

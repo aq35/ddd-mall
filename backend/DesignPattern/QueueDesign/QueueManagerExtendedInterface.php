@@ -7,8 +7,8 @@ use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
 // [QueueDesign] の状態管理 QueueManagerInterface の拡張
-// @return QueueExtendedInterface　... $this 返す時と同じで メソッドチェーンができる。
-interface QueueExtendedInterface extends QueueManagerInterface
+// @return QueueManagerExtendedInterface... $this 返す時と同じで メソッドチェーンができる。
+interface QueueManagerExtendedInterface extends QueueManagerInterface
 {
     /**
      * @return QueueFeatureInterface
@@ -49,34 +49,34 @@ interface QueueExtendedInterface extends QueueManagerInterface
      * Erase Queue.
      *
      * @param bool $all
-     * @return QueueExtendedInterface
+     * @return QueueManagerExtendedInterface
      */
     public function erase($all = false);
 
     /**
      * Export Queue not fired handlers and/or streams to another Queue model.
      *
-     * @param QueueExtendedInterface $selectQueue
+     * @param QueueManagerExtendedInterface $selectQueue
      * @param bool $all
-     * @return QueueExtendedInterface
+     * @return QueueManagerExtendedInterface
      */
-    public function export(QueueExtendedInterface $selectQueue, $all = false);
+    public function export(QueueManagerExtendedInterface $selectQueue, $all = false);
 
     /**
      * Import handlers and/or streams from another Queue model.
      *
-     * @param QueueExtendedInterface $selectQueue
+     * @param QueueManagerExtendedInterface $selectQueue
      * @param bool $all
-     * @return QueueExtendedInterface
+     * @return QueueManagerExtendedInterface
      */
-    public function import(QueueExtendedInterface $selectQueue, $all = false);
+    public function import(QueueManagerExtendedInterface $selectQueue, $all = false);
 
     /**
      * Swap handlers and/or stream between Queue models.
      *
-     * @param QueueExtendedInterface $selectQueue
+     * @param QueueManagerExtendedInterface $selectQueue
      * @param bool $all
-     * @return QueueExtendedInterface
+     * @return QueueManagerExtendedInterface
      */
-    public function swap(QueueExtendedInterface $selectQueue, $all = false);
+    public function swap(QueueManagerExtendedInterface $selectQueue, $all = false);
 }

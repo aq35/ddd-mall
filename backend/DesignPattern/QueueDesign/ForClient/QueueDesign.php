@@ -2,13 +2,13 @@
 
 namespace DesignPattern\QueueDesign\ForClient;
 
+use DesignPattern\QueueDesign\QueueManagerExtendedInterface;
 use DesignPattern\QueueDesign\Timer\TimerInterface;
-use DesignPattern\QueueDesign\QueueExtendedInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 use DesignPattern\QueueDesign\Basequeue\QueueManagerInterface;
 
 // [QueueDesign] 本体クラス
-class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
+class QueueDesign implements QueueManagerExtendedInterface
 {
     /**
      * @var QueueManagerInterface|QueueFeatureInterface
@@ -42,7 +42,7 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
     }
 
 
-    public function export(QueueExtendedInterface $queueExtended, $all = false)
+    public function export(QueueManagerExtendedInterface $queueExtended, $all = false)
     {
         $this->selectQueue->export($queueExtended->getModel(), $all);
 
@@ -50,7 +50,7 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
     }
 
 
-    public function import(QueueExtendedInterface $queueExtended, $all = false)
+    public function import(QueueManagerExtendedInterface $queueExtended, $all = false)
     {
         $this->selectQueue->import($queueExtended->getModel(), $all);
 
@@ -58,7 +58,7 @@ class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
     }
 
 
-    public function swap(QueueExtendedInterface $queueExtended, $all = false)
+    public function swap(QueueManagerExtendedInterface $queueExtended, $all = false)
     {
         $this->selectQueue->swap($queueExtended->getModel(), $all);
 
