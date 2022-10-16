@@ -2,7 +2,7 @@
 
 namespace DesignPattern\QueueDesign\ForClient;
 
-use DesignPattern\QueueDesign\ForClient\SelectQueueInterface;
+use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 
 // クライアントに [QueueDesign] QueueManager 状態管理 のアクセスを提供する
 interface QueueManagerForClientInterface

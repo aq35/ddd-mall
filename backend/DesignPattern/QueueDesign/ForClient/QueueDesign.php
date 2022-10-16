@@ -3,7 +3,7 @@
 namespace DesignPattern\QueueDesign\ForClient;
 
 use DesignPattern\QueueDesign\Timer\TimerInterface;
-use DesignPattern\QueueDesign\ForClient\SelectQueueInterface;
+use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
 // [QueueDesign] 本体クラス

@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\QueueDesign\ForClient;
+namespace DesignPattern\QueueDesign\SplQueue;
 
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;

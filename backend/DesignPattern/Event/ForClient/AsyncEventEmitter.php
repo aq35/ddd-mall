@@ -8,9 +8,7 @@ use DesignPattern\Event\Contract\EventEmitterInterface;
 use DesignPattern\QueueDesign\ForClient\QueueManagerForClientInterface;
 use DesignPattern\QueueDesign\ForClient\QueueDesign;
 use DesignPattern\QueueDesign\ForClient\SelectSplQueue;
-use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
-use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
-use DesignPattern\QueueDesign\ForClient\SelectQueueInterface;
+use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 
 // 並列式EventEmitter
 class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, QueueManagerForClientInterface
@@ -30,7 +28,7 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
      * [QueueDesign]の状態管理
      * @see QueueAwareInterface::setQueue
      */
-    public function setQueue(QueueManagerInterface|QueueFeatureInterface $queue = null)
+    public function setQueue(SelectQueueInterface $queue = null)
     {
         $this->queue = $queue;
     }
@@ -39,7 +37,7 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
      * [QueueDesign]の状態管理
      * @see QueueAwareInterface::getQueue
      */
-    public function getQueue(): QueueManagerInterface|QueueFeatureInterface
+    public function getQueue(): SelectQueueInterface
     {
         return $this->queue;
     }
