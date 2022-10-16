@@ -75,6 +75,7 @@ class PhpSplQueue
     }
 
     /**
+     * 次のキューがないか確認する
      * Check if the next tick queue is empty.
      *
      * @return boolean

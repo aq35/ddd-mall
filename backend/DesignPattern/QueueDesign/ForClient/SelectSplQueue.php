@@ -6,9 +6,9 @@ use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 use DesignPattern\QueueDesign\SplQueue\ContinousSplQueue;
 use DesignPattern\QueueDesign\SplQueue\FiniteSplQueue;
 
-use DesignPattern\QueueDesign\Timer\Timer;
-use DesignPattern\QueueDesign\Timer\TimerBox;
-use DesignPattern\QueueDesign\Timer\TimerInterface;
+use DesignPattern\QueueDesign\QueueHasTimer\QueueHasTimer;
+use DesignPattern\QueueDesign\QueueHasTimer\TimerBox;
+use DesignPattern\QueueDesign\QueueHasTimer\TimerInterface;
 
 use DesignPattern\QueueDesign\FlowController;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
@@ -165,7 +165,7 @@ class SelectSplQueue implements SelectQueueInterface
 
     public function addTimer($interval, callable $callback)
     {
-        $timer = new Timer($this, $interval, $callback, false);
+        $timer = new QueueHasTimer($this, $interval, $callback, false);
 
         $this->timers->add($timer);
 
@@ -175,7 +175,7 @@ class SelectSplQueue implements SelectQueueInterface
 
     public function addPeriodicTimer($interval, callable $callback)
     {
-        $timer = new Timer($this, $interval, $callback, true);
+        $timer = new QueueHasTimer($this, $interval, $callback, true);
 
         $this->timers->add($timer);
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace DesignPattern\QueueDesign\Timer;
+namespace DesignPattern\QueueDesign\QueueHasTimer;
 
-use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
-use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 
-class Timer implements TimerInterface
+// [QueueHasTimer]
+class QueueHasTimer implements TimerInterface
 {
     /**
      * @var float
@@ -13,7 +13,7 @@ class Timer implements TimerInterface
     const MIN_INTERVAL = 1e-6;
 
     /**
-     * @var QueueFeatureInterface|QueueManagerInterface
+     * @var SelectQueueInterface
      */
     protected $selectQueue;
 
@@ -38,13 +38,13 @@ class Timer implements TimerInterface
     protected $data;
 
     /**
-     * @param QueueFeatureInterface|QueueManagerInterface $selectQueue
+     * @param SelectQueueInterface $selectQueue
      * @param float $interval
      * @param callable $callback
      * @param bool $periodic
      * @param mixed|null $data
      */
-    public function __construct(QueueFeatureInterface|QueueManagerInterface $selectQueue, float $interval, callable $callback, $periodic = false, $data = null)
+    public function __construct(SelectQueueInterface $selectQueue, float $interval, callable $callback, $periodic = false, $data = null)
     {
         if ($interval < self::MIN_INTERVAL) {
             $interval = self::MIN_INTERVAL;
@@ -70,7 +70,7 @@ class Timer implements TimerInterface
     }
 
 
-    public function getQueue()
+    public function getQueue(): SelectQueueInterface
     {
         return $this->selectQueue;
     }

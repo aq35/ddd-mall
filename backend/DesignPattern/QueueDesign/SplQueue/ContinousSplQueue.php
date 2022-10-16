@@ -12,7 +12,6 @@ class ContinousSplQueue extends PhpSplQueue
      * tick() が呼び出されたときにキューにあったコールバックと、新しく追加されたコールバックを呼び出します。
      * Invokes callbacks which were on the queue when tick() was called and newly added ones.
      *
-     * tickとは、時間のごくわずかな隙間、須臾(しゅゆ)のことだろうか
      * Queueのコールバック(関数)をある分だけ実行します。
      * dequeue() は、queueが空だと、RuntimeExceptionを投げる
      */
