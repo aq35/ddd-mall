@@ -2,23 +2,22 @@
 
 namespace DesignPattern\QueueDesign\ForClient;
 
-use DesignPattern\QueueDesign\QueueManagerExtendedInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerExtendedInterface;
 use DesignPattern\QueueDesign\Timer\TimerInterface;
-use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
-use DesignPattern\QueueDesign\Basequeue\QueueManagerInterface;
+use DesignPattern\QueueDesign\ForClient\SelectQueueInterface;
 
 // [QueueDesign] 本体クラス
 class QueueDesign implements QueueManagerExtendedInterface
 {
     /**
-     * @var QueueManagerInterface|QueueFeatureInterface
+     * @var SelectQueueInterface
      */
     protected $selectQueue;
 
     /**
-     * @param QueueManagerInterface|QueueFeatureInterface
+     * @param SelectQueueInterface
      */
-    public function __construct(QueueManagerInterface|QueueFeatureInterface $selectQueue)
+    public function __construct(SelectQueueInterface $selectQueue)
     {
         $this->selectQueue = $selectQueue;
     }

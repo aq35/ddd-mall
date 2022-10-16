@@ -5,17 +5,18 @@ namespace DesignPattern\Event\ForClient;
 use DesignPattern\Event\Contract\EventEmitterInterface;
 
 // [QueueDesign] が使えるようになる
-use DesignPattern\QueueDesign\ForClient\QueueDesignAwareInterface;
-use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
-use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\ForClient\QueueManagerForClientInterface;
 use DesignPattern\QueueDesign\ForClient\QueueDesign;
 use DesignPattern\QueueDesign\ForClient\SelectSplQueue;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\ForClient\SelectQueueInterface;
 
 // 並列式EventEmitter
-class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, QueueDesignAwareInterface
+class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, QueueManagerForClientInterface
 {
     /**
-     * @var QueueManagerInterface|QueueFeatureInterface|null
+     * @var SelectQueueInterface|null
      */
     protected $queue = null;
 

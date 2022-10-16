@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\QueueDesign;
+namespace DesignPattern\QueueDesign\BaseQueue;
 
 use DesignPattern\QueueDesign\FlowController;
 use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
@@ -16,20 +16,22 @@ interface QueueManagerExtendedInterface extends QueueManagerInterface
     public function getModel();
 
     /**
+     * QueueFeatureInterface
      * Perform a single iteration of the event Queue.
      */
     public function tick();
 
     /**
+     * QueueFeatureInterface
      * Run the Queue until there are no more tasks to perform.
      */
     public function start();
 
     /**
+     * QueueFeatureInterface
      * Instruct a running event Queue to stop.
      */
     public function stop();
-
 
     /**
      * Set FlowController used by model.
