@@ -2,7 +2,7 @@
 
 namespace DesignPattern\Queue\ForClient;
 
-use DesignPattern\Queue\BaseQueue\QueueInterface;
+use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
 
 use DesignPattern\Queue\SplQueue\ContinousSplQueue;
 use DesignPattern\Queue\SplQueue\FiniteSplQueue;
@@ -15,7 +15,7 @@ use DesignPattern\Queue\FlowController;
 
 use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
 
-class SelectQueue implements QueueFeatureInterface, QueueInterface
+class SelectQueue implements QueueFeatureInterface, QueueManagerInterface
 {
     /**
      * @var int

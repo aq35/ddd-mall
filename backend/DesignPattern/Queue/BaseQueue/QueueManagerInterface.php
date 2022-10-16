@@ -4,7 +4,8 @@ namespace DesignPattern\Queue\BaseQueue;
 
 use DesignPattern\Queue\Timer\TimerInterface;
 
-interface QueueInterface
+// Queueの状態管理
+interface QueueManagerInterface
 {
     /**
      * ループが現在実行されているかどうかを確認します

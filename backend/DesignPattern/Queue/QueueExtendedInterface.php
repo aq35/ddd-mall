@@ -3,9 +3,10 @@
 namespace DesignPattern\Queue;
 
 use DesignPattern\Queue\FlowController;
-use DesignPattern\Queue\BaseQueue\QueueInterface;
+use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
+use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
 
-interface QueueExtendedInterface extends QueueInterface
+interface QueueExtendedInterface extends QueueManagerInterface
 {
     /**
      * @return QueueFeatureInterface

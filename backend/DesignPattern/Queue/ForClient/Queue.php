@@ -2,23 +2,23 @@
 
 namespace DesignPattern\queue\ForClient;
 
-use DesignPattern\queue\Basequeue\QueueInterface;
-
-use DesignPattern\queue\Timer\TimerInterface;
-use DesignPattern\queue\queueExtendedInterface;
+use DesignPattern\Queue\Timer\TimerInterface;
+use DesignPattern\Queue\QueueExtendedInterface;
 use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
+use DesignPattern\Queue\Basequeue\QueueManagerInterface;
 
-class Queue implements queueExtendedInterface, QueueInterface
+
+class Queue implements QueueExtendedInterface, QueueManagerInterface
 {
     /**
-     * @var QueueInterface|QueueFeatureInterface
+     * @var QueueManagerInterface|QueueFeatureInterface
      */
     protected $queue;
 
     /**
-     * @param QueueInterface| QueueFeatureInterface
+     * @param QueueManagerInterface|QueueFeatureInterface
      */
-    public function __construct(QueueInterface|QueueFeatureInterface $queue)
+    public function __construct(QueueManagerInterface|QueueFeatureInterface $queue)
     {
         $this->queue = $queue;
     }
@@ -46,25 +46,25 @@ class Queue implements queueExtendedInterface, QueueInterface
     }
 
 
-    public function export(queueExtendedInterface $queue, $all = false)
+    public function export(QueueExtendedInterface $queueExtended, $all = false)
     {
-        $this->queue->export($queue->getModel(), $all);
+        $this->queue->export($queueExtended->getModel(), $all);
 
         return $this;
     }
 
 
-    public function import(queueExtendedInterface $queue, $all = false)
+    public function import(QueueExtendedInterface $queueExtended, $all = false)
     {
-        $this->queue->import($queue->getModel(), $all);
+        $this->queue->import($queueExtended->getModel(), $all);
 
         return $this;
     }
 
 
-    public function swap(queueExtendedInterface $queue, $all = false)
+    public function swap(QueueExtendedInterface $queueExtended, $all = false)
     {
-        $this->queue->swap($queue->getModel(), $all);
+        $this->queue->swap($queueExtended->getModel(), $all);
 
         return $this;
     }
