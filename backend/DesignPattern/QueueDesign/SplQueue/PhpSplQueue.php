@@ -2,14 +2,14 @@
 
 namespace DesignPattern\QueueDesign\SplQueue;
 
-use DesignPattern\QueueDesign\ForClient\SelectSplQueue;
+use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 use SplQueue;
 
 // [PHP SplQueue]
 class PhpSplQueue
 {
     /**
-     * @var SelectSplQueue
+     * @var SelectQueueInterface
      */
     protected $queueModel;
 
@@ -26,9 +26,9 @@ class PhpSplQueue
     private $callback;
 
     /**
-     * @param SelectSplQueue $queueModel
+     * @param SelectQueueInterface $queueModel
      */
-    public function __construct(SelectSplQueue $queueModel)
+    public function __construct(SelectQueueInterface $queueModel)
     {
         $this->queueModel = $queueModel;
         $this->sqlQueue = new SplQueue(); // [キュー構造] SplQueue
