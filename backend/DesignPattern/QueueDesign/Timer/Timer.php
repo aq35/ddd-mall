@@ -15,7 +15,7 @@ class Timer implements TimerInterface
     /**
      * @var QueueFeatureInterface|QueueManagerInterface
      */
-    protected $Queue;
+    protected $selectQueue;
 
     /**
      * @var float
@@ -38,19 +38,19 @@ class Timer implements TimerInterface
     protected $data;
 
     /**
-     * @param QueueFeatureInterface|QueueManagerInterface $Queue
+     * @param QueueFeatureInterface|QueueManagerInterface $selectQueue
      * @param float $interval
      * @param callable $callback
      * @param bool $periodic
      * @param mixed|null $data
      */
-    public function __construct(QueueFeatureInterface|QueueManagerInterface $Queue, float $interval, callable $callback, $periodic = false, $data = null)
+    public function __construct(QueueFeatureInterface|QueueManagerInterface $selectQueue, float $interval, callable $callback, $periodic = false, $data = null)
     {
         if ($interval < self::MIN_INTERVAL) {
             $interval = self::MIN_INTERVAL;
         }
 
-        $this->Queue = $Queue;
+        $this->selectQueue = $selectQueue;
         $this->interval = (float) $interval;
         $this->callback = $callback;
         $this->periodic = (bool) $periodic;
@@ -62,7 +62,7 @@ class Timer implements TimerInterface
      */
     public function __destruct()
     {
-        unset($this->Queue);
+        unset($this->selectQueue);
         unset($this->interval);
         unset($this->callback);
         unset($this->periodic);
@@ -72,7 +72,7 @@ class Timer implements TimerInterface
 
     public function getQueue()
     {
-        return $this->Queue;
+        return $this->selectQueue;
     }
 
 
@@ -108,14 +108,14 @@ class Timer implements TimerInterface
 
     public function isActive()
     {
-        return $this->Queue->isTimerActive($this);
+        return $this->selectQueue->isTimerActive($this);
     }
 
 
     public function cancel()
     {
-        if (isset($this->Queue)) {
-            $this->Queue->cancelTimer($this);
+        if (isset($this->selectQueue)) {
+            $this->selectQueue->cancelTimer($this);
         }
     }
 }

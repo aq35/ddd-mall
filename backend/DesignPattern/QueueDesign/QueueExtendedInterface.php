@@ -6,6 +6,8 @@ use DesignPattern\QueueDesign\FlowController;
 use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
+// [QueueDesign] の状態管理 QueueManagerInterface の拡張
+// @return QueueExtendedInterface　... $this 返す時と同じで メソッドチェーンができる。
 interface QueueExtendedInterface extends QueueManagerInterface
 {
     /**
@@ -54,27 +56,27 @@ interface QueueExtendedInterface extends QueueManagerInterface
     /**
      * Export Queue not fired handlers and/or streams to another Queue model.
      *
-     * @param QueueExtendedInterface $Queue
+     * @param QueueExtendedInterface $selectQueue
      * @param bool $all
      * @return QueueExtendedInterface
      */
-    public function export(QueueExtendedInterface $Queue, $all = false);
+    public function export(QueueExtendedInterface $selectQueue, $all = false);
 
     /**
      * Import handlers and/or streams from another Queue model.
      *
-     * @param QueueExtendedInterface $Queue
+     * @param QueueExtendedInterface $selectQueue
      * @param bool $all
      * @return QueueExtendedInterface
      */
-    public function import(QueueExtendedInterface $Queue, $all = false);
+    public function import(QueueExtendedInterface $selectQueue, $all = false);
 
     /**
      * Swap handlers and/or stream between Queue models.
      *
-     * @param QueueExtendedInterface $Queue
+     * @param QueueExtendedInterface $selectQueue
      * @param bool $all
      * @return QueueExtendedInterface
      */
-    public function swap(QueueExtendedInterface $Queue, $all = false);
+    public function swap(QueueExtendedInterface $selectQueue, $all = false);
 }
