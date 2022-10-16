@@ -77,7 +77,7 @@ class TimerBox
     }
 
     /**
-     * @return TimerInterface|null
+     * @return null|bool|int|float|string
      */
     public function getFirst()
     {
