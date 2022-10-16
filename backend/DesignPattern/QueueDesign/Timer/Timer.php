@@ -1,9 +1,9 @@
 <?php
 
-namespace DesignPattern\Queue\Timer;
+namespace DesignPattern\QueueDesign\Timer;
 
-use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
-use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
 class Timer implements TimerInterface
 {

@@ -4,12 +4,11 @@ namespace DesignPattern\Event\ForClient;
 
 use DesignPattern\Event\Contract\EventEmitterInterface;
 
-use DesignPattern\Queue\QueueAwareInterface;
-use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
-use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
-
-use DesignPattern\Queue\ForClient\Queue;
-use DesignPattern\Queue\ForClient\SelectQueue;
+use DesignPattern\QueueDesign\QueueAwareInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\ForClient\Queue;
+use DesignPattern\QueueDesign\ForClient\SelectQueue;
 
 
 // 並列式SeriesEventEmitter

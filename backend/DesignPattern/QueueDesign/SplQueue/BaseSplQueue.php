@@ -1,9 +1,9 @@
 <?php
 
-namespace DesignPattern\Queue\SplQueue;
+namespace DesignPattern\QueueDesign\SplQueue;
 
-use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
-use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
 use SplQueue;
 
 class BaseSplQueue

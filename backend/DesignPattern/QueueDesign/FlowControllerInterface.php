@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Queue;
+namespace DesignPattern\QueueDesign;
 
 interface FlowControllerInterface
 {

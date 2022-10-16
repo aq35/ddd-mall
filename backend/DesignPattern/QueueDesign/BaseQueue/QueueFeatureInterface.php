@@ -1,10 +1,10 @@
 <?php
 
-namespace DesignPattern\Queue\BaseQueue;
+namespace DesignPattern\QueueDesign\BaseQueue;
 
-use Dazzle\Queue\Flow\FlowController;
+use Dazzle\QueueDesign\Flow\FlowController;
 
-// Queueが備えている機能を提供する
+// Queueサービス が備えている機能を提供する
 interface QueueFeatureInterface
 {
     /**

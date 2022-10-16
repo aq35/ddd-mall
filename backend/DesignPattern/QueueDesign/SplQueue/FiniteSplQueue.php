@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Queue\SplQueue;
+namespace DesignPattern\QueueDesign\SplQueue;
 
 class FiniteSplQueue extends BaseSplQueue
 {

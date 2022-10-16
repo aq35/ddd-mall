@@ -1,8 +1,8 @@
 <?php
 
-namespace DesignPattern\Queue;
+namespace DesignPattern\QueueDesign;
 
-use DesignPattern\Queue\QueueExtendedInterface;
+use DesignPattern\QueueDesign\QueueExtendedInterface;
 
 interface QueueExtendedAwareInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Queue\Timer;
+namespace DesignPattern\QueueDesign\Timer;
 
 interface TimerCollectionInterface
 {

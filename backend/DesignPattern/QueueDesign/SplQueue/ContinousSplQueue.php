@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Queue\SplQueue;
+namespace DesignPattern\QueueDesign\SplQueue;
 
 class ContinousSplQueue extends BaseSplQueue
 {

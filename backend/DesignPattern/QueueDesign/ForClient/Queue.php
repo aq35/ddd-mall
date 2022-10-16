@@ -1,11 +1,11 @@
 <?php
 
-namespace DesignPattern\queue\ForClient;
+namespace DesignPattern\QueueDesign\ForClient;
 
-use DesignPattern\Queue\Timer\TimerInterface;
-use DesignPattern\Queue\QueueExtendedInterface;
-use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
-use DesignPattern\Queue\Basequeue\QueueManagerInterface;
+use DesignPattern\QueueDesign\Timer\TimerInterface;
+use DesignPattern\QueueDesign\QueueExtendedInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\Basequeue\QueueManagerInterface;
 
 
 class Queue implements QueueExtendedInterface, QueueManagerInterface

@@ -1,8 +1,8 @@
 <?php
 
-namespace DesignPattern\Queue;
+namespace DesignPattern\QueueDesign;
 
-use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
 
 interface QueueAwareInterface
 {

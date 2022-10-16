@@ -1,19 +1,19 @@
 <?php
 
-namespace DesignPattern\Queue\ForClient;
+namespace DesignPattern\QueueDesign\ForClient;
 
-use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
 
-use DesignPattern\Queue\SplQueue\ContinousSplQueue;
-use DesignPattern\Queue\SplQueue\FiniteSplQueue;
+use DesignPattern\QueueDesign\SplQueue\ContinousSplQueue;
+use DesignPattern\QueueDesign\SplQueue\FiniteSplQueue;
 
-use DesignPattern\Queue\Timer\Timer;
-use DesignPattern\Queue\Timer\TimerBox;
-use DesignPattern\Queue\Timer\TimerInterface;
+use DesignPattern\QueueDesign\Timer\Timer;
+use DesignPattern\QueueDesign\Timer\TimerBox;
+use DesignPattern\QueueDesign\Timer\TimerInterface;
 
-use DesignPattern\Queue\FlowController;
+use DesignPattern\QueueDesign\FlowController;
 
-use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
 class SelectQueue implements QueueFeatureInterface, QueueManagerInterface
 {

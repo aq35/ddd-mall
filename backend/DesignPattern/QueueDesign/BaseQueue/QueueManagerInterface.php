@@ -1,10 +1,10 @@
 <?php
 
-namespace DesignPattern\Queue\BaseQueue;
+namespace DesignPattern\QueueDesign\BaseQueue;
 
-use DesignPattern\Queue\Timer\TimerInterface;
+use DesignPattern\QueueDesign\Timer\TimerInterface;
 
-// Queueの状態管理
+// QueueDesign の状態管理
 interface QueueManagerInterface
 {
     /**

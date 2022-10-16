@@ -1,10 +1,10 @@
 <?php
 
-namespace DesignPattern\Queue;
+namespace DesignPattern\QueueDesign;
 
-use DesignPattern\Queue\FlowController;
-use DesignPattern\Queue\BaseQueue\QueueManagerInterface;
-use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
+use DesignPattern\QueueDesign\FlowController;
+use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
+use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
 interface QueueExtendedInterface extends QueueManagerInterface
 {
