@@ -5,7 +5,8 @@ namespace DesignPattern\QueueDesign\SplQueue;
 use DesignPattern\QueueDesign\ForClient\SelectSplQueue;
 use SplQueue;
 
-class BaseSplQueue
+// [PHP SplQueue]
+class PhpSplQueue
 {
     /**
      * @var SelectSplQueue
@@ -25,7 +26,6 @@ class BaseSplQueue
     private $callback;
 
     /**
-     *
      * @param SelectSplQueue $queueModel
      */
     public function __construct(SelectSplQueue $queueModel)

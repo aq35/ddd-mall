@@ -2,7 +2,8 @@
 
 namespace DesignPattern\QueueDesign\SplQueue;
 
-class FiniteSplQueue extends BaseSplQueue
+// [PHP SplQueue] 拡張
+class FiniteSplQueue extends PhpSplQueue
 {
     /**
      * コールバック キューをフラッシュします。
@@ -10,8 +11,6 @@ class FiniteSplQueue extends BaseSplQueue
      *
      * tick() が呼び出されたときにキューにあったコールバックと、新しく追加されたコールバックを呼び出します。
      * Invokes callbacks which were on the queue when tick() was called and newly added ones.
-     *
-     * SplQueue は、一点にまとめたい。
      *
      * tickとは、時間のごくわずかな隙間、須臾(しゅゆ)のことだろうか
      * Queueのコールバック(関数)をある分だけ実行します。

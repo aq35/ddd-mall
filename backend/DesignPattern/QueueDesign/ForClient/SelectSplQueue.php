@@ -22,24 +22,27 @@ class SelectSplQueue implements SelectQueueInterface
     const MICROSECONDS_PER_SECOND = 1e6;
 
     /**
+     * [PHP SplQueue]
      * @var ContinousSplQueue
      */
     protected $startSqlQueue;
 
     /**
+     * [PHP SplQueue]
      * @var ContinousSplQueue
      */
     protected $stopSplQueue;
 
     /**
+     * [PHP SplQueue]
      * @var ContinousSplQueue
      */
     protected $nextSqlQueue;
 
     /**
-     * @var TickFiniteSplQueue
+     * @var FiniteSplQueue
      */
-    protected $futureSqlQueue;
+    protected $fititeSqlQueue;
 
     /**
      * @var FlowController
@@ -74,10 +77,11 @@ class SelectSplQueue implements SelectQueueInterface
 
     public function __construct()
     {
-        $this->startSqlQueue = new ContinousSplQueue($this);
-        $this->stopSplQueue = new ContinousSplQueue($this);
-        $this->nextSqlQueue = new ContinousSplQueue($this);
-        $this->futureSqlQueue = new FiniteSplQueue($this);
+        $this->startSqlQueue = new ContinousSplQueue($this); // [PHP SplQueue]
+        $this->stopSplQueue = new ContinousSplQueue($this); // [PHP SplQueue]
+        $this->nextSqlQueue = new ContinousSplQueue($this); // [PHP SplQueue]
+        $this->fititeSqlQueue = new FiniteSplQueue($this); // [PHP SplQueue]
+
         $this->flowController = new FlowController();
         $this->timers = new TimerBox();
     }
@@ -87,10 +91,12 @@ class SelectSplQueue implements SelectQueueInterface
      */
     public function __destruct()
     {
-        unset($this->startSqlQueue);
-        unset($this->stopSplQueue);
-        unset($this->nextSqlQueue);
-        unset($this->futureSqlQueue);
+        // [PHP SplQueue]
+        unset($this->startSqlQueue); // [PHP SplQueue]
+        unset($this->stopSplQueue); // [PHP SplQueue]
+        unset($this->nextSqlQueue); // [PHP SplQueue]
+        unset($this->fititeSqlQueue); // [PHP SplQueue]
+
         unset($this->flowController);
         unset($this->timers);
         unset($this->readStreams);
@@ -193,7 +199,6 @@ class SelectSplQueue implements SelectQueueInterface
 
     public function onStart(callable $listener)
     {
-        // add
         $this->startSqlQueue->add($listener);
     }
 
@@ -216,7 +221,7 @@ class SelectSplQueue implements SelectQueueInterface
      */
     public function onAfterTick(callable $listener)
     {
-        $this->futureSqlQueue->add($listener);
+        $this->fititeSqlQueue->add($listener);
     }
 
 
@@ -225,7 +230,7 @@ class SelectSplQueue implements SelectQueueInterface
         $this->flowController->isRunning = true;
 
         $this->nextSqlQueue->tick();
-        $this->futureSqlQueue->tick();
+        $this->fititeSqlQueue->tick();
         $this->timers->tick();
         $this->waitForStreamActivity(0);
 
@@ -252,13 +257,13 @@ class SelectSplQueue implements SelectQueueInterface
         while ($this->flowController->isRunning) {
             $this->nextSqlQueue->tick();
 
-            $this->futureSqlQueue->tick();
+            $this->fititeSqlQueue->tick();
 
             $this->timers->tick();
 
             // 次ティックまたは将来ティックのキューには、保留中のコールバックがあります
             // Next-tick or future-tick queues have pending callbacks ...
-            if (!$this->flowController->isRunning || !$this->nextSqlQueue->isEmpty() || !$this->futureSqlQueue->isEmpty()) {
+            if (!$this->flowController->isRunning || !$this->nextSqlQueue->isEmpty() || !$this->fititeSqlQueue->isEmpty()) {
                 $timeout = 0;
             }
             // 保留中のタイマーがあり、期限が来るまでブロックするだけです...
@@ -428,7 +433,7 @@ class SelectSplQueue implements SelectQueueInterface
     {
         return [
             'nextSqlQueue'     => null,
-            'futureSqlQueue'   => null,
+            'fititeSqlQueue'   => null,
             'flowController'    => null
         ];
     }
