@@ -1,18 +1,10 @@
 <?php
 
-namespace DesignPattern\QueueDesign\QueueHasTimer;
+namespace DesignPattern\QueueDesign\QueueHasTimer\Timer;
 
-use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
-
+// [Timer] 時間
 interface TimerInterface
 {
-    /**
-     * Return Queue.
-     *
-     * @return QueueFeatureInterface
-     */
-    public function getQueue();
-
     /**
      * Return interval of timer.
      *
@@ -47,16 +39,4 @@ interface TimerInterface
      * @return bool
      */
     public function isPeriodic();
-
-    /**
-     * Check if timer is active.
-     *
-     * @return bool
-     */
-    public function isActive();
-
-    /**
-     * Cancel timer and unregister it from Queue.
-     */
-    public function cancel();
 }

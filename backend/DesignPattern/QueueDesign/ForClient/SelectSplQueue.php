@@ -7,8 +7,8 @@ use DesignPattern\QueueDesign\SplQueue\ContinousSplQueue;
 use DesignPattern\QueueDesign\SplQueue\FiniteSplQueue;
 
 use DesignPattern\QueueDesign\QueueHasTimer\QueueHasTimer;
-use DesignPattern\QueueDesign\QueueHasTimer\TimerBox;
-use DesignPattern\QueueDesign\QueueHasTimer\TimerInterface;
+use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerBox;
+use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerInterface;
 
 use DesignPattern\QueueDesign\FlowController;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
@@ -189,7 +189,6 @@ class SelectSplQueue implements SelectQueueInterface
             $this->timers->remove($timer);
         }
     }
-
 
     public function isTimerActive(TimerInterface $timer)
     {

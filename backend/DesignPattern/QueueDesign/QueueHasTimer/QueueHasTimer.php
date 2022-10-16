@@ -2,40 +2,17 @@
 
 namespace DesignPattern\QueueDesign\QueueHasTimer;
 
+use DesignPattern\QueueDesign\QueueHasTimer\QueueHasTimerInterface;
 use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
+use DesignPattern\QueueDesign\QueueHasTimer\Timer\Timer;
 
 // [QueueHasTimer]
-class QueueHasTimer implements TimerInterface
+class QueueHasTimer extends Timer implements QueueHasTimerInterface
 {
-    /**
-     * @var float
-     */
-    const MIN_INTERVAL = 1e-6;
-
     /**
      * @var SelectQueueInterface
      */
     protected $selectQueue;
-
-    /**
-     * @var float
-     */
-    protected $interval;
-
-    /**
-     * @var callable
-     */
-    protected $callback;
-
-    /**
-     * @var bool
-     */
-    protected $periodic;
-
-    /**
-     * @var mixed|null
-     */
-    protected $data;
 
     /**
      * @param SelectQueueInterface $selectQueue
@@ -57,9 +34,6 @@ class QueueHasTimer implements TimerInterface
         $this->data = $data;
     }
 
-    /**
-     *
-     */
     public function __destruct()
     {
         unset($this->selectQueue);
@@ -69,49 +43,17 @@ class QueueHasTimer implements TimerInterface
         unset($this->data);
     }
 
-
+    // SelectQueueInterface
     public function getQueue(): SelectQueueInterface
     {
         return $this->selectQueue;
     }
-
-
-    public function getInterval(): float
-    {
-        return $this->interval;
-    }
-
-
-    public function getCallback()
-    {
-        return $this->callback;
-    }
-
-
-    public function getData()
-    {
-        return $this->data;
-    }
-
-
-    public function setData($data)
-    {
-        $this->data = $data;
-    }
-
-
-    public function isPeriodic()
-    {
-        return $this->periodic;
-    }
-
-
+    // SelectQueueInterface
     public function isActive()
     {
         return $this->selectQueue->isTimerActive($this);
     }
-
-
+    // SelectQueueInterface
     public function cancel()
     {
         if (isset($this->selectQueue)) {

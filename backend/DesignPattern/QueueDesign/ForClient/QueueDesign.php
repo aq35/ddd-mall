@@ -2,7 +2,7 @@
 
 namespace DesignPattern\QueueDesign\ForClient;
 
-use DesignPattern\QueueDesign\QueueHasTimer\TimerInterface;
+use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerInterface;
 use DesignPattern\QueueDesign\SplQueue\SelectQueueInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 

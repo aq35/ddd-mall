@@ -1,9 +1,10 @@
 <?php
 
-namespace DesignPattern\QueueDesign\QueueHasTimer;
+namespace DesignPattern\QueueDesign\QueueHasTimer\Timer;
 
 use SplObjectStorage;
 use SplPriorityQueue;
+use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerInterface;
 
 class TimerBox
 {

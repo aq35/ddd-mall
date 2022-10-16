@@ -2,7 +2,7 @@
 
 namespace DesignPattern\QueueDesign\BaseQueue;
 
-use DesignPattern\QueueDesign\QueueHasTimer\TimerInterface;
+use DesignPattern\QueueDesign\QueueHasTimer\Timer\TimerInterface;
 
 // [QueueDesign] QueueManagerInterface QueueDesign の状態管理を担当します。
 // QueueManagerInterface は、Queueサービス の操作系を持ちません。
