@@ -7,7 +7,7 @@ use DesignPattern\QueueDesign\QueueExtendedInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 use DesignPattern\QueueDesign\Basequeue\QueueManagerInterface;
 
-class MyQueue implements QueueExtendedInterface, QueueManagerInterface
+class QueueDesign implements QueueExtendedInterface, QueueManagerInterface
 {
     /**
      * @var QueueManagerInterface|QueueFeatureInterface

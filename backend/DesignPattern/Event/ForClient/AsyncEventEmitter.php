@@ -4,16 +4,16 @@ namespace DesignPattern\Event\ForClient;
 
 use DesignPattern\Event\Contract\EventEmitterInterface;
 
-use DesignPattern\QueueDesign\QueueAwareInterface;
+// [QueueDesign] が使えるようになる
+use DesignPattern\QueueDesign\ForClient\QueueDesignAwareInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
-use DesignPattern\QueueDesign\ForClient\MyQueue;
-use DesignPattern\QueueDesign\ForClient\SelectQueue;
+use DesignPattern\QueueDesign\ForClient\QueueDesign;
+use DesignPattern\QueueDesign\ForClient\SelectQueueDesign;
 
-// 並列式SeriesEventEmitter
-class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, QueueAwareInterface
+// 並列式EventEmitter
+class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, QueueDesignAwareInterface
 {
-
     /**
      * @var QueueManagerInterface|QueueFeatureInterface|null
      */
@@ -21,21 +21,24 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
 
     public function __construct()
     {
-        $this->setQueue(new MyQueue(new SelectQueue()));
+        // [QueueDesign] が使えるようになる
+        $this->setQueue(new QueueDesign(new SelectQueueDesign()));
     }
 
     /**
+     * [QueueDesign]の状態管理
      * @see QueueAwareInterface::setQueue
      */
-    public function setQueue(QueueManagerInterface|QueueFeatureInterface|null $queue = null)
+    public function setQueue(QueueManagerInterface|QueueFeatureInterface $queue = null)
     {
         $this->queue = $queue;
     }
 
     /**
+     * [QueueDesign]の状態管理
      * @see QueueAwareInterface::getQueue
      */
-    public function getQueue(): QueueManagerInterface|QueueFeatureInterface|null
+    public function getQueue(): QueueManagerInterface|QueueFeatureInterface
     {
         return $this->queue;
     }

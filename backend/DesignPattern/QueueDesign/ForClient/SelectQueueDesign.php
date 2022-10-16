@@ -15,7 +15,7 @@ use DesignPattern\QueueDesign\FlowController;
 
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 
-class SelectQueue implements QueueFeatureInterface, QueueManagerInterface
+class SelectQueueDesign implements QueueFeatureInterface, QueueManagerInterface
 {
     /**
      * @var int

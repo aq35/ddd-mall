@@ -4,7 +4,10 @@ namespace DesignPattern\QueueDesign\BaseQueue;
 
 use Dazzle\QueueDesign\Flow\FlowController;
 
-// Queueサービス が備えている機能を提供する
+// [QueueDesign] 外部 or 内部 Queue機能を操作する。
+// Queue が備えている機能を提供する。
+// 例) SqlQueue ... PHPが提供しているQueueサービス
+// 実際には、QueueFeatureInterfaceは、どんなQueueサービスを使っているかは考えなくて良い。
 interface QueueFeatureInterface
 {
     /**
