@@ -7,9 +7,8 @@ use DesignPattern\Event\Contract\EventEmitterInterface;
 use DesignPattern\QueueDesign\QueueAwareInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueFeatureInterface;
 use DesignPattern\QueueDesign\BaseQueue\QueueManagerInterface;
-use DesignPattern\QueueDesign\ForClient\Queue;
+use DesignPattern\QueueDesign\ForClient\MyQueue;
 use DesignPattern\QueueDesign\ForClient\SelectQueue;
-
 
 // 並列式SeriesEventEmitter
 class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterface, QueueAwareInterface
@@ -22,7 +21,7 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
 
     public function __construct()
     {
-        $this->setQueue(new Queue(new SelectQueue()));
+        $this->setQueue(new MyQueue(new SelectQueue()));
     }
 
     /**
