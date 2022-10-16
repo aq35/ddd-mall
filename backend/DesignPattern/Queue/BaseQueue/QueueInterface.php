@@ -96,7 +96,7 @@ interface QueueInterface
     public function isTimerActive(TimerInterface $timer);
 
     /**
-     * イベント ループの開始ティックでコールバックが呼び出されるようにスケジュールします。
+     * イベントループの開始ティックでコールバックが呼び出されるようにスケジュールします。
      * Schedule a callback to be invoked on the start tick of event Queue.
      * コールバックは、何よりも先に、キューに入れられた順序で実行されることが保証されています。
      * Callbacks are guarenteed to be executed in the order they are enqueued, before anything else.

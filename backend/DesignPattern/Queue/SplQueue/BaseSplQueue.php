@@ -2,14 +2,14 @@
 
 namespace DesignPattern\Queue\SplQueue;
 
-use DesignPattern\Queue\QueueModelInterface;
+use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
 use DesignPattern\Queue\BaseQueue\QueueInterface;
 use SplQueue;
 
 class BaseSplQueue
 {
     /**
-     * @var QueueModelInterface|QueueInterface
+     * @var QueueFeatureInterface|QueueInterface
      */
     protected $queueModel;
 
@@ -27,9 +27,9 @@ class BaseSplQueue
 
     /**
      *
-     * @param QueueModelInterface|QueueInterface $queueModel
+     * @param QueueFeatureInterface|QueueInterface $queueModel
      */
-    public function __construct(QueueModelInterface|QueueInterface $queueModel)
+    public function __construct(QueueFeatureInterface|QueueInterface $queueModel)
     {
         $this->queueModel = $queueModel;
         $this->sqlQueue = new SplQueue(); // [キュー構造] SplQueue

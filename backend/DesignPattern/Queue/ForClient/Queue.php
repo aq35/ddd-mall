@@ -6,19 +6,19 @@ use DesignPattern\queue\Basequeue\QueueInterface;
 
 use DesignPattern\queue\Timer\TimerInterface;
 use DesignPattern\queue\queueExtendedInterface;
-use DesignPattern\queue\queueModelInterface;
+use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
 
-class queue implements queueExtendedInterface, QueueInterface
+class Queue implements queueExtendedInterface, QueueInterface
 {
     /**
-     * @var QueueInterface|queueModelInterface
+     * @var QueueInterface|QueueFeatureInterface
      */
     protected $queue;
 
     /**
-     * @param QueueInterface| queueModelInterface
+     * @param QueueInterface| QueueFeatureInterface
      */
-    public function __construct(QueueInterface|queueModelInterface $queue)
+    public function __construct(QueueInterface|QueueFeatureInterface $queue)
     {
         $this->queue = $queue;
     }

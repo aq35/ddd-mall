@@ -5,7 +5,7 @@ namespace DesignPattern\Event\ForClient;
 use DesignPattern\Event\Contract\EventEmitterInterface;
 
 use DesignPattern\Queue\QueueAwareInterface;
-use DesignPattern\Queue\QueueModelInterface;
+use DesignPattern\Queue\QueueFeatureInterface;
 use DesignPattern\Queue\BaseQueue\QueueInterface;
 
 use DesignPattern\Queue\ForClient\Queue;
@@ -17,7 +17,7 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
 {
 
     /**
-     * @var QueueInterface|QueueModelInterface|null
+     * @var QueueInterface|QueueFeatureInterface|null
      */
     protected $queue = null;
 
@@ -29,7 +29,7 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
     /**
      * @see QueueAwareInterface::setQueue
      */
-    public function setQueue(QueueInterface|QueueModelInterface|null $queue = null)
+    public function setQueue(QueueInterface|QueueFeatureInterface|null $queue = null)
     {
         $this->queue = $queue;
     }
@@ -37,7 +37,7 @@ class AsyncEventEmitter extends SeriesEventEmitter implements EventEmitterInterf
     /**
      * @see QueueAwareInterface::getQueue
      */
-    public function getQueue(): QueueInterface|QueueModelInterface|null
+    public function getQueue(): QueueInterface|QueueFeatureInterface|null
     {
         return $this->queue;
     }

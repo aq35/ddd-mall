@@ -8,7 +8,7 @@ use DesignPattern\Queue\BaseQueue\QueueInterface;
 interface QueueExtendedInterface extends QueueInterface
 {
     /**
-     * @return QueueModelInterface
+     * @return QueueFeatureInterface
      */
     public function getModel();
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace DesignPattern\Queue;
+namespace DesignPattern\Queue\BaseQueue;
 
 use Dazzle\Queue\Flow\FlowController;
 
-interface QueueModelInterface
+// Queueが備えている機能を提供する
+interface QueueFeatureInterface
 {
     /**
      * Perform a single iteration of the event Queue.
@@ -40,34 +41,34 @@ interface QueueModelInterface
      * Flush Queue.
      *
      * @param bool $all
-     * @return QueueModelInterface
+     * @return QueueFeatureInterface
      */
     public function erase($all = false);
 
     /**
      * Export Queue not fired handlers and/or streams to another Queue model.
      *
-     * @param QueueModelInterface $queue
+     * @param QueueFeatureInterface $queue
      * @param bool $all
-     * @return QueueModelInterface
+     * @return QueueFeatureInterface
      */
-    public function export(QueueModelInterface $queue, $all = false);
+    public function export(QueueFeatureInterface $queue, $all = false);
 
     /**
      * Import handlers and/or streams from another Queue model.
      *
-     * @param QueueModelInterface $queue
+     * @param QueueFeatureInterface $queue
      * @param bool $all
-     * @return QueueModelInterface
+     * @return QueueFeatureInterface
      */
-    public function import(QueueModelInterface $queue, $all = false);
+    public function import(QueueFeatureInterface $queue, $all = false);
 
     /**
      * Swap handlers and/or stream between Queue models.
      *
-     * @param QueueModelInterface $queue
+     * @param QueueFeatureInterface $queue
      * @param bool $all
-     * @return QueueModelInterface
+     * @return QueueFeatureInterface
      */
-    public function swap(QueueModelInterface $queue, $all = false);
+    public function swap(QueueFeatureInterface $queue, $all = false);
 }

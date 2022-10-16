@@ -2,14 +2,14 @@
 
 namespace DesignPattern\Queue\Timer;
 
-use DesignPattern\Queue\QueueModelInterface;
+use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
 
 interface TimerInterface
 {
     /**
      * Return Queue.
      *
-     * @return QueueModelInterface
+     * @return QueueFeatureInterface
      */
     public function getQueue();
 

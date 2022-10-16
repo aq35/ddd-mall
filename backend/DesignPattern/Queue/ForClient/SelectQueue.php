@@ -12,9 +12,10 @@ use DesignPattern\Queue\Timer\TimerBox;
 use DesignPattern\Queue\Timer\TimerInterface;
 
 use DesignPattern\Queue\FlowController;
-use DesignPattern\Queue\QueueModelInterface;
 
-class SelectQueue implements QueueModelInterface, QueueInterface
+use DesignPattern\Queue\BaseQueue\QueueFeatureInterface;
+
+class SelectQueue implements QueueFeatureInterface, QueueInterface
 {
     /**
      * @var int
@@ -193,6 +194,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
 
     public function onStart(callable $listener)
     {
+        // add
         $this->startSqlQueue->add($listener);
     }
 
@@ -321,7 +323,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     }
 
 
-    public function export(QueueModelInterface $queueModel, $all = false)
+    public function export(QueueFeatureInterface $queueModel, $all = false)
     {
         $this->stop();
         $queueModel->stop();
@@ -335,7 +337,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     }
 
 
-    public function import(QueueModelInterface $queueModel, $all = false)
+    public function import(QueueFeatureInterface $queueModel, $all = false)
     {
         $this->stop();
         $queueModel->stop();
@@ -349,7 +351,7 @@ class SelectQueue implements QueueModelInterface, QueueInterface
     }
 
 
-    public function swap(QueueModelInterface $queueModel, $all = false)
+    public function swap(QueueFeatureInterface $queueModel, $all = false)
     {
         $this->stop();
         $queueModel->stop();
