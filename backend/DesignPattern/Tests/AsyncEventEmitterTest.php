@@ -71,12 +71,12 @@ final class AsyncEventEmitterTest extends TestCase
         });
 
         // ファイル操作
-        $stream = fopen("./DesignPattern/Tests/StreamText.txt", "r");
+        $stream = fopen("./DesignPattern/Tests/StreamTextRead.txt", "r");
         $i += 1;
         $asyncEmitter->getQueue()->addReadStream($stream, function () use ($stream, $asyncEmitter, $i) {
             echo $stream . "\n"; // Resource id
-            if (filesize("./DesignPattern/Tests/StreamText.txt")) {
-                $mes = fread($stream, filesize("./DesignPattern/Tests/StreamText.txt"));
+            if (filesize("./DesignPattern/Tests/StreamTextRead.txt")) {
+                $mes = fread($stream, filesize("./DesignPattern/Tests/StreamTextRead.txt"));
                 fclose($stream);
                 echo $mes;
                 echo "\e[31m [$i 番目] addReadStream \e[m" . "\n";
@@ -84,11 +84,11 @@ final class AsyncEventEmitterTest extends TestCase
         });
 
         // ファイル操作
-        $stream = fopen("./DesignPattern/Tests/StreamText.txt", 'w');
+        $stream = fopen("./DesignPattern/Tests/StreamTextWrite.txt", 'w');
         $i += 1;
         $asyncEmitter->getQueue()->addWriteStream($stream, function () use ($stream, $asyncEmitter, $i) {
             echo $stream . "\n"; // Resource id
-            $message = "あいうえお\n";
+            $message = mt_rand() . "\n";
             fwrite($stream, $message); // ファイルに書き込む
             fclose($stream);
             echo "\e[31m [$i 番目] addWriteStream \e[m" . "\n";
