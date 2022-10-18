@@ -73,7 +73,7 @@ final class AsyncEventEmitterTest extends TestCase
         // ファイル操作
         $stream = fopen("./DesignPattern/Tests/StreamTextRead.txt", "r");
         $i += 1;
-        $asyncEmitter->getQueue()->addReadStream($stream, function () use ($stream, $asyncEmitter, $i) {
+        $asyncEmitter->getQueue()->addReadStream($stream, function () use ($stream, $i) {
             echo $stream . "\n"; // Resource id
             if (filesize("./DesignPattern/Tests/StreamTextRead.txt")) {
                 $mes = fread($stream, filesize("./DesignPattern/Tests/StreamTextRead.txt"));
@@ -86,7 +86,7 @@ final class AsyncEventEmitterTest extends TestCase
         // ファイル操作
         $stream = fopen("./DesignPattern/Tests/StreamTextWrite.txt", 'w');
         $i += 1;
-        $asyncEmitter->getQueue()->addWriteStream($stream, function () use ($stream, $asyncEmitter, $i) {
+        $asyncEmitter->getQueue()->addWriteStream($stream, function () use ($stream, $i) {
             echo $stream . "\n"; // Resource id
             $message = mt_rand() . "\n";
             fwrite($stream, $message); // ファイルに書き込む
