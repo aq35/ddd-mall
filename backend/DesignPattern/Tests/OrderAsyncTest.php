@@ -72,8 +72,7 @@ final class OrderAsyncTest extends TestCase
 
     public function test_EventEmitter_async_emitters(): void
     {
-        var_dump(Co::wait([
-
+        $co = Co::wait([
             'Delay 5 secs' => function () {
                 echo "[Delay] I start to have a pseudo-sleep in this coroutine for about 5 secs\n";
                 for ($i = 0; $i < 5; ++$i) {
@@ -84,16 +83,13 @@ final class OrderAsyncTest extends TestCase
                 }
                 echo "[Delay] Done!\n";
             },
-
             "google.com HTML" => $this->curl_init_with("https://google.com"),
-
             "Content-Length of github.com" => function () {
                 echo "[GitHub] I start to request for github.com to calculate Content-Length\n";
                 $content = yield $this->curl_init_with("https://github.com");
                 echo "[GitHub] Done! Now I calculate length of contents\n";
                 return strlen($content);
             },
-
             "Save mpyw's Gravatar Image URL to local" => function () {
                 echo "[Gravatar] I start to request for github.com to get Gravatar URL\n";
                 $src = (yield $this->get_xpath_async('https://github.com/mpyw'))
@@ -103,8 +99,8 @@ final class OrderAsyncTest extends TestCase
                 echo "[Gravatar] Done! Saved as /tmp/mpyw.png\n";
                 $this->assertTrue(true);
             }
-
-        ]));
+        ]);
+        var_dump($co);
     }
 
 
