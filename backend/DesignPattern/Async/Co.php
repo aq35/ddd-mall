@@ -61,6 +61,7 @@ class Co implements CoInterface
 
     /**
      * Wait until value is recursively resolved to return it.
+     * // 自分自身が呼び出した関数の結果が帰るまで待ちます。
      * This function call must be atomic.
      * @param  mixed $value
      * @param  array $options
@@ -81,7 +82,7 @@ class Co implements CoInterface
         }
         // @codeCoverageIgnoreStart
     }
-    // @codeCoverageIgnoreEnd
+    //
 
     /**
      * Value is recursively resolved, but we never wait it.
