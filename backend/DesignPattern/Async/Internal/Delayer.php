@@ -61,7 +61,7 @@ class Delayer
             }
             $min = $diff;
         }
-        $min && usleep($min * 1000000);
+        $min && usleep(intval($min * 1000000));
     }
 
     /**

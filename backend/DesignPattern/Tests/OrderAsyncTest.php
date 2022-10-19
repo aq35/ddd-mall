@@ -107,15 +107,17 @@ final class OrderAsyncTest extends TestCase
         ]));
     }
 
-    function curl_init_with(string $url, array $options = [])
+
+    function curl_init_with($url, array $options = [])
     {
-        $ch = curl_init();
         $options = array_replace([
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
         ], $options);
+        $ch = curl_init($url);
         curl_setopt_array($ch, $options);
-        return $ch;
+        $response = curl_exec($ch);
+        return $response;
     }
 
     function get_xpath_async(string $url): \Generator
