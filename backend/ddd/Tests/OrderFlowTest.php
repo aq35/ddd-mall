@@ -122,12 +122,12 @@ final class OrderFlowTest extends TestCase
     //
     // |------|------|<=----|------|------| Consume 600 point successfully (600ポイント消費に成功)
     //　　　　　　　　　　　　　　　　　　　　　　　AAAを永続化
-    //
     // |------|=====>|------|------|------|
     //        (Retry)ポイント600円を消費する
     //        (Idempotency_Key:AAA)
     //
-    // |------|------|<=----|------|------| Return result directly without consume point again (ポイント消費なし)
+    // |------|------|<=----|------|------| AAAが既にあるため、ポイント消費をしない
+    //                                      Return result directly without consume point again (ポイント消費なし)
     //
     // |------|<=====|------|------|------|
     //         Success
