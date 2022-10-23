@@ -23,6 +23,8 @@ final class OrderFlowTest extends TestCase
     public function test_orderFlow(): void
     {
 
+        // (状態) Created: 決済受付
+
         // 決済処理のトランザクションデータ作成
         // Phase1
         // 支払いリクエスト
@@ -162,15 +164,15 @@ final class OrderFlowTest extends TestCase
     // PaymentServiceでは、正常のトランザクション処理と共に、ロールバックするための補償トランザクション処理もステートマシンで管理して、
     // 必要に応じて実行して決済処理の整合性を担保しています。
     // -----------------------------------------
-    // Created -> Save Paymenet Transaction　　　　             |  Update Payment Transaction Status ----> Failed
+    // Created -> Save Payment Transaction 　　　　             | Update Payment Transaction Status --------> Failed
     //                                                  　     | (Retry)
-    //         　　↓↓                                   　　    |                     ↑↑
+    //         　　↓↓                                   　　    |                   ↑↑
     //            Consume User Balance  ---- rollback ---->　  | Rollback User Balance Consumption
     //            (Retry)                                 　   | (Retry)
-    //         　　↓↓                                     　　  |                     ↑↑
-    //            Consume User CreditCard ---- rollback ---->　|  Rollback User CreditCard Consumption
+    //         　　↓↓                                     　　  |                   ↑↑
+    //            Consume User CreditCard ---- rollback ---->　| Rollback User CreditCard Consumption
     //            (Retry)                                 　   | (Retry)
-    //         　　↓↓                                      　　 |--------------------------Compensating Transaction 補償トランザクション
+    //         　　↓↓                                      　　 |--------------------------Compensating Transaction(補償トランザクション)
     //            Add Partner Balance
     //            (Retry)
     //         　　↓↓
@@ -190,3 +192,29 @@ final class OrderFlowTest extends TestCase
     // 実行したら実売上と履歴の記録処理が走る
     // 仮押さえの後にロールバック処理を走ったら、履歴が汚れるなどの副作用も抑えながらよりきれいな補償処理が実現できます。
 }
+    // Orchestration-based Saga with StateMachine
+    // https://engineering.mercari.com/blog/entry/20221018-mtf2022-day3-5/
+    //  決済処理を担当しているサービスの中で状態遷移マシンベースの仕組みが作られていて、一つの決済処理を複数のStateに分けてそれぞれ状態遷移として、定義されて実行できるようにします。
+    //
+    // もしエラーが起きて復旧できない場合、右側の補償処理としてロールバックという状態遷移も定義できます。たとえばもしお客様がカード決済に失敗し、かつ残高が消費された場合、ロールバック処理によって残高消費を取り消した上で決済を失敗させることができます。
+    // エラーが起きても自動でリトライやロールバックをし、お客様視点での金銭的な整合性を担保できます。
+    //
+    // -----------------------------------------
+    // Created -> StateA                   　　　　             | Update Payment Transaction Status --------> Failed
+    //            決済データ保存   　   　                 　     | 決済失敗
+    //         　　↓↓                                   　　    |                   ↑↑
+    //            StateB    　　　　　　  ---- rollback ---->　  | Rollback User Balance Consumption
+    //            内部残高消費                              　   | 残高消費取消
+    //         　　↓↓                                     　　  |                   ↑↑
+    //            StateC                  ---- rollback ---->　| Rollback User CreditCard Consumption
+    //            外部カード決済                                 | カード決済取消
+    //         　　↓↓                                      　　 |--------------------------Compensating Transaction(補償トランザクション)
+    //            StateD
+    //            決済成功
+    //         　　↓↓
+    //            StateE
+    //            決済通知
+    //         　　↓↓
+    //            Update Payment Transaction Status =======> Succceded
+    //            (Retry)
+    // -----------------------------------------
