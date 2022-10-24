@@ -192,6 +192,7 @@ final class OrderFlowTest extends TestCase
     // 実行したら実売上と履歴の記録処理が走る
     // 仮押さえの後にロールバック処理を走ったら、履歴が汚れるなどの副作用も抑えながらよりきれいな補償処理が実現できます。
 }
+
     // Orchestration-based Saga with StateMachine
     // https://engineering.mercari.com/blog/entry/20221018-mtf2022-day3-5/
     //  決済処理を担当しているサービスの中で状態遷移マシンベースの仕組みが作られていて、一つの決済処理を複数のStateに分けてそれぞれ状態遷移として、定義されて実行できるようにします。
