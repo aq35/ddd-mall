@@ -15,5 +15,6 @@ final class ExternalService
     //        Save Results
     public static function consumeUserCreditCard(): void
     {
+        echo "consumeUserCreditCard" . "\n";
     }
 }

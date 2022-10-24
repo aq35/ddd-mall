@@ -14,5 +14,6 @@ final class MessageQueue
     //        Save Results
     public static function publishEvent(): void
     {
+        echo "publishEvent" . "\n";
     }
 }

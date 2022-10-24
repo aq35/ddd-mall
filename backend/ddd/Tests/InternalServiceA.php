@@ -13,5 +13,6 @@ final class InternalServiceA
     //        Save Results
     public static function consumeUserPoint(): void
     {
+        echo "consumeUserPoint" . "\n";
     }
 }

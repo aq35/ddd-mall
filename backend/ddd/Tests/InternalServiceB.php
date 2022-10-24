@@ -14,5 +14,6 @@ final class InternalServiceB
     //        Save Results
     public static function addPartnerSales(): void
     {
+        echo "addPartnerSales" . "\n";
     }
 }

@@ -4,6 +4,8 @@ namespace DDD\Tests;
 
 use PHPUnit\Framework\TestCase;
 
+use DesignPattern\Event\ForClient\AsyncEventEmitter;
+
 // ./vendor/bin/phpunit ddd/Tests/OrderFlowTest.php
 final class OrderFlowTest extends TestCase
 {
@@ -23,82 +25,116 @@ final class OrderFlowTest extends TestCase
     public function test_orderFlow(): void
     {
 
-        // (状態) Created: 決済受付
 
-        // 決済処理のトランザクションデータ作成
-        // Phase1
-        // 支払いリクエスト
-        // |=====>|------|------|------|------|
-        //        Begin Transaction
-        //　
-        // |------|<=----|------|------|------|
-        //        Create Payment Transaction
-        //
-        // |------|<=----|------|------|------|
-        //        Commit Transaction
-        PaymentService::createPaymentTransaction();
+        $i = 0;
+        $asyncEmitter = new AsyncEventEmitter();
 
-        // Phase2
-        // |------|=====>|------|------|------|
-        //        ポイント600円を消費する
-        //        タイムアウト:InternalServiceAの中で、600円のポイントが消費された可能性がある
-        //
-        // |------|<=----|------|------|------|
-        //        Save Results
-        InternalServiceA::consumeUserPoint();
+        $i += 1;
+        $asyncEmitter->on('event', function () use ($i) {
+            // (状態) Created: 決済受付
 
-        // Phase3
-        // |------|======|======|=====>|------|
-        //        クレジットカード400円を消費する
-        //        タイムアウト:InternalServiceAの中で、600円のポイントが消費された
-        //        タイムアウト:ExternalServiceの中で、400円の与信枠が消費されたかどうかわからない
-        //        残高不足:InternalServiceAの中で、600円のポイントが消費された
-        //
-        // |------|<=----|------|------|------|
-        //        Save Results
-        ExternalService::consumeUserCreditCard();
+            // 決済処理のトランザクションデータ作成
+            // Phase1
+            // 支払いリクエスト
+            // |=====>|------|------|------|------|
+            //        Begin Transaction
+            //　
+            // |------|<=----|------|------|------|
+            //        Create Payment Transaction
+            //
+            // |------|<=----|------|------|------|
+            //        Commit Transaction
+            PaymentService::createPaymentTransaction();
+        });
 
-        // Phase4
-        // |------|===================>|------|
-        //        加盟店の売上金に1000円を付与する
-        //        InternalServiceAの中で、600円のポイントが消費された
-        //        ExternalServiceの中で、400円の与信枠が消費された
-        //        InternalServiceBの中で、加盟店に1000円付与されたかどうかわからない
-        // |------|<=----|------|------|------|
-        //        Save Results
-        InternalServiceB::addPartnerSales();
+        $i += 1;
+        $asyncEmitter->on('event', function () use ($i) {
+            // Phase2
+            // |------|=====>|------|------|------|
+            //        ポイント600円を消費する
+            //        タイムアウト:InternalServiceAの中で、600円のポイントが消費された可能性がある
+            //
+            // |------|<=----|------|------|------|
+            //        Save Results
+            InternalServiceA::consumeUserPoint();
+        });
 
-        // Phase5
-        // |------|============>|------|------|
-        //        決済の結果通知を送信する
-        //        InternalServiceAの中で、600円のポイントが消費された
-        //        ExternalServiceの中で、400円の与信枠が消費された
-        //        InternalServiceBの中で、加盟店に1000円付与された
-        //        MessageQueueにイベント送信されたかどうかわからない
-        // |------|<=----|------|------|------|
-        //        Save Results
-        MessageQueue::publishEvent();
+        $i += 1;
+        $asyncEmitter->on('event', function () use ($i) {
+            // Phase3
+            // |------|======|======|=====>|------|
+            //        クレジットカード400円を消費する
+            //        タイムアウト:InternalServiceAの中で、600円のポイントが消費された
+            //        タイムアウト:ExternalServiceの中で、400円の与信枠が消費されたかどうかわからない
+            //        残高不足:InternalServiceAの中で、600円のポイントが消費された
+            //
+            // |------|<=----|------|------|------|
+            //        Save Results
+            ExternalService::consumeUserCreditCard();
+        });
 
-        // Phase6
-        // |------|<=----|------|------|------|
-        //        Begin Transaction
-        // |------|<=----|------|------|------|
-        //　　　　　Commit Transaction
-        //        InternalServiceAの中で、600円のポイントが消費された
-        //        ExternalServiceの中で、400円の与信枠が消費された
-        //        InternalServiceBの中で、加盟店に1000円付与された
-        //        MessageQueueにイベント送信された
-        //        DBコミットに失敗すると、PaymentServiceにトランザクションデータなくなり、整合性が崩れる。
-        // |------|<=----|------|------|------|
-        //        Commit Transaction
-        PaymentService::updatePaymentTransaction();
+        $i += 1;
+        $asyncEmitter->on('event', function () use ($i) {
+            // Phase4
+            // |------|===================>|------|
+            //        加盟店の売上金に1000円を付与する
+            //        InternalServiceAの中で、600円のポイントが消費された
+            //        ExternalServiceの中で、400円の与信枠が消費された
+            //        InternalServiceBの中で、加盟店に1000円付与されたかどうかわからない
+            // |------|<=----|------|------|------|
+            //        Save Results
+            InternalServiceB::addPartnerSales();
+        });
+
+        $i += 1;
+        $asyncEmitter->on('event', function () use ($i) {
+            // Phase5
+            // |------|============>|------|------|
+            //        決済の結果通知を送信する
+            //        InternalServiceAの中で、600円のポイントが消費された
+            //        ExternalServiceの中で、400円の与信枠が消費された
+            //        InternalServiceBの中で、加盟店に1000円付与された
+            //        MessageQueueにイベント送信されたかどうかわからない
+            // |------|<=----|------|------|------|
+            //        Save Results
+            MessageQueue::publishEvent();
+        });
+
+        $i += 1;
+        $asyncEmitter->on('event', function () use ($i) {
+            // Phase6
+            // |------|<=----|------|------|------|
+            //        Begin Transaction
+            // |------|<=----|------|------|------|
+            //　　　　　Commit Transaction
+            //        InternalServiceAの中で、600円のポイントが消費された
+            //        ExternalServiceの中で、400円の与信枠が消費された
+            //        InternalServiceBの中で、加盟店に1000円付与された
+            //        MessageQueueにイベント送信された
+            //        DBコミットに失敗すると、PaymentServiceにトランザクションデータなくなり、整合性が崩れる。
+            // |------|<=----|------|------|------|
+            //        Commit Transaction
+            PaymentService::updatePaymentTransaction();
+        });
+        $asyncEmitter->emit('event');
+
+
+        $i += 1;
+        $asyncEmitter->getQueue()->onAfterTick(function () use ($asyncEmitter, $i) {
+            $asyncEmitter->getQueue()->stop();
+        });
+
+        $asyncEmitter->getQueue()->start();
+
+        $this->assertTrue(true);
 
         // |<=====|------|------|------|------|
         // 支払いレスポンス
-
-        $this->assertTrue(true);
     }
 
+    public function te()
+    {
+    }
     // 冪等性
     // 決済処理中リトライ処理が発生した場合、何も考慮しない場合、依存先サービスに投げる操作が多重に実行されたらお客様の残高が何度も引かれてしまう問題が発生します。
     //

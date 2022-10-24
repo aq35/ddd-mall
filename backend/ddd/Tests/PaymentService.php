@@ -2,6 +2,7 @@
 
 namespace DDD\Tests;
 
+
 final class PaymentService
 {
     // PaymentServiceでは1つの決済トランザクション処理を複数のフェーズに細分化して実行するようにしています。
@@ -23,6 +24,7 @@ final class PaymentService
     //        Commit Transaction
     public static function createPaymentTransaction(): void
     {
+        echo "createPaymentTransaction" . "\n";
     }
 
     // Phase6
@@ -39,6 +41,7 @@ final class PaymentService
     //        Commit Transaction
     public static function updatePaymentTransaction(): void
     {
+        echo "updatePaymentTransaction" . "\n";
     }
 }
 
@@ -91,3 +94,9 @@ External Services-----|
 // 加盟店様のお財布・決済アカウントはこのようになっています。
 // 内部のアカウントには、決済をするたびに売上が貯まる未精算売上口座があります。
 // それから精算のプロセスを完了した後に、確定された売上が精算済み売上口座に入ります。売上が債権として精算される場合は、精算済み債権口座に入ります。
+// 加盟店様の外部アカウントについては、出金用途で銀行口座に登録してもらい、システムの中で管理されています。
+
+// 価値の変動　〜帳簿・台帳管理〜
+// アカウントを操作して実際に決済処理をします。
+// 処理によって価値は変動するので、正確にトラッキング・管理することも大切です。ここでは帳簿・台帳管理について先にお話しします。
+// まず帳簿は記帳の目的によるので、実際の形や設計は変わることがあります。
