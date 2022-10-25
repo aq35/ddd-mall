@@ -12,7 +12,7 @@ class AutoScheduler extends AbstractScheduler
      * Constructor.
      * Initialize cURL multi handle.
      * @param CoOption $options
-     * @param resource $mh      curl_multi
+     * @param resource $mh
      */
     public function __construct(CoOption $options, $mh)
     {

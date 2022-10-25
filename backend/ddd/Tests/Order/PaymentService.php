@@ -1,7 +1,6 @@
 <?php
 
-namespace DDD\Tests;
-
+namespace DDD\Tests\Order;
 
 final class PaymentService
 {

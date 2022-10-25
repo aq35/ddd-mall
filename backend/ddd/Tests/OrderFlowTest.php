@@ -4,6 +4,12 @@ namespace DDD\Tests;
 
 use PHPUnit\Framework\TestCase;
 
+//
+use DDD\Tests\Order\ExternalService;
+use DDD\Tests\Order\InternalServiceA;
+use DDD\Tests\Order\InternalServiceB;
+use DDD\Tests\Order\MessageQueue;
+use DDD\Tests\Order\PaymentService;
 use DesignPattern\Event\ForClient\AsyncEventEmitter;
 
 // ./vendor/bin/phpunit ddd/Tests/OrderFlowTest.php
@@ -118,23 +124,18 @@ final class OrderFlowTest extends TestCase
         });
         $asyncEmitter->emit('event');
 
-
         $i += 1;
         $asyncEmitter->getQueue()->onAfterTick(function () use ($asyncEmitter, $i) {
             $asyncEmitter->getQueue()->stop();
         });
 
         $asyncEmitter->getQueue()->start();
-
         $this->assertTrue(true);
 
         // |<=====|------|------|------|------|
         // 支払いレスポンス
     }
 
-    public function te()
-    {
-    }
     // 冪等性
     // 決済処理中リトライ処理が発生した場合、何も考慮しない場合、依存先サービスに投げる操作が多重に実行されたらお客様の残高が何度も引かれてしまう問題が発生します。
     //

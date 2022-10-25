@@ -63,8 +63,8 @@ class Co implements CoInterface
      * Wait until value is recursively resolved to return it.
      * // 自分自身が呼び出した関数の結果が帰るまで待ちます。
      * This function call must be atomic.
-     * @param  mixed $value
-     * @param  array $options
+     * @param  mixed $value 並列に解決される任意の値。
+     * @param  array $options 連想配列
      * @return mixed
      */
     public static function wait($value, array $options = [])
@@ -80,7 +80,6 @@ class Co implements CoInterface
         } finally {
             self::$self = null;
         }
-        // @codeCoverageIgnoreStart
     }
     //
 
