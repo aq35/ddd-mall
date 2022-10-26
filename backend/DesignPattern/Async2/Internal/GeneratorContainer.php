@@ -31,30 +31,14 @@ class GeneratorContainer
     private $exception = null;
 
     /**
-     * Parent yield key.
-     * @var mixed
-     */
-    private $yieldKey;
-
-    /**
      * Constructor.
      * @param \Generator $g
      */
-    public function __construct(\Generator $generator, $yield_key = null)
+    public function __construct(\Generator $generator)
     {
         $this->generator = $generator;
         $this->hashId = spl_object_hash($generator); // 指定したオブジェクトのハッシュIDを返します。
-        $this->yieldKey = $yield_key;
         $this->isWorkingGenerator();
-    }
-
-    /**
-     * Return parent yield key.
-     * @return mixed
-     */
-    public function getYieldKey()
-    {
-        return $this->yieldKey;
     }
 
     /**
@@ -159,7 +143,6 @@ class GeneratorContainer
     // getReturnOrThrown
     public function currentOrFail()
     {
-        $this->validateInvalidity();
         if ($this->exception === null && $this->generator->valid() && !$this->isWorkingGenerator()) {
             return $this->generator->current();
         }
@@ -176,7 +159,7 @@ class GeneratorContainer
     private function validateValidity()
     {
         if (!$this->isWorkingGenerator()) {
-            throw new \BadMethodCallException('ジェネレーターは実行中なので、以降の処理を停止します | Unreachable here.');
+            throw new \BadMethodCallException('ジェネレーターは無効です | Unreachable here.');
         }
     }
 
@@ -187,7 +170,7 @@ class GeneratorContainer
     private function validateInvalidity()
     {
         if ($this->isWorkingGenerator()) {
-            throw new \BadMethodCallException('ジェネレーターは実行中なので、以降の処理を停止します | Unreachable here.');
+            throw new \BadMethodCallException('ジェネレーターは無効です | Unreachable here.');
         }
     }
 }
