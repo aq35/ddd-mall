@@ -9,6 +9,7 @@ use Exception;
 // ./vendor/bin/phpunit DesignPattern/Tests/Async2Test.php
 final class Async2Test extends TestCase
 {
+
     public function test_同期的(): void
     {
         // 0,何もしない
@@ -163,5 +164,70 @@ final class Async2Test extends TestCase
         $dom = new \DOMDocument;
         @$dom->loadHTML(yield $this->curl_init_with($url));
         return new \DOMXPath($dom);
+    }
+}
+class OrderStatusEntity
+{
+
+    const RECEIVE_ORDER = 'receive_order';
+    const PAYMENT_POINT = 'payment_point';
+    const PAYMENT_CREDIT = 'payment_creadit';
+    const NOTIFICATION_EMAIL = 'notification_email';
+    // 0.未予定
+    // 1.処理対象
+    // 2,処理成功(責任_終了)
+    // 3.処理失敗、もう一回処理対象
+    // 4.処理失敗後、もう一回処理に成功(責任_終了)
+    // 5.処理失敗後、もう一回処理に失敗
+    // 6.処理失敗後、ロールバック処理対象
+    // 7.処理失敗後、ロールバック処理に成功(責任_終了)
+    // 8.処理失敗後、ロールバック処理に失敗(責任_終了)
+    public $status = [
+        self::RECEIVE_ORDER => 0,
+        self::PAYMENT_POINT => 0,
+        self::PAYMENT_CREDIT => 0,
+        self::NOTIFICATION_EMAIL => 0,
+    ];
+
+    public function target($targetName): void
+    {
+        $this->status[$targetName] = 1;
+    }
+
+    public function success($successName, array $targetName): void
+    {
+        $this->status[$successName] = 2; // 終了
+        $this->status[$targetName] = 1; // 次の実行
+    }
+
+    public function failureAndFinish($failureName): void
+    {
+        $this->status[$failureName] = 3;
+    }
+
+    public function targetAgain($targetName): void
+    {
+        $this->status[$targetName] = 4;
+    }
+
+    public function failureAgain($keyName): void
+    {
+        $this->status[$keyName] = 5;
+    }
+
+    public function rollback($keyName): void
+    {
+        $this->status[$keyName] = 6;
+    }
+
+    public function successRollback($keyName, $nextRollback): void
+    {
+        $this->status[$keyName] = 7;
+        $this->status[$nextRollback] = 6; // 次のロールバック対象を決める
+    }
+
+    public function errorRollback($keyName): void
+    {
+        $this->status[$keyName] = 8; // 失敗、終了
     }
 }
