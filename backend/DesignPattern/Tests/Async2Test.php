@@ -168,66 +168,40 @@ final class Async2Test extends TestCase
 }
 class OrderStatusEntity
 {
+    public const RECEIVE_ORDER = 'receive_order';
+    public const PAYMENT_POINT = 'payment_point';
+    public const PAYMENT_CREDIT = 'payment_creadit';
+    public const NOTIFICATION_EMAIL = 'notification_email';
 
-    const RECEIVE_ORDER = 'receive_order';
-    const PAYMENT_POINT = 'payment_point';
-    const PAYMENT_CREDIT = 'payment_creadit';
-    const NOTIFICATION_EMAIL = 'notification_email';
-    // 0.未予定
-    // 1.処理対象
-    // 2,処理成功(責任_終了)
-    // 3.処理失敗、もう一回処理対象
-    // 4.処理失敗後、もう一回処理に成功(責任_終了)
-    // 5.処理失敗後、もう一回処理に失敗
-    // 6.処理失敗後、ロールバック処理対象
-    // 7.処理失敗後、ロールバック処理に成功(責任_終了)
-    // 8.処理失敗後、ロールバック処理に失敗(責任_終了)
+    // 正常ルール
+    // A1 実行
+    // |----------|C1 失敗 終了していい
+    // |          |C2 失敗 ロールバックすること
+    // |          |C3 失敗 もう一回
+    // |----------|
+    // B1 成功 (next)A1
+    // B2 成功終了
+
+    // C2 ロールバック
+    // |----------|E1 失敗 終了していい
+    // |          |
+    // |          |
+    // |----------|B1
+    // D1 成功 (next)C2 上もロールバック
+    // D2 成功 終了
+
+    // C3 再度実行
+    // |----------|C1 失敗 終了していい
+    // |          |C2 失敗 ロールバックすること
+    // |          |
+    // |----------|B1
+    // B1 成功 (next)A1
+    // B2 成功終了
+
     public $status = [
         self::RECEIVE_ORDER => 0,
         self::PAYMENT_POINT => 0,
         self::PAYMENT_CREDIT => 0,
         self::NOTIFICATION_EMAIL => 0,
     ];
-
-    public function target($targetName): void
-    {
-        $this->status[$targetName] = 1;
-    }
-
-    public function success($successName, array $targetName): void
-    {
-        $this->status[$successName] = 2; // 終了
-        $this->status[$targetName] = 1; // 次の実行
-    }
-
-    public function failureAndFinish($failureName): void
-    {
-        $this->status[$failureName] = 3;
-    }
-
-    public function targetAgain($targetName): void
-    {
-        $this->status[$targetName] = 4;
-    }
-
-    public function failureAgain($keyName): void
-    {
-        $this->status[$keyName] = 5;
-    }
-
-    public function rollback($keyName): void
-    {
-        $this->status[$keyName] = 6;
-    }
-
-    public function successRollback($keyName, $nextRollback): void
-    {
-        $this->status[$keyName] = 7;
-        $this->status[$nextRollback] = 6; // 次のロールバック対象を決める
-    }
-
-    public function errorRollback($keyName): void
-    {
-        $this->status[$keyName] = 8; // 失敗、終了
-    }
 }
