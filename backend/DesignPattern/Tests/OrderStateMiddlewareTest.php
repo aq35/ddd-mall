@@ -15,13 +15,22 @@ final class OrderStateMiddlewareTest extends TestCase
     {
         $test  = new OrderContextTest();
         echo "\n";
-        $data = $test->test('A');
+        $data = $test->test('A3');
         echo $data->getState() . "\n";
 
-        $data = $test->test('B');
+        $data = $test->test('B3');
         echo $data->getState() . "\n";
 
-        $data = $test->test('C');
+        $data = $test->test('C3');
+        echo $data->getState() . "\n";
+
+        $data = $test->test('SUCCESS_A');
+        echo $data->getState() . "\n";
+
+        $data = $test->test('SUCCESS_B');
+        echo $data->getState() . "\n";
+
+        $data = $test->test('SUCCESS_C');
         echo $data->getState() . "\n";
 
         $this->assertTrue(true);
