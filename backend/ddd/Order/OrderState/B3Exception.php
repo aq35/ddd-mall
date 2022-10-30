@@ -2,7 +2,7 @@
 
 namespace DDD\Order\OrderState;
 
-class A3Exception extends \Exception
+class B3Exception extends \Exception
 {
     public $throwable;
 }
