@@ -2,27 +2,27 @@
 
 namespace DDD\Order\OrderState;
 
-use DDD\Order\OrderState\AStatusInterface;
+use DDD\Order\OrderState\BaseState;
 
-final class A1State implements AStatusInterface
+final class A1State extends BaseState
 {
-    private static $status = 1;
-    private static $instance = null;
+    private static $status = 'A1';
 
+    protected static $instance = null;
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new A1State();
+            self::$instance = new self;
         }
         return self::$instance;
     }
 
-    public function nextState()
+    public function toA2State()
     {
         return A2State::getInstance();
     }
 
-    public function backState()
+    public function backA1State()
     {
         return self::$instance;
     }
@@ -30,15 +30,5 @@ final class A1State implements AStatusInterface
     public function getState()
     {
         return self::$status;
-    }
-
-    public final function __clone()
-    {
-        throw new \Exception('This Instance is Not Clone');
-    }
-
-    public final function __wakeup()
-    {
-        throw new \Exception('This Instance is Not unserialize');
     }
 }

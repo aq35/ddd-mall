@@ -18,12 +18,12 @@ final class OrderStateTest extends TestCase
         echo "\n現在のステータスは" . $status . "\n";
 
         // ステータスを進める
-        $orderContext->nextState();
+        $orderContext->toA2State();
         $status = $orderContext->getState();
         echo "\n現在のステータスは" . $status . "\n";
 
         // ステータスを戻す
-        $orderContext->backState();
+        $orderContext->backA1State();
         $status = $orderContext->getState();
         echo "\n現在のステータスは" . $status . "\n";
 

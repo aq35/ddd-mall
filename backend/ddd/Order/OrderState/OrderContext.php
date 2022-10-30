@@ -2,12 +2,12 @@
 
 namespace DDD\Order\OrderState;
 
-use DDD\Order\OrderState\AStatusInterface;
+use DDD\Order\OrderState\StatusInterface;
 use DDD\Order\OrderState\A1State;
 
 class OrderContext
 {
-    private AStatusInterface $interface;
+    private StatusInterface $interface;
 
     public function __construct()
     {
@@ -15,15 +15,14 @@ class OrderContext
         $this->interface = A1State::getInstance();
     }
 
-    public function nextState()
+    public function toA2State()
     {
-
-        $this->interface = $this->interface->nextState();
+        $this->interface = $this->interface->toA2State();
     }
 
-    public function backState()
+    public function backA1State()
     {
-        $this->interface = $this->interface->backState();
+        $this->interface = $this->interface->backA1State();
     }
 
     public function getState()
