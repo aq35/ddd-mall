@@ -4,7 +4,7 @@ namespace DDD\Validator;
 
 // DesignPatternは、Validatorクラスまでで、子クラスには見えないようにしたい。
 
-use DesignPattern\Middleware\ForClient\PipelineBuilder;
+use DesignPattern\Middleware\Context\PipelineBuilder;
 use DesignPattern\Middleware\Domain\Input;
 use DesignPattern\Middleware\Domain\Output;
 use DesignPattern\Middleware\Domain\Handler;

@@ -2,7 +2,7 @@
 
 namespace DesignPattern\Middleware\Example;
 
-use DesignPattern\Middleware\ForClient\PipelineBuilder;
+use DesignPattern\Middleware\Context\PipelineBuilder;
 use DesignPattern\Middleware\Domain\Input;
 use DesignPattern\Middleware\Example\OuterMiddleware;
 use DesignPattern\Middleware\Example\InnerMiddleware;

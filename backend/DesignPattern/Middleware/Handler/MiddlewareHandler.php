@@ -1,6 +1,6 @@
 <?php
 
-namespace DesignPattern\Middleware\ForPipelineBuilder;
+namespace DesignPattern\Middleware\Handler;
 
 use DesignPattern\Middleware\Domain\Middleware;
 use DesignPattern\Middleware\Domain\Handler;

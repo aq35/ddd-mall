@@ -4,7 +4,7 @@ namespace DDD\Validator;
 
 use DesignPattern\Middleware\Domain\Middleware;
 use DesignPattern\Middleware\Domain\Handler;
-use DesignPattern\Middleware\ForPipelineBuilder\MiddlewareHandler;
+use DesignPattern\Middleware\Handler\MiddlewareHandler;
 
 /**
  * ---------------------------------------------------------------------------------------------------------------------

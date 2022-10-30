@@ -1,10 +1,10 @@
 <?php
 
-namespace DesignPattern\Middleware\ForClient;
+namespace DesignPattern\Middleware\Context;
 
 use DesignPattern\Middleware\Domain\Middleware;
 use DesignPattern\Middleware\Domain\Handler;
-use DesignPattern\Middleware\ForPipelineBuilder\MiddlewareHandler;
+use DesignPattern\Middleware\Handler\MiddlewareHandler;
 
 // ### PipelineBuilder
 // クライアントコードが Middleware パターンを扱いやすくするための補助的なクラス
@@ -35,25 +35,6 @@ final class PipelineBuilder
         return $this;
     }
 
-    // イメージ
-    /*
-    // MiddlewareHandler外側
-    function handle(){
-        手続き処理
-        MiddlewareHandler外側@handle()
-        {
-            手続き処理
-            MiddlewareHandler中側@handle(){
-                // MiddlewareHandlerC
-                function process(){
-                    手続きコード
-                    return <コア>Handler</コア>->handle();
-                }
-            }
-        }
-    }
-
-    */
     public function build(Handler $handler): Handler
     {
         foreach ($this->middlewares as $middleware) {
