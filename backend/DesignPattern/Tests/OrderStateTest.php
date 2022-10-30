@@ -15,8 +15,9 @@ final class OrderStateTest extends TestCase
         $orderContext = new OrderContext();
 
         // 現在のステータス
-        $status = $orderContext->getState();
+
         // A1 (実行対象)
+        $status = $orderContext->getState();
         echo "\n現在のステータスは、" . $status . "\n";
 
         // => A2 (実行成功)
