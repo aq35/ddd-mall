@@ -4,9 +4,9 @@ namespace DDD\Order\OrderState;
 
 use DDD\Order\OrderState\BaseState;
 
-final class A2State extends BaseState
+final class C3State extends BaseState
 {
-    private static $status = 'A2';
+    private static $status = 'C3';
 
     protected static $instance = null;
     public static function getInstance()
@@ -17,7 +17,7 @@ final class A2State extends BaseState
         return self::$instance;
     }
 
-    public function toA2State()
+    public function toC3State()
     {
         return self::$status;
     }

@@ -17,12 +17,7 @@ final class A1State extends BaseState
         return self::$instance;
     }
 
-    public function toA2State()
-    {
-        return A2State::getInstance();
-    }
-
-    public function backA1State()
+    public function toA1State()
     {
         return self::$instance;
     }
