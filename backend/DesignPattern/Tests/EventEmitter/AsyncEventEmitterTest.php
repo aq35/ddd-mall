@@ -1,12 +1,12 @@
 <?php
 
-namespace DDD\Tests;
+namespace DDD\Tests\EventEmitter;
 
 use PHPUnit\Framework\TestCase;
 
 use DesignPattern\Event\ForClient\AsyncEventEmitter;
 
-// ./vendor/bin/phpunit DesignPattern/Tests/AsyncEventEmitterTest.php
+// ./vendor/bin/phpunit DesignPattern/Tests/EventEmitter/AsyncEventEmitterTest.php
 final class AsyncEventEmitterTest extends TestCase
 {
     public function testEventEmitter_async_emitters(): void

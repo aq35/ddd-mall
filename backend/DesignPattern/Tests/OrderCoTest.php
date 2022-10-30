@@ -7,10 +7,10 @@ use PHPUnit\Framework\TestCase;
 use DesignPattern\Event\ForClient\AsyncEventEmitter;
 use DesignPattern\Async\Co;
 
-// ./vendor/bin/phpunit DesignPattern/Tests/OrderAsyncTest.php
-final class OrderAsyncTest extends TestCase
+// ./vendor/bin/phpunit DesignPattern/Tests/OrderCoTest.php
+final class OrderCoTest extends TestCase
 {
-    public function test_EventEmitter_async_emitters(): void
+    public function test_Co(): void
     {
         $co = Co::wait([
             'Delay 5 secs' => function () {
@@ -42,7 +42,6 @@ final class OrderAsyncTest extends TestCase
         ]);
         var_dump($co);
     }
-
 
     function curl_init_with($url, array $options = [])
     {

@@ -6,7 +6,7 @@ use  DDD\Tests\OrderState\A1State;
 
 final class OrderContext
 {
-    private $state;
+    private AStatusInterface $state;
 
     public function __construct()
     {
