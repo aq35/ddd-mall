@@ -7,8 +7,8 @@ use PHPUnit\Framework\TestCase;
 use DesignPattern\Event\ForClient\AsyncEventEmitter;
 use DesignPattern\Async\Co;
 
-// ./vendor/bin/phpunit DesignPattern/Tests/OrderCoTest.php
-final class OrderCoTest extends TestCase
+// ./vendor/bin/phpunit DesignPattern/Tests/GeneratorContainer0Test.php
+final class GeneratorContainer0Test extends TestCase
 {
     public function test_Co(): void
     {

@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use DesignPattern\Async2\Internal\GeneratorContainer;
 use Exception;
 
-// ./vendor/bin/phpunit DesignPattern/Tests/GeneratorContainerTest.php
-final class GeneratorContainerTest extends TestCase
+// ./vendor/bin/phpunit DesignPattern/Tests/GeneratorContainer1Test.php
+final class GeneratorContainer1Test extends TestCase
 {
 
     public function test_同期的(): void
