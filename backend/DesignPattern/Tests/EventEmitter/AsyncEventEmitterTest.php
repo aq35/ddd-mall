@@ -71,7 +71,7 @@ final class AsyncEventEmitterTest extends TestCase
         });
 
         // ファイル操作
-        $stream = fopen("./DesignPattern/Tests/StreamTextRead.txt", "r");
+        $stream = fopen("./DesignPattern/Tests/EventEmitter/StreamTextRead.txt", "r");
         $i += 1;
         $asyncEmitter->getQueue()->addReadStream($stream, function () use ($stream, $asyncEmitter, $i) {
             echo $stream . "\n"; // Resource id
@@ -84,7 +84,7 @@ final class AsyncEventEmitterTest extends TestCase
         });
 
         // ファイル操作
-        $stream = fopen("./DesignPattern/Tests/StreamTextWrite.txt", 'w');
+        $stream = fopen("./DesignPattern/Tests/EventEmitter/StreamTextWrite.txt", 'w');
         $i += 1;
         $asyncEmitter->getQueue()->addWriteStream($stream, function () use ($stream, $asyncEmitter, $i) {
             echo $stream . "\n"; // Resource id

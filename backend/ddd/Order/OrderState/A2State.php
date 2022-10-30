@@ -1,8 +1,8 @@
 <?php
 
-namespace DDD\Tests\OrderState;
+namespace DDD\Order\OrderState;
 
-use DDD\Tests\OrderState\AStatusInterface;
+use DDD\Order\OrderState\AStatusInterface;
 
 final class A2State implements AStatusInterface
 {
@@ -19,12 +19,17 @@ final class A2State implements AStatusInterface
 
     public function nextState()
     {
+        return self::$status;
+    }
+
+    public function backState()
+    {
         return A1State::getInstance();
     }
 
-    public function backStatus()
+    public function getState()
     {
-        return $this->status;
+        return self::$status;
     }
 
     public final function __clone()
