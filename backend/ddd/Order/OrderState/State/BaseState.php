@@ -1,8 +1,6 @@
 <?php
 
-namespace DDD\Order\OrderState;
-
-use DDD\Order\OrderState\StatusInterface;
+namespace DDD\Order\OrderState\State;
 
 abstract class BaseState implements StatusInterface
 {

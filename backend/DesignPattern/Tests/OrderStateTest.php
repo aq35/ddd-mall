@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 use DDD\Order\OrderState\OrderContext;
 
+// ステータス管理:1つのステータス管理
 // ./vendor/bin/phpunit DesignPattern/Tests/OrderStateTest.php
 final class OrderStateTest extends TestCase
 {

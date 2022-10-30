@@ -2,8 +2,8 @@
 
 namespace DDD\Order\OrderState;
 
-use DDD\Order\OrderState\StatusInterface;
-use DDD\Order\OrderState\A1State;
+use DDD\Order\OrderState\State\StatusInterface;
+use DDD\Order\OrderState\State\A1State;
 
 class OrderContext
 {
@@ -11,7 +11,6 @@ class OrderContext
 
     public function __construct()
     {
-
         $this->interface = A1State::getInstance();
     }
 

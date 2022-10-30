@@ -1,8 +1,6 @@
 <?php
 
-namespace DDD\Order\OrderState;
-
-use DDD\Order\OrderState\BaseState;
+namespace DDD\Order\OrderState\State;
 
 final class A1State extends BaseState
 {

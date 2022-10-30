@@ -1,6 +1,6 @@
 <?php
 
-namespace DDD\Order\OrderState;
+namespace DDD\Order\OrderState\State;
 
 interface StatusInterface
 {
